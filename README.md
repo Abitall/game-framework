@@ -67,6 +67,7 @@ npm run agents:build  # пересобрать frontmatter агентов из a
 ## Документация
 
 - `docs/WORKFLOW-GUIDE.md` — полный разбор фаз
+- `docs/КАК-РАБОТАТЬ.md` — инструкция: с чего начать, что когда запускать
 - `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md` — как агент ведёт диалог
 - `docs/examples/` — разобранные сессии
 - `docs/FRAMEWORK-*.md` — аудит, план, сравнение, пробелы
