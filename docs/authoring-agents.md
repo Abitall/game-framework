@@ -1,6 +1,6 @@
 # Agent Authoring Guide
 
-Every OCGS agent is a markdown file in `.agents/agents/` with structured
+Every OCGS agent is a markdown file in `.framework/library/agents/` with structured
 frontmatter and sections. This guide covers the template, conventions, and
 testing process.
 

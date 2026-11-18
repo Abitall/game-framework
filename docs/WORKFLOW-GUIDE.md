@@ -6,9 +6,6 @@
 > 52-agent system, 78 slash commands, and 3 TypeScript plugins. It assumes you
 > have OpenCode installed and are working from the project root.
 >
-> > **Pi users:** See [`docs/pi-workflow.md`](pi-workflow.md) for harness-specific differences and
-> > [`docs/pi-compatibility.md`](pi-compatibility.md) for setup.
-> > **oh-my-pi (omp) users:** See [`docs/omp-compatibility.md`](omp-compatibility.md) for setup and known gaps.
 >
 > The pipeline has 7 phases. Each phase has a formal gate (`/gate-check`)
 > that must pass before you advance. The authoritative phase sequence is
@@ -1257,7 +1254,7 @@ these are labels, not scripts you will find on disk.
 | `validate-commit` | Before commit | Checks for design doc references, valid JSON, no hardcoded values |
 | `validate-push` | Before push | Warns on pushes to `main`, `master`, or `develop` |
 | `validate-assets` | After file write | Checks asset naming and JSON validity |
-| `validate-skill-change` | Skill file written | Advises running `/skill-test` after `.agents/skills/` changes |
+| `validate-skill-change` | Skill file written | Advises running `/skill-test` after `.framework/library/skills/` changes |
 | `log-agent` | Agent start | Logs agent invocations for the audit trail |
 | `log-agent-stop` | Agent stop | Completes the agent audit trail |
 | `session-stop` | Session end | Archives session state and commits |

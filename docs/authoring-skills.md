@@ -1,13 +1,13 @@
 # Skill Authoring Guide
 
 Every OCGS skill is a `SKILL.md` file inside a named directory in
-`.agents/skills/`. Skills define structured workflows that agents
+`.framework/library/skills/`. Skills define structured workflows that agents
 follow when a user invokes a slash command.
 
 ## Directory Structure
 
 ```
-.agents/skills/{skill-name}/
+.framework/library/skills/{skill-name}/
 ├── SKILL.md              # The skill workflow definition
 └── [assets or templates] # Optional: templates the skill references
 ```
@@ -236,8 +236,8 @@ If any spawned agent returns BLOCKED, errors, or cannot complete:
 After creating or modifying a skill:
 
 1. Verify the frontmatter is valid YAML
-2. Check all agent references (`subagent_type:` values) match `.agents/agents/`
-3. Check all command references match `.agents/commands/`
+2. Check all agent references (`subagent_type:` values) match `.framework/library/agents/`
+3. Check all command references match `.framework/library/commands/`
 4. Run the framework validator: `node tests/agents/validate.mjs`
 
 The validator checks:
@@ -288,7 +288,7 @@ Use `question`:
 ## Cross-Reference Checklist
 
 When adding a skill, update:
-- [ ] Command file in `.agents/commands/` (if new skill needs a slash command)
+- [ ] Command file in `.framework/library/commands/` (if new skill needs a slash command)
 - [ ] Agent delegation: agents that reference this skill in their domain
 - [ ] Rules that reference this skill's domain
 - [ ] Framework validator exceptions (if any patterns intentionally differ)
