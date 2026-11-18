@@ -39,8 +39,8 @@
     "gauntlet:pair": "node tools/ab.mjs",
     "gauntlet:reveal": "node tools/reveal.mjs",
     "balance:progress": "node tools/balance-progress.mjs",
-    "search:up": "docker compose -f tools/searxng/docker-compose.yml up -d",
-    "search:down": "docker compose -f tools/searxng/docker-compose.yml down"
+    "search:up": "docker compose -f tools/websearch/docker-compose.yml up -d",
+    "search:down": "docker compose -f tools/websearch/docker-compose.yml down"
   },
   "keywords": [
     "game-development",

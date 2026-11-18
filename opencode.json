@@ -64,13 +64,13 @@
         "disabled": true,
         "codemode": false
       },
-      "searxng": {
+      "websearch": {
         "type": "local",
-        "command": ["node", "tools/searxng-mcp.mjs"],
-        "disabled": true,
+        "command": ["node", "tools/websearch-mcp.mjs"],
         "codemode": false,
         "environment": {
-          "SEARXNG_URL": "{env:SEARXNG_URL}"
+          "SEARXNG_URL": "{env:SEARXNG_URL}",
+          "SEARCH_PROVIDER": "{env:SEARCH_PROVIDER}"
         }
       }
     }
