@@ -2,6 +2,8 @@
 description: "Quality review of test files and manual evidence documents."
 ---
 
-Use the `test-evidence-review` skill (`.opencode/skills/test-evidence-review/SKILL.md`).
+Read `.opencode/skills/test-evidence-review/SKILL.md` and execute its workflow now.
+Treat this message as the invocation: do not answer with a description of the
+skill, and do not ask whether to begin.
 
 $ARGUMENTS

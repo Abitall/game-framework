@@ -2,6 +2,8 @@
 description: "Orchestrate level design team: level-designer +"
 ---
 
-Use the `team-level` skill (`.opencode/skills/team-level/SKILL.md`).
+Read `.opencode/skills/team-level/SKILL.md` and execute its workflow now.
+Treat this message as the invocation: do not answer with a description of the
+skill, and do not ask whether to begin.
 
 $ARGUMENTS

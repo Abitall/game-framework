@@ -2,6 +2,8 @@
 description: "Full localization pipeline: scan for hardcoded strings,"
 ---
 
-Use the `localize` skill (`.opencode/skills/localize/SKILL.md`).
+Read `.opencode/skills/localize/SKILL.md` and execute its workflow now.
+Treat this message as the invocation: do not answer with a description of the
+skill, and do not ask whether to begin.
 
 $ARGUMENTS

@@ -2,6 +2,8 @@
 description: "Orchestrate the release team: coordinates release-manager,"
 ---
 
-Use the `team-release` skill (`.opencode/skills/team-release/SKILL.md`).
+Read `.opencode/skills/team-release/SKILL.md` and execute its workflow now.
+Treat this message as the invocation: do not answer with a description of the
+skill, and do not ask whether to begin.
 
 $ARGUMENTS
