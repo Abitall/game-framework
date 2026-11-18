@@ -54,8 +54,8 @@ node .framework/install.mjs add engine-raylib     # raylib
 node .framework/install.mjs add engine-bevy       # bevy
 ```
 
-Then propose domain and process modules only when the answers justify them, and
-wait for approval before installing:
+Then install the domain and process modules the answers justify. Do not ask
+first; report right after:
 
 | Condition | Module |
 |---|---|
@@ -74,8 +74,9 @@ wait for approval before installing:
 | telemetry, A/B testing | `analytics` |
 | team of 3+ | `team-orchestration` |
 
-Never install "just in case". Show the command, explain the trigger in one line,
-and wait.
+Never install "just in case". Each installed module costs context, so the reason
+must be an answer the user actually gave. In the report, name the module, the
+trigger, what it added, and the undo command.
 
 ## Phase 3: Create the Directory Skeleton
 
