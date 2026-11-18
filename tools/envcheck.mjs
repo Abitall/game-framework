@@ -31,6 +31,15 @@ function firstExisting(candidates) {
   return candidates.find((candidate) => candidate && fs.existsSync(candidate)) ?? null
 }
 
+/** PowerShell `Set-Content -Encoding utf8` writes a BOM; JSON.parse rejects it. */
+function readJson(file) {
+  try {
+    return JSON.parse(fs.readFileSync(file, "utf8").replace(/^\uFEFF/, ""))
+  } catch {
+    return null
+  }
+}
+
 // ── Runtime ──────────────────────────────────────────────────────────────────
 const nodeVersion = process.versions.node
 const nodeMajor = Number(nodeVersion.split(".")[0])
@@ -61,14 +70,7 @@ add("Docker", "optional", Boolean(docker), docker ?? "not found — local web se
 
 // ── Project ──────────────────────────────────────────────────────────────────
 const pkgPath = path.join(ROOT, "package.json")
-let pkg = null
-if (fs.existsSync(pkgPath)) {
-  try {
-    pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"))
-  } catch {
-    pkg = null
-  }
-}
+const pkg = fs.existsSync(pkgPath) ? readJson(pkgPath) : null
 add("package.json", "required", Boolean(pkg), pkg ? "ok" : "missing or invalid")
 
 const deps = { ...(pkg?.dependencies ?? {}), ...(pkg?.devDependencies ?? {}) }
@@ -114,6 +116,23 @@ if (isUnity) {
     "/Applications/Unity/Hub/Editor",
   ])
   add("Unity Hub editor", "recommended", Boolean(unity), unity ?? "not found — install Unity 6.3 LTS via Unity Hub")
+}
+
+// ── MCP servers ──────────────────────────────────────────────────────────────
+const opencodeConfig = path.join(ROOT, "opencode.json")
+if (fs.existsSync(opencodeConfig)) {
+  let servers = {}
+  const parsed = readJson(opencodeConfig)
+  if (parsed?.mcp?.servers) servers = parsed.mcp.servers
+  for (const [name, server] of Object.entries(servers)) {
+    if (server?.disabled) {
+      add(`mcp ${name}`, "optional", true, "disabled")
+      continue
+    }
+    const executable = Array.isArray(server?.command) ? server.command[0] : ""
+    const found = executable ? command(executable) : null
+    add(`mcp ${name}`, "required", Boolean(found), found ? `${executable} ${found}` : `command "${executable || "?"}" not found — the server will show as failed`)
+  }
 }
 
 // ── Project extras ───────────────────────────────────────────────────────────
