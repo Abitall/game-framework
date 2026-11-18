@@ -11,6 +11,25 @@
 неудаче уходит в DuckDuckGo. Управлять можно переменной `SEARCH_PROVIDER`:
 `auto` (по умолчанию), `searxng`, `duckduckgo`.
 
+## Запускать ли SearXNG каждый раз
+
+Нет. Три уровня, которые делают это за вас:
+
+1. **Контейнер сам поднимается после старта Docker.** В `docker-compose.yml` стоит
+   `restart: unless-stopped` — один раз запустили, дальше он живёт.
+2. **Сервер поиска запускает его сам.** Если SearXNG не отвечает, `search`
+   выполняет `docker compose up -d`, ждёт до 45 секунд и повторяет запрос.
+   В ответе появляется пометка `(container started automatically)`.
+3. **Если Docker не запущен вообще** — сервер не трогает его и уходит в
+   DuckDuckGo. Поиск работает, просто без агрегации.
+
+Единственное, что стоит сделать один раз: включить в Docker Desktop
+**Settings → General → Start Docker Desktop when you sign in**. Тогда после
+перезагрузки поднимется демон, за ним контейнер, и SearXNG будет доступен без
+вашего участия.
+
+Отключить автозапуск: `SEARXNG_AUTOSTART=never`.
+
 ## Быстрая проверка
 
 **1. Сервер отвечает.** Запустите и отправьте `initialize`:
@@ -78,4 +97,5 @@ npm run search:down    # остановить
 |---|---|---|
 | `SEARXNG_URL` | `http://localhost:8888` | адрес SearXNG |
 | `SEARCH_PROVIDER` | `auto` | `auto`, `searxng` или `duckduckgo` |
+| `SEARXNG_AUTOSTART` | `auto` | `auto` — поднимать контейнер самому, `never` — не трогать |
 | `SEARCH_TIMEOUT_MS` | `15000` | таймаут одного запроса |

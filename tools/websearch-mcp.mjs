@@ -17,9 +17,13 @@
  *   SEARCH_TIMEOUT_MS default 15000
  */
 import readline from "node:readline"
+import fs from "node:fs"
+import path from "node:path"
+import { spawnSync } from "node:child_process"
 
 const BASE = (process.env.SEARXNG_URL ?? "http://localhost:8888").replace(/\/+$/, "")
 const PROVIDER = (process.env.SEARCH_PROVIDER ?? "auto").toLowerCase()
+const AUTOSTART = (process.env.SEARXNG_AUTOSTART ?? "auto").toLowerCase()
 const TIMEOUT_MS = Number(process.env.SEARCH_TIMEOUT_MS ?? 15000)
 const USER_AGENT =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120 Safari/537.36"
@@ -59,12 +63,72 @@ function clampCount(value, fallback = 8) {
   return Math.max(1, Math.min(20, Math.trunc(number)))
 }
 
+// ── Starting SearXNG when it is down ─────────────────────────────────────────
+
+let startAttempted = false
+let startedThisRun = false
+
+function dockerBin() {
+  if (process.env.DOCKER_BIN) return process.env.DOCKER_BIN
+  if (process.platform === "win32") {
+    const bundled = "C:\\Program Files\\Docker\\Docker\\resources\\bin\\docker.exe"
+    if (fs.existsSync(bundled)) return bundled
+  }
+  return "docker"
+}
+
+function composeFile() {
+  const candidates = [
+    path.join(process.cwd(), "tools", "websearch", "docker-compose.yml"),
+    path.join(process.cwd(), "..", "tools", "websearch", "docker-compose.yml"),
+  ]
+  return candidates.find((candidate) => fs.existsSync(candidate)) ?? null
+}
+
+function startContainer() {
+  const compose = composeFile()
+  if (!compose) return { ok: false, reason: "docker-compose.yml not found under tools/websearch" }
+  const result = spawnSync(dockerBin(), ["compose", "-f", compose, "up", "-d"], {
+    encoding: "utf8",
+    timeout: 180000,
+    windowsHide: true,
+  })
+  if (result.error) return { ok: false, reason: result.error.message }
+  if (result.status !== 0) {
+    const detail = `${result.stderr ?? ""}${result.stdout ?? ""}`
+      .trim()
+      .split(/\r?\n/)
+      .filter(Boolean)
+      .slice(-2)
+      .join(" ")
+    return { ok: false, reason: detail || `docker exited with ${result.status}` }
+  }
+  return { ok: true }
+}
+
+async function waitForSearxng(timeoutMs = 45000) {
+  const deadline = Date.now() + timeoutMs
+  while (Date.now() < deadline) {
+    try {
+      const response = await fetch(`${BASE}/search?q=ping&format=json`, {
+        signal: AbortSignal.timeout(3000),
+      })
+      if (response.ok) return true
+    } catch {
+      // still booting
+    }
+    await new Promise((resolve) => setTimeout(resolve, 1500))
+  }
+  return false
+}
+
 function formatResults(provider, results) {
-  if (!results.length) return `[${provider}] No results.`
+  const suffix = provider === "searxng" && startedThisRun ? " (container started automatically)" : ""
+  if (!results.length) return `[${provider}] No results.${suffix}`
   const body = results
     .map((r, i) => `${i + 1}. ${r.title || "(no title)"}\n   ${r.url}\n   ${r.snippet}`)
     .join("\n\n")
-  return `[${provider}] ${results.length} result(s)\n\n${body}`
+  return `[${provider}] ${results.length} result(s)${suffix}\n\n${body}`
 }
 
 // ── SearXNG ──────────────────────────────────────────────────────────────────
@@ -149,13 +213,44 @@ async function duckduckgoSearch({ query, count = 8, language }) {
 // ── Provider selection ───────────────────────────────────────────────────────
 
 async function search(args) {
-  if (PROVIDER === "searxng") return searxSearch(args)
   if (PROVIDER === "duckduckgo") return duckduckgoSearch(args)
+
+  if (PROVIDER === "searxng") {
+    try {
+      return await searxSearch(args)
+    } catch (error) {
+      if (AUTOSTART !== "never" && !startAttempted) {
+        startAttempted = true
+        const started = startContainer()
+        if (started.ok && (await waitForSearxng())) return searxSearch(args)
+        throw new Error(
+          `SearXNG is not running at ${BASE} and could not be started: ${started.ok ? "container started but did not answer" : started.reason}`,
+        )
+      }
+      throw error
+    }
+  }
 
   try {
     return await searxSearch(args)
-  } catch (error) {
-    const reason = error.name === "TimeoutError" ? "timed out" : error.message
+  } catch (firstError) {
+    const reason = firstError.name === "TimeoutError" ? "timed out" : firstError.message
+
+    if (AUTOSTART !== "never" && !startAttempted) {
+      startAttempted = true
+      const started = startContainer()
+      if (started.ok) {
+        startedThisRun = true
+        if (await waitForSearxng()) {
+          try {
+            return await searxSearch(args)
+          } catch {
+            // fall through to DuckDuckGo
+          }
+        }
+      }
+    }
+
     try {
       return await duckduckgoSearch(args)
     } catch (fallbackError) {

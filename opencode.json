@@ -70,7 +70,8 @@
         "codemode": false,
         "environment": {
           "SEARXNG_URL": "{env:SEARXNG_URL}",
-          "SEARCH_PROVIDER": "{env:SEARCH_PROVIDER}"
+          "SEARCH_PROVIDER": "{env:SEARCH_PROVIDER}",
+          "SEARXNG_AUTOSTART": "{env:SEARXNG_AUTOSTART}"
         }
       },
       "comfyui": {
