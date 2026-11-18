@@ -15,7 +15,7 @@
 | 5 | Помогать держать пайплайн | ✅ | `production/PIPELINE.md` + `tools/pipeline.mjs` (исполняемые гейты) + `pipeline-guard` |
 | 6 | Записывать удачные решения | ✅ | `tools/learn.mjs` (предложение → одобрение) + `docs/solutions/` |
 | 7 | Долгие тесты: чекпоинты, ядра, предупреждение | ✅ | `tools/balance-progress.mjs`, `tools/run-affinity.ps1`, `rules/long-tests.md` |
-| 8 | Бесплатный веб-поиск | ✅ | SearXNG в Docker + MCP-сервер `tools/searxng-mcp.mjs` |
+| 8 | Бесплатный веб-поиск | ✅ | SearXNG в Docker + MCP-сервер `tools/websearch-mcp.mjs` |
 | 9 | Удобный редактор UI для Phaser | ⏸ позже | паттерн панели тюнинга реализован как скилл; полный редактор отложен |
 | 10 | Субагенты для сложных задач | ✅ | `Delegation Rule` в AGENTS.md |
 

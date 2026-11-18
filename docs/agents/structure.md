@@ -7,10 +7,10 @@
 ├── .framework/                   # THE FRAMEWORK (inert, never auto-loaded)
 │   ├── library/                  # pool: every agent, skill, command, rule
 │   │   ├── agents/               # 52 agent definitions
-│   │   ├── skills/               # 86 skills
-│   │   ├── commands/             # 86 slash commands
+│   │   ├── skills/               # 90 skills
+│   │   ├── commands/             # 90 slash commands
 │   │   └── rules/                # 16 path-scoped coding rules
-│   ├── modules/                  # 28 module manifests
+│   ├── modules/                  # 31 module manifests
 │   ├── tools/                    # manifest generator
 │   └── install.mjs               # module installer
 ├── .opencode/                    # ACTIVE: only installed modules live here

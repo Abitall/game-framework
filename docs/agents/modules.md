@@ -1,6 +1,6 @@
 # Module System
 
-The framework ships 29 modules but installs 6. Only installed modules exist in
+The framework ships 31 modules but installs 8. Only installed modules exist in
 `.opencode/`, so uninstalled modules cost zero context.
 
 ```bash
@@ -25,6 +25,8 @@ node .framework/install.mjs doctor
 | `qa` | 4 QA agents, 8 skills, 2 rules (tests, long runs) |
 | `release` | 2 agents, 8 skills (sprints, milestones, changelog, repo) |
 | `obsidian` | 1 skill: notes in Russian with wikilinks and map cards |
+| `shutdown` | 1 skill: power off after a long task, only on request |
+| `comfyui` | 1 skill: local GPU image generation, saved workflows, validation |
 | `templates` | 29 document templates (GDD, bibles, pitch, risk register, test plan, protocols) |
 
 ### Available on demand
