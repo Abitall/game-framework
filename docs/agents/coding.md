@@ -5,6 +5,12 @@
 - Gameplay values are data-driven (external config), never hardcoded
 - Public methods are unit-testable (dependency injection over singletons)
 - Commits reference the relevant design document or task ID
+- **Image assets — name the medium before making one.** Three options:
+  code (Phaser Graphics, canvas, CSS) for UI frames, bars, gradients, simple
+  icons and procedural patterns; Aseprite for pixel art, sprites and tiles;
+  ComfyUI for illustration, textures, backgrounds and key art. State the choice
+  and the reason in one line, then load the matching skill. Never reach for a
+  generated raster image when a rectangle would do.
 - **Verification-driven development**: write tests first for gameplay systems.
   For UI changes, verify with screenshots. Every implementation needs a way to
   prove it works.

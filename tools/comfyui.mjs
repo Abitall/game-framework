@@ -6,13 +6,17 @@
  * user's own GPU. No cloud, no API keys, no per-image cost.
  *
  * Tools:
- *   status    — is the server up, queue depth, version
- *   models    — available unets, text encoders, VAEs
- *   generate  — text to image, waits for the result, copies the PNG into the project
- *   history   — recent generations known to ComfyUI
+ *   status             — is the server up, queue depth, VRAM
+ *   models             — available unets, text encoders, VAEs
+ *   workflows          — built-in and saved workflows, with what they need
+ *   validate-workflow  — check a workflow against the live ComfyUI before running it
+ *   generate           — text to image, waits, copies the PNG into the project
+ *   history            — recent generations known to ComfyUI
  *
- * The graph is the one ComfyUI itself produced on this machine, extracted from an
- * existing output PNG, so the node names and settings are known to work.
+ * Workflows live in production/workflows/<name>.json. A workflow file is either
+ * a raw API graph or { name, description, models, defaults, graph }. Placeholders
+ * inside strings are replaced from the generate arguments: {{prompt}},
+ * {{negative}}, {{width}}, {{height}}, {{steps}}, {{cfg}}, {{seed}}.
  *
  * Config: production/comfyui.json -> { "url": "...", "dir": "..." }
  * Env: COMFYUI_URL, COMFYUI_DIR, COMFYUI_TIMEOUT_MS
@@ -23,6 +27,7 @@ import readline from "node:readline"
 
 const ROOT = process.cwd()
 const DEFAULT_URL = "http://127.0.0.1:8188"
+const WORKFLOWS = path.join(ROOT, "production", "workflows")
 
 function config() {
   const file = path.join(ROOT, "production", "comfyui.json")
@@ -42,22 +47,22 @@ function config() {
 
 const TIMEOUT_MS = Number(process.env.COMFYUI_TIMEOUT_MS ?? 300000)
 
-// ── Graph ────────────────────────────────────────────────────────────────────
+// ── Built-in workflow ────────────────────────────────────────────────────────
 // Verified on this machine: ComfyUI 0.20.1, flux-2-klein-base-4b, qwen_3_4b
 // (clip type flux2), flux2-vae, SamplerCustomAdvanced + Flux2Scheduler.
 
-function buildGraph({ prompt, negative = "", width, height, steps, cfg, seed }) {
+function builtinGraph() {
   return {
     "1": { class_type: "UNETLoader", inputs: { unet_name: "flux-2-klein-base-4b.safetensors", weight_dtype: "default" } },
     "2": { class_type: "CLIPLoader", inputs: { clip_name: "qwen_3_4b.safetensors", type: "flux2", device: "default" } },
     "3": { class_type: "VAELoader", inputs: { vae_name: "flux2-vae.safetensors" } },
-    "4": { class_type: "CLIPTextEncode", inputs: { text: prompt, clip: ["2", 0] } },
-    "5": { class_type: "CLIPTextEncode", inputs: { text: negative, clip: ["2", 0] } },
-    "6": { class_type: "EmptyFlux2LatentImage", inputs: { width, height, batch_size: 1 } },
-    "7": { class_type: "Flux2Scheduler", inputs: { steps, width, height } },
+    "4": { class_type: "CLIPTextEncode", inputs: { text: "{{prompt}}", clip: ["2", 0] } },
+    "5": { class_type: "CLIPTextEncode", inputs: { text: "{{negative}}", clip: ["2", 0] } },
+    "6": { class_type: "EmptyFlux2LatentImage", inputs: { width: "{{width}}", height: "{{height}}", batch_size: 1 } },
+    "7": { class_type: "Flux2Scheduler", inputs: { steps: "{{steps}}", width: "{{width}}", height: "{{height}}" } },
     "8": { class_type: "KSamplerSelect", inputs: { sampler_name: "euler" } },
-    "9": { class_type: "CFGGuider", inputs: { cfg, model: ["1", 0], positive: ["4", 0], negative: ["5", 0] } },
-    "10": { class_type: "RandomNoise", inputs: { noise_seed: seed } },
+    "9": { class_type: "CFGGuider", inputs: { cfg: "{{cfg}}", model: ["1", 0], positive: ["4", 0], negative: ["5", 0] } },
+    "10": { class_type: "RandomNoise", inputs: { noise_seed: "{{seed}}" } },
     "11": {
       class_type: "SamplerCustomAdvanced",
       inputs: { noise: ["10", 0], guider: ["9", 0], sampler: ["8", 0], sigmas: ["7", 0], latent_image: ["6", 0] },
@@ -65,6 +70,82 @@ function buildGraph({ prompt, negative = "", width, height, steps, cfg, seed }) 
     "12": { class_type: "VAEDecode", inputs: { samples: ["11", 0], vae: ["3", 0] } },
     "13": { class_type: "SaveImage", inputs: { images: ["12", 0], filename_prefix: "agent" } },
   }
+}
+
+const BUILTIN = {
+  name: "flux2-klein",
+  description: "Flux 2 Klein 4B. Stylized illustration, textures, backgrounds, concept art. The verified default.",
+  models: {
+    unet: "flux-2-klein-base-4b.safetensors",
+    clip: "qwen_3_4b.safetensors",
+    clip_type: "flux2",
+    vae: "flux2-vae.safetensors",
+  },
+  defaults: { width: 1024, height: 1024, steps: 20, cfg: 5 },
+}
+
+// ── Workflow files ───────────────────────────────────────────────────────────
+
+function readWorkflowFile(file) {
+  const raw = JSON.parse(fs.readFileSync(file, "utf8").replace(/^\uFEFF/, ""))
+  if (raw.graph && typeof raw.graph === "object") return raw
+  return { name: path.basename(file, ".json"), description: "", graph: raw }
+}
+
+function listWorkflows() {
+  const saved = []
+  if (fs.existsSync(WORKFLOWS)) {
+    for (const file of fs.readdirSync(WORKFLOWS).filter((f) => f.endsWith(".json"))) {
+      try {
+        const wf = readWorkflowFile(path.join(WORKFLOWS, file))
+        saved.push({
+          name: wf.name,
+          file: path.join("production", "workflows", file).split(path.sep).join("/"),
+          description: wf.description ?? "",
+          models: wf.models ?? {},
+          defaults: wf.defaults ?? {},
+          nodes: Object.keys(wf.graph ?? {}).length,
+        })
+      } catch {
+        saved.push({ name: path.basename(file, ".json"), file, error: "invalid JSON" })
+      }
+    }
+  }
+  return { builtin: { ...BUILTIN, nodes: Object.keys(builtinGraph()).length }, saved }
+}
+
+function resolveWorkflow(nameOrPath = "flux2-klein") {
+  const direct = path.resolve(ROOT, nameOrPath)
+  if (fs.existsSync(direct) && direct.endsWith(".json")) return readWorkflowFile(direct)
+
+  const candidate = path.join(WORKFLOWS, `${nameOrPath}.json`)
+  if (fs.existsSync(candidate)) return readWorkflowFile(candidate)
+
+  if (nameOrPath === "flux2-klein") {
+    return { ...BUILTIN, graph: builtinGraph() }
+  }
+
+  const available = ["flux2-klein", ...(fs.existsSync(WORKFLOWS) ? fs.readdirSync(WORKFLOWS).filter((f) => f.endsWith(".json")).map((f) => f.slice(0, -5)) : [])]
+  throw new Error(`unknown workflow "${nameOrPath}". Available: ${available.join(", ")}`)
+}
+
+function substitute(value, vars) {
+  if (typeof value === "string") {
+    const exact = value.match(/^\{\{(\w+)\}\}$/)
+    if (exact) {
+      const key = exact[1]
+      if (!(key in vars)) throw new Error(`workflow placeholder {{${key}}} has no value`)
+      return vars[key]
+    }
+    return value.replace(/\{\{(\w+)\}\}/g, (_, key) => (key in vars ? String(vars[key]) : `{{${key}}}`))
+  }
+  if (Array.isArray(value)) return value.map((item) => substitute(item, vars))
+  if (value && typeof value === "object") {
+    const out = {}
+    for (const [key, item] of Object.entries(value)) out[key] = substitute(item, vars)
+    return out
+  }
+  return value
 }
 
 // ── HTTP ─────────────────────────────────────────────────────────────────────
@@ -105,18 +186,15 @@ async function status() {
   try {
     const stats = await jsonGet(`${url}/system_stats`)
     const queue = await jsonGet(`${url}/queue`)
-    const running = queue.queue_running?.length ?? 0
-    const pending = queue.queue_pending?.length ?? 0
     return JSON.stringify(
       {
         ok: true,
         url,
         version: stats.system?.comfyui_version,
-        os: stats.system?.os,
         device: stats.devices?.[0]?.name,
         vram_total_mb: Math.round((stats.devices?.[0]?.vram_total ?? 0) / 1024 / 1024),
         vram_free_mb: Math.round((stats.devices?.[0]?.vram_free ?? 0) / 1024 / 1024),
-        queue: { running, pending },
+        queue: { running: queue.queue_running?.length ?? 0, pending: queue.queue_pending?.length ?? 0 },
       },
       null,
       2,
@@ -148,20 +226,98 @@ async function models() {
   }
 }
 
+function workflows() {
+  return JSON.stringify({ ok: true, ...listWorkflows() }, null, 2)
+}
+
+async function validateWorkflow(args = {}) {
+  const { url } = config()
+  let workflow
+  try {
+    workflow = resolveWorkflow(args.workflow ?? "flux2-klein")
+  } catch (error) {
+    return JSON.stringify({ ok: false, error: error.message })
+  }
+
+  let info
+  try {
+    info = await jsonGet(`${url}/object_info`)
+  } catch (error) {
+    return JSON.stringify({ ok: false, error: unavailable(error) })
+  }
+
+  const problems = []
+  const graph = workflow.graph ?? {}
+
+  for (const [id, node] of Object.entries(graph)) {
+    const definition = info[node.class_type]
+    if (!definition) {
+      problems.push(`node ${id}: class_type "${node.class_type}" does not exist in this ComfyUI`)
+      continue
+    }
+    const required = definition.input?.required ?? {}
+    for (const key of Object.keys(required)) {
+      if (!(key in (node.inputs ?? {}))) problems.push(`node ${id} (${node.class_type}): missing required input "${key}"`)
+    }
+    for (const [key, value] of Object.entries(node.inputs ?? {})) {
+      const spec = required[key] ?? definition.input?.optional?.[key]
+      if (!spec) {
+        problems.push(`node ${id} (${node.class_type}): unknown input "${key}"`)
+        continue
+      }
+      const enumValues = Array.isArray(spec[0]) ? spec[0] : null
+      if (enumValues && typeof value === "string" && !value.startsWith("{{") && !enumValues.includes(value)) {
+        problems.push(`node ${id} (${node.class_type}): "${value}" is not a valid value for "${key}"`)
+      }
+    }
+  }
+
+  return JSON.stringify(
+    {
+      ok: problems.length === 0,
+      workflow: workflow.name ?? args.workflow,
+      nodes: Object.keys(graph).length,
+      models: workflow.models ?? {},
+      problems,
+    },
+    null,
+    2,
+  )
+}
+
 async function generate(args = {}) {
   const { url } = config()
   const prompt = String(args.prompt ?? "").trim()
   if (!prompt) return JSON.stringify({ ok: false, error: "prompt is required" })
 
-  const width = Math.max(256, Math.min(2048, Number(args.width) || 1024))
-  const height = Math.max(256, Math.min(2048, Number(args.height) || 1024))
-  const steps = Math.max(1, Math.min(60, Number(args.steps) || 20))
-  const cfg = Math.max(0, Math.min(20, Number(args.cfg) || 5))
-  const seed = Number.isFinite(Number(args.seed)) && Number(args.seed) > 0
-    ? Math.trunc(Number(args.seed))
-    : Math.floor(Math.random() * 2 ** 31)
+  let workflow
+  try {
+    workflow = resolveWorkflow(args.workflow ?? "flux2-klein")
+  } catch (error) {
+    return JSON.stringify({ ok: false, error: error.message })
+  }
 
-  const graph = buildGraph({ prompt, negative: String(args.negative ?? ""), width, height, steps, cfg, seed })
+  const defaults = workflow.defaults ?? {}
+  const width = Math.max(256, Math.min(2048, Number(args.width) || defaults.width || 1024))
+  const height = Math.max(256, Math.min(2048, Number(args.height) || defaults.height || 1024))
+  const steps = Math.max(1, Math.min(60, Number(args.steps) || defaults.steps || 20))
+  const cfg = Math.max(0, Math.min(20, Number(args.cfg) || defaults.cfg || 5))
+  const seed = Number(args.seed) > 0 ? Math.trunc(Number(args.seed)) : Math.floor(Math.random() * 2 ** 31)
+
+  let graph
+  try {
+    graph = substitute(workflow.graph ?? {}, {
+      prompt,
+      negative: String(args.negative ?? ""),
+      width,
+      height,
+      steps,
+      cfg,
+      seed,
+    })
+  } catch (error) {
+    return JSON.stringify({ ok: false, error: error.message })
+  }
 
   const started = Date.now()
   let submitted
@@ -203,9 +359,7 @@ async function generate(args = {}) {
     const saved = []
 
     for (const image of images) {
-      const source = dir
-        ? path.join(dir, "ComfyUI", "output", image.subfolder ?? "", image.filename)
-        : null
+      const source = dir ? path.join(dir, "ComfyUI", "output", image.subfolder ?? "", image.filename) : null
       const target = path.join(outDir, image.filename)
       if (source && fs.existsSync(source)) {
         fs.copyFileSync(source, target)
@@ -223,6 +377,7 @@ async function generate(args = {}) {
     return JSON.stringify(
       {
         ok: true,
+        workflow: workflow.name ?? args.workflow,
         files: saved,
         seed,
         width,
@@ -231,7 +386,7 @@ async function generate(args = {}) {
         cfg,
         prompt_id: promptId,
         seconds: Math.round((Date.now() - started) / 1000),
-        note: "open the file to judge the result; if it is wrong, change the prompt and generate again",
+        note: "open the file to judge the result; if it is wrong, change one thing and generate again",
       },
       null,
       2,
@@ -262,15 +417,21 @@ async function history(args = {}) {
 // ── MCP plumbing ─────────────────────────────────────────────────────────────
 
 const TOOLS = [
+  { name: "status", description: "Check whether ComfyUI is running, and its queue and VRAM.", inputSchema: { type: "object", properties: {} } },
+  { name: "models", description: "List the checkpoints, text encoders and VAEs ComfyUI can load.", inputSchema: { type: "object", properties: {} } },
   {
-    name: "status",
-    description: "Check whether ComfyUI is running, and its queue and VRAM.",
+    name: "workflows",
+    description: "List the built-in workflow and every workflow saved in production/workflows, with the models and defaults each needs.",
     inputSchema: { type: "object", properties: {} },
   },
   {
-    name: "models",
-    description: "List the checkpoints, text encoders and VAEs ComfyUI can load.",
-    inputSchema: { type: "object", properties: {} },
+    name: "validate-workflow",
+    description:
+      "Check a workflow against the live ComfyUI before running it: node classes exist, required inputs present, enum values valid. Run this after building or editing a workflow.",
+    inputSchema: {
+      type: "object",
+      properties: { workflow: { type: "string", description: "Name in production/workflows or a path; default flux2-klein" } },
+    },
   },
   {
     name: "generate",
@@ -279,12 +440,13 @@ const TOOLS = [
     inputSchema: {
       type: "object",
       properties: {
-        prompt: { type: "string", description: "Positive prompt" },
+        prompt: { type: "string", description: "Positive prompt, English" },
         negative: { type: "string", description: "Negative prompt, usually empty for Flux" },
-        width: { type: "number", description: "Default 1024" },
-        height: { type: "number", description: "Default 1024" },
-        steps: { type: "number", description: "Default 20" },
-        cfg: { type: "number", description: "Default 5" },
+        workflow: { type: "string", description: "Workflow name or path; default flux2-klein" },
+        width: { type: "number" },
+        height: { type: "number" },
+        steps: { type: "number" },
+        cfg: { type: "number" },
         seed: { type: "number", description: "0 or omitted means random" },
         out: { type: "string", description: "Output folder, default production/images" },
       },
@@ -294,16 +456,15 @@ const TOOLS = [
   {
     name: "history",
     description: "Recent generations known to ComfyUI.",
-    inputSchema: {
-      type: "object",
-      properties: { limit: { type: "number", description: "Default 5" } },
-    },
+    inputSchema: { type: "object", properties: { limit: { type: "number" } } },
   },
 ]
 
 async function callTool(name, args) {
   if (name === "status") return status()
   if (name === "models") return models()
+  if (name === "workflows") return workflows()
+  if (name === "validate-workflow") return validateWorkflow(args)
   if (name === "generate") return generate(args)
   if (name === "history") return history(args)
   throw new Error(`unknown tool: ${name}`)
@@ -338,7 +499,7 @@ rl.on("line", async (line) => {
       reply(id, {
         protocolVersion: params?.protocolVersion ?? "2024-11-05",
         capabilities: { tools: {} },
-        serverInfo: { name: "comfyui", version: "1.0.0" },
+        serverInfo: { name: "comfyui", version: "1.1.0" },
       })
       return
     }

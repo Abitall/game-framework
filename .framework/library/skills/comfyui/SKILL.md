@@ -1,90 +1,144 @@
 ---
 name: comfyui
-description: "Generate images on the local GPU through ComfyUI: write the prompt, look at the result, judge it against criteria, and iterate until it is right."
+description: "Create images: choose the medium (code, Aseprite, ComfyUI), pick the model, build and validate a workflow, then prompt, look, judge and iterate on the local GPU."
 argument-hint: "[what to draw]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Bash
 ---
 
-Image generation runs on the user's own GPU. No cloud, no API key, no per-image
-cost. The cost is GPU time and the tokens spent looking at results.
+Image generation runs on the user's own GPU through ComfyUI. No cloud, no API
+key, no per-image cost. The cost is GPU time and the tokens spent looking at
+results.
 
-The model here is **Flux 2 Klein 4B** with the Qwen 3 4B text encoder and the
-Flux 2 VAE. That is the only verified pipeline; do not invent others.
+## Phase 1: Choose the medium, and say so
 
-## Phase 1: Write the prompt
+The agent has three ways to make an image. Pick one and tell the user why, in one
+line, before doing anything.
 
-A prompt that works has five parts, in this order:
+| Medium | Use it for | Cost |
+|---|---|---|
+| **Code** (Phaser Graphics, canvas, CSS) | UI frames, bars, gradients, simple icons, particles, procedural patterns | free, instant, scales, no assets to ship |
+| **Aseprite** | pixel art: sprites, tiles, icons in a pixel style, spritesheets | cheap, precise, editable by hand |
+| **ComfyUI** | illustration, textures, backgrounds, key art, anything painterly or photoreal | GPU time, tokens per look |
 
-1. **Subject** — what it is, singular and concrete: "a red apple", not "fruit".
-2. **Style** — "flat vector", "pixel art", "isometric game icon", "watercolour".
-3. **Composition** — "centered", "side view", "close-up", "on a plain white background".
-4. **Palette** — the actual colours: "red and green on white".
-5. **Lighting/quality** — "soft studio light", "no shadows", "clean edges".
+Rules of thumb:
 
-Negative prompt is usually empty for Flux. Use it only for a repeated defect
-("blurry", "text", "watermark").
+- If it can be drawn with rectangles and circles, draw it in code. Shipping a PNG
+  for a health bar is a mistake.
+- If the game's art style is pixel art, use Aseprite: generated raster art will
+  not match a 16×16 palette.
+- If the user wants a picture — key art, a background, a textured panel — use
+  ComfyUI.
 
-Write the prompt in English. The model was trained on English captions.
+When the request is ambiguous, ask once: "иконка в стиле пиксель-арт или
+иллюстрация?" The answer decides the medium.
 
-## Phase 2: Draft cheaply
-
-First pass is a draft, not a final: 512–768 px, 8–12 steps.
+## Phase 2: Choose the model
 
 ```json
-{ "prompt": "...", "width": 512, "height": 512, "steps": 8, "cfg": 4 }
+{ "tool": "models" }
 ```
 
-A draft costs ~30 seconds on an RTX 3060. Judge the idea, not the detail.
+Compare what the task needs with what is installed:
 
-## Phase 3: Look at it
+- **Flux 2 Klein 4B** — the verified default. Stylized illustration, textures,
+  backgrounds. Works at 1024×1024 in ~30–40 s on an RTX 3060.
+- Other checkpoints, if present, are listed with their names. Do not invent a
+  model that is not in the list, and do not assume a pipeline for a model that
+  has no saved workflow.
 
-The tool returns a file path. Read that file — you must actually look at the
-image, not assume. This is the expensive step: roughly 1–1.5k tokens per look.
+If the best model for the task is not installed, say so and offer the closest
+installed one. Do not silently substitute.
 
-## Phase 4: Judge against criteria
+## Phase 3: Choose or build the workflow
 
-Check in this order, and stop at the first failure:
+```json
+{ "tool": "workflows" }
+```
 
-1. **Subject** — is it the thing that was asked for?
-2. **Silhouette** — readable at a glance, at small size?
-3. **Style** — does it match the requested look?
-4. **Palette** — the colours asked for?
-5. **Artifacts** — extra limbs, melted edges, stray objects, garbled text?
-6. **Usability** — does it fit where it will be used (icon, tile, background)?
+A workflow is the node graph: models, sampler, scheduler, latent size. It lives in
+`production/workflows/<name>.json` and is reusable across projects.
 
-Write the verdict in one line: what is right, what is wrong, what to change.
+1. **Saved workflow exists and fits** → use it. This is the normal case.
+2. **No workflow fits** → build one:
+   - Start from a saved workflow of the same model family.
+   - Or extract the graph from a PNG ComfyUI already produced: the `prompt` chunk
+     holds the exact API graph. Prefer this over guessing node names.
+   - Keep placeholders `{{prompt}}`, `{{negative}}`, `{{width}}`, `{{height}}`,
+     `{{steps}}`, `{{cfg}}`, `{{seed}}` so it stays reusable.
+3. **Validate before spending GPU time:**
 
-## Phase 5: Iterate, one change at a time
+```json
+{ "tool": "validate-workflow", "arguments": { "workflow": "flux2-klein" } }
+```
 
-Change one thing per round. If you change the subject and the style together you
-cannot tell which one helped.
+It checks that every `class_type` exists in this ComfyUI, that required inputs are
+present, and that enum values are valid. A graph that fails validation will fail
+at generation too — fix it first.
 
-- Wrong subject → rewrite part 1, keep the rest.
-- Right subject, wrong style → parts 2 and 5.
-- Good image, wrong colours → part 4 only.
-- Artifacts → add them to the negative prompt, keep the positive unchanged.
-- Almost right → keep the seed, raise steps to 20–30 and the size to 1024.
+4. **Save it for the future.** Write the file to
+   `production/workflows/<name>.json` with `name`, `description`, `models`,
+   `defaults` and `graph`. Next time it is one call.
 
-**Stop after 5 rounds.** If it is still wrong, report what you tried and ask the
-user to choose a direction. Do not burn an hour of GPU time guessing.
+Never submit a hand-written graph without validating it. Node names differ
+between ComfyUI versions, and a typo costs a failed run and a confused user.
 
-## Phase 6: Deliver
+## Phase 4: Write the prompt
 
-- Final image: 1024×1024, 20–30 steps, `production/images/`.
-- Save the prompt next to it as `<name>.prompt.txt`, including the seed. Without
-  it the result cannot be reproduced.
-- If the image is used in the game, copy it into `assets/` and reference it from
-  the config, not from the prompt.
+Five parts, in this order, in English:
+
+1. **Subject** — singular and concrete: "a red apple", not "fruit".
+2. **Style** — "flat vector", "painted texture", "isometric game icon".
+3. **Composition** — "centered", "side view", "on a plain white background".
+4. **Palette** — the actual colours.
+5. **Lighting/quality** — "soft studio light", "clean edges".
+
+Negative prompt is usually empty for Flux. Use it only for a repeated defect.
+
+## Phase 5: Draft cheaply
+
+First pass is a draft: 512–768 px, 8–12 steps. Judge the idea, not the detail.
+
+```json
+{ "tool": "generate", "arguments": { "prompt": "...", "width": 512, "height": 512, "steps": 8, "cfg": 4 } }
+```
+
+## Phase 6: Look, judge, iterate
+
+The tool returns a file path. **Read that file** — never describe an image you did
+not look at. This is the expensive step: ~1–1.5k tokens per look.
+
+Judge in order, stop at the first failure:
+
+1. Subject — is it the thing asked for?
+2. Silhouette — readable at a glance, at small size?
+3. Style — matches the requested look?
+4. Palette — the colours asked for?
+5. Artifacts — extra limbs, melted edges, stray objects, garbled text?
+6. Usability — fits where it will be used?
+
+Change **one thing per round**. Wrong subject → rewrite part 1. Wrong style →
+parts 2 and 5. Wrong colours → part 4. Artifacts → negative prompt only. Almost
+right → keep the seed, raise steps to 20–30 and size to 1024.
+
+**Stop after 5 rounds.** Report what was tried and ask for a direction.
+
+## Phase 7: Deliver
+
+- Final image in `production/images/`, 1024×1024, 20–30 steps.
+- Save the prompt next to it as `<name>.prompt.txt` with the seed.
+- If the image ships in the game, copy it to `assets/` and reference it from
+  config, not from the prompt.
 
 ## Rules
 
+- **Name the medium first.** Code, Aseprite, or ComfyUI — with a reason.
 - **English prompts.** Short and concrete beats long and poetic.
-- **No text in images.** Flux renders letters badly; ask for a blank space and
-  draw the text in the game.
+- **No text in images.** Flux renders letters badly; leave space and draw text in
+  the game.
+- **Validate before generating.** A bad graph wastes a minute and a look.
+- **Save every working workflow.** Rebuilding the same graph twice is the waste
+  this skill exists to prevent.
 - **One change per round.** Otherwise the next verdict is meaningless.
-- **Look before you judge.** Never describe an image you did not read.
-- **Respect the GPU.** Do not queue more than one generation at a time; ComfyUI
-  serialises them anyway, and a queue of ten is ten minutes of waiting.
-- **Ask before a long batch.** More than ~10 generations is a decision, not a
-  detail.
+- **Respect the GPU.** One generation at a time; more than ~10 is a decision to
+  confirm with the user.

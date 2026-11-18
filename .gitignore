@@ -39,3 +39,6 @@ dist-play/
 
 # Runtime state (armed shutdown)
 production/shutdown.json
+
+# Generated images (copy the ones you ship into assets/)
+production/images/
