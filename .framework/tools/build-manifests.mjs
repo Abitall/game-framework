@@ -178,6 +178,15 @@ const SPEC = [
     triggers: ["the user wants to move UI elements without asking the agent", "layout tuning by feel"],
   },
 
+  {
+    name: "obsidian",
+    default: true,
+    description: "Write ideas, concepts, plans and documents into an Obsidian vault in Russian, with wikilinks and generated map cards.",
+    depends: ["core"],
+    skills: ["obsidian"],
+    triggers: ["the user wants notes, ideas or plans in Obsidian", "a thinking space outside the project docs"],
+  },
+
   // ── Domains ───────────────────────────────────────────────────────────────
   {
     name: "architecture",

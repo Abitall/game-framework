@@ -56,6 +56,7 @@ node .framework/install.mjs doctor               # проверить целос
 | `node tools/ab.mjs` / `reveal.mjs` | слепое сравнение кадров |
 | `node tools/capture.mjs` | снимок экрана через headless Chrome |
 | `node tools/envcheck.mjs` | чего не хватает в окружении |
+| `node tools/obsidian.mjs` | заметки в Obsidian: создать, найти, проверить ссылки |
 | `node tools/change-model.mjs <model>` | сменить модель у агентов |
 | `node tools/check-encoding.mjs` | проверить UTF-8 |
 

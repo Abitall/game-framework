@@ -1,0 +1,22 @@
+{
+  "name": "obsidian",
+  "version": "1.0.0",
+  "description": "Write ideas, concepts, plans and documents into an Obsidian vault in Russian, with wikilinks and generated map cards.",
+  "default": true,
+  "depends": [
+    "core"
+  ],
+  "agents": [],
+  "skills": [
+    "obsidian"
+  ],
+  "commands": [
+    "obsidian"
+  ],
+  "rules": [],
+  "docs": [],
+  "triggers": [
+    "the user wants notes, ideas or plans in Obsidian",
+    "a thinking space outside the project docs"
+  ]
+}

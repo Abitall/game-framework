@@ -192,6 +192,14 @@
         "skills\\repo-init\\SKILL.md": "2a1605d306148dc3ce5d5d743059f8997e6d908b44b84bdb1eb994680cc0d966",
         "skills\\repo-sync\\SKILL.md": "4262557727245e23d75776e4fafd4985a44712235f0b85318dea938917e72f80"
       }
+    },
+    "obsidian": {
+      "version": "1.0.0",
+      "installedAt": "2026-11-18T18:56:35.193Z",
+      "files": {
+        "skills\\obsidian\\SKILL.md": "62ce724777a36f61037605fa87d2bb668f9cd3014e0c46aef6dc760580fdbd9a",
+        "commands\\obsidian.md": "dcff092e59f5a6df6442966eb7aab4edb3164c1affe9bdcab998d2605ad2d541"
+      }
     }
   }
 }

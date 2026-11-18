@@ -962,6 +962,17 @@ skills:
     priority: high
     category: engine
 
+  - name: obsidian
+    spec: skill-testing-framework/skills/process/obsidian.md
+    last_static: ""
+    last_static_result: ""
+    last_spec: ""
+    last_spec_result: ""
+    last_category: ""
+    last_category_result: ""
+    priority: high
+    category: process
+
 agents:
   # Tier 1 Directors
   - name: creative-director
