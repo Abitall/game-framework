@@ -1,0 +1,23 @@
+{
+  "name": "engine-unity",
+  "version": "1.0.0",
+  "description": "Unity 6.3 LTS specialists: DOTS/ECS, shaders, Addressables, UI Toolkit.",
+  "default": false,
+  "depends": [
+    "core"
+  ],
+  "agents": [
+    "unity-specialist",
+    "unity-dots-specialist",
+    "unity-shader-specialist",
+    "unity-addressables-specialist",
+    "unity-ui-specialist"
+  ],
+  "skills": [],
+  "commands": [],
+  "rules": [],
+  "docs": [],
+  "triggers": [
+    "project stack is Unity"
+  ]
+}

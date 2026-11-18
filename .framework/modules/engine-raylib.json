@@ -1,0 +1,30 @@
+{
+  "name": "engine-raylib",
+  "version": "1.0.0",
+  "description": "Raylib specialist: core, rlgl, raudio, raymath, raygui.",
+  "default": false,
+  "depends": [
+    "core"
+  ],
+  "agents": [
+    "raylib-specialist"
+  ],
+  "skills": [],
+  "commands": [],
+  "rules": [],
+  "docs": [
+    "engine-reference/raylib/VERSION.md",
+    "engine-reference/raylib/breaking-changes.md",
+    "engine-reference/raylib/current-best-practices.md",
+    "engine-reference/raylib/deprecated-apis.md",
+    "engine-reference/raylib/modules/core.md",
+    "engine-reference/raylib/modules/platforms.md",
+    "engine-reference/raylib/modules/raudio.md",
+    "engine-reference/raylib/modules/raygui.md",
+    "engine-reference/raylib/modules/raymath.md",
+    "engine-reference/raylib/modules/rlgl.md"
+  ],
+  "triggers": [
+    "project stack is Raylib"
+  ]
+}

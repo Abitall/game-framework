@@ -148,13 +148,13 @@ describe("pre-commit: file size limits", () => {
 describe("pre-commit: framework redirect integrity", () => {
 	it("accepts redirect stubs that resolve", () => {
 		const root = makeTempDir()
-		mkdirSync(join(root, ".agents", "agents"), { recursive: true })
+		mkdirSync(join(root, ".framework/library", "agents"), { recursive: true })
 		mkdirSync(join(root, ".opencode"), { recursive: true })
 		for (const [name, target] of [
-			["agents", "../.agents/agents"],
-			["commands", "../.agents/agents"],
-			["rules", "../.agents/agents"],
-			["skills", "../.agents/agents"],
+			["agents", "../.framework/library/agents"],
+			["commands", "../.framework/library/agents"],
+			["rules", "../.framework/library/agents"],
+			["skills", "../.framework/library/agents"],
 		]) {
 			writeFileSync(join(root, ".opencode", name), target, "utf8")
 		}
@@ -167,7 +167,7 @@ describe("pre-commit: framework redirect integrity", () => {
 		const root = makeTempDir()
 		mkdirSync(join(root, ".opencode"), { recursive: true })
 		for (const name of ["agents", "commands", "rules", "skills"]) {
-			writeFileSync(join(root, ".opencode", name), "../.agents/missing", "utf8")
+			writeFileSync(join(root, ".opencode", name), "../.framework/library/missing", "utf8")
 		}
 
 		const { errors } = checkFrameworkLinks(root)
@@ -187,23 +187,27 @@ describe("pre-commit: framework redirect integrity", () => {
 })
 
 describe("pre-commit: gate planning", () => {
-	it("requests no gates for docs-only changes", () => {
-		assert.deepEqual(planGates(["README.md", "docs/guide.md"]), [])
+	it("requests only the encoding gate for docs-only changes", () => {
+		assert.deepEqual(planGates(["README.md", "docs/guide.md"]), ["encoding"])
 	})
 
-	it("requests framework validation for .agents changes", () => {
-		assert.deepEqual(planGates([".agents/agents/producer.md"]), ["framework"])
+	it("requests framework validation for .framework/library changes", () => {
+		assert.deepEqual(planGates([".framework/library/agents/producer.md"]), ["framework", "encoding"])
 	})
 
 	it("requests plugin tests for plugin changes", () => {
-		assert.deepEqual(planGates([".opencode/plugins/ccgs-hooks.ts"]), ["plugins"])
+		assert.deepEqual(planGates([".opencode/plugins/ccgs-hooks.ts"]), ["plugins", "encoding"])
 	})
 
-	it("requests both gates when both areas change", () => {
+	it("requests all gates when every area changes", () => {
 		assert.deepEqual(
-			planGates([".agents/skills/x/SKILL.md", ".opencode/plugins/ccgs-hooks.ts"]),
-			["framework", "plugins"],
+			planGates([".framework/library/skills/x/SKILL.md", ".opencode/plugins/ccgs-hooks.ts"]),
+			["framework", "plugins", "encoding"],
 		)
+	})
+
+	it("skips the encoding gate for binary-only changes", () => {
+		assert.deepEqual(planGates(["assets/banner.png"]), [])
 	})
 })
 

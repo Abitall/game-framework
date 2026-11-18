@@ -1,0 +1,23 @@
+{
+  "name": "narrative",
+  "version": "1.0.0",
+  "description": "Story architecture, world building, characters, dialogue.",
+  "default": false,
+  "depends": [
+    "core"
+  ],
+  "agents": [
+    "narrative-director",
+    "world-builder",
+    "writer"
+  ],
+  "skills": [],
+  "commands": [],
+  "rules": [
+    "narrative"
+  ],
+  "docs": [],
+  "triggers": [
+    "story, lore, or dialogue"
+  ]
+}

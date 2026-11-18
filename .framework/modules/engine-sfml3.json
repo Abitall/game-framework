@@ -1,0 +1,29 @@
+{
+  "name": "engine-sfml3",
+  "version": "1.0.0",
+  "description": "SFML 3 specialist: Graphics, Audio, Network, Window, System.",
+  "default": false,
+  "depends": [
+    "core"
+  ],
+  "agents": [
+    "sfml-specialist"
+  ],
+  "skills": [],
+  "commands": [],
+  "rules": [],
+  "docs": [
+    "engine-reference/sfml3/VERSION.md",
+    "engine-reference/sfml3/breaking-changes.md",
+    "engine-reference/sfml3/current-best-practices.md",
+    "engine-reference/sfml3/deprecated-apis.md",
+    "engine-reference/sfml3/modules/audio.md",
+    "engine-reference/sfml3/modules/graphics.md",
+    "engine-reference/sfml3/modules/network.md",
+    "engine-reference/sfml3/modules/system.md",
+    "engine-reference/sfml3/modules/window.md"
+  ],
+  "triggers": [
+    "project stack is SFML 3"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "name": "qa-advanced",
+  "version": "1.0.0",
+  "description": "Test planning, bug files, profiling, soak testing, flakiness, engine-specific smoke.",
+  "default": false,
+  "depends": [
+    "qa"
+  ],
+  "agents": [],
+  "skills": [
+    "qa-plan",
+    "bug-report",
+    "bug-triage",
+    "perf-profile",
+    "soak-test",
+    "test-flakiness",
+    "automated-smoke-test",
+    "autopilot-playtest"
+  ],
+  "commands": [
+    "qa-plan",
+    "bug-report",
+    "bug-triage",
+    "perf-profile",
+    "soak-test",
+    "test-flakiness",
+    "automated-smoke-test",
+    "autopilot-playtest"
+  ],
+  "rules": [],
+  "docs": [],
+  "triggers": [
+    "bugs tracked as files",
+    "profiling needed",
+    "pre-release hardening"
+  ]
+}

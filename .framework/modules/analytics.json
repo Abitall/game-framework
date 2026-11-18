@@ -1,0 +1,21 @@
+{
+  "name": "analytics",
+  "version": "1.0.0",
+  "description": "Telemetry, player behaviour tracking, A/B tests, dashboards.",
+  "default": false,
+  "depends": [
+    "core"
+  ],
+  "agents": [
+    "analytics-engineer"
+  ],
+  "skills": [],
+  "commands": [],
+  "rules": [],
+  "docs": [],
+  "triggers": [
+    "telemetry data exists",
+    "A/B testing",
+    "analytics backend"
+  ]
+}

@@ -1,361 +1,197 @@
 {
-  "architecture": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-11T17:38:57.004Z",
-    "files": [
-      "agents/lead-programmer.md",
-      "commands/architecture-review.md",
-      "commands/create-control-manifest.md",
-      "rules/design-docs.md",
-      "skills/architecture-review/SKILL.md",
-      "skills/create-control-manifest/SKILL.md",
-      "skills/propagate-design-change/SKILL.md"
-    ]
-  },
-  "art": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-11T17:38:57.006Z",
-    "files": [
-      "agents/art-director.md",
-      "agents/technical-artist.md",
-      "commands/art-generate.md",
-      "skills/art-bible/SKILL.md",
-      "skills/art-generate/SKILL.md",
-      "skills/asset-audit/SKILL.md",
-      "skills/asset-spec/SKILL.md"
-    ]
-  },
-  "audio": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-11T17:38:57.007Z",
-    "files": [
-      "agents/audio-director.md",
-      "agents/sound-designer.md",
-      "commands/team-audio.md",
-      "skills/team-audio/SKILL.md"
-    ]
-  },
-  "core": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-11T17:38:57.011Z",
-    "files": [
-      "agents/creative-director.md",
-      "agents/producer.md",
-      "agents/technical-director.md",
-      "commands/architecture-decision.md",
-      "commands/concept-brainstorm.md",
-      "commands/create-architecture.md",
-      "commands/help.md",
-      "commands/init-template.md",
-      "commands/map-systems.md",
-      "commands/project-stage-detect.md",
-      "commands/setup-engine.md",
-      "commands/start.md",
-      "docs/context-management.md",
-      "docs/coordination-rules.md",
-      "docs/director-gates.md",
-      "docs/workflow-catalog.yaml",
-      "plugins/ccgs-hooks.ts",
-      "plugins/changelog-generator.ts",
-      "plugins/drift-detector.ts",
-      "skills/architecture-decision/SKILL.md",
-      "skills/concept-brainstorm/SKILL.md",
-      "skills/create-architecture/SKILL.md",
-      "skills/gate-check/SKILL.md",
-      "skills/help/SKILL.md",
-      "skills/init-template/SKILL.md",
-      "skills/map-systems/SKILL.md",
-      "skills/project-stage-detect/SKILL.md",
-      "skills/setup-engine/SKILL.md",
-      "skills/start/SKILL.md"
-    ]
-  },
-  "data": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-11T17:38:57.013Z",
-    "files": [
-      "rules/data-files.md"
-    ]
-  },
-  "design": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-11T18:06:43.548Z",
-    "files": [
-      "agents/economy-designer.md",
-      "agents/game-designer.md",
-      "agents/systems-designer.md",
-      "commands/design-review.md",
-      "commands/design-system.md",
-      "commands/quick-design.md",
-      "commands/review-all-gdds.md",
-      "commands/team-combat.md",
-      "skills/balance-check/SKILL.md",
-      "skills/consistency-check/SKILL.md",
-      "skills/content-audit/SKILL.md",
-      "skills/design-review/SKILL.md",
-      "skills/design-system/SKILL.md",
-      "skills/estimate/SKILL.md",
-      "skills/playtest-report/SKILL.md",
-      "skills/quick-design/SKILL.md",
-      "skills/review-all-gdds/SKILL.md",
-      "skills/scope-check/SKILL.md",
-      "skills/team-combat/SKILL.md"
-    ],
-    "mcp": []
-  },
-  "engine-godot": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-11T17:38:57.019Z",
-    "files": [
-      "agents/godot-csharp-specialist.md",
-      "agents/godot-gdextension-specialist.md",
-      "agents/godot-gdscript-specialist.md",
-      "agents/godot-shader-specialist.md",
-      "agents/godot-specialist.md"
-    ]
-  },
-  "engine-unity": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-11T17:38:57.020Z",
-    "files": [
-      "agents/unity-addressables-specialist.md",
-      "agents/unity-dots-specialist.md",
-      "agents/unity-shader-specialist.md",
-      "agents/unity-specialist.md",
-      "agents/unity-ui-specialist.md"
-    ]
-  },
-  "engine-unreal": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-11T17:38:57.021Z",
-    "files": [
-      "agents/ue-blueprint-specialist.md",
-      "agents/ue-gas-specialist.md",
-      "agents/ue-replication-specialist.md",
-      "agents/ue-umg-specialist.md",
-      "agents/unreal-specialist.md"
-    ]
-  },
-  "level-design": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-11T17:38:57.022Z",
-    "files": [
-      "agents/level-designer.md",
-      "commands/team-level.md",
-      "skills/team-level/SKILL.md"
-    ]
-  },
-  "live-ops": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-11T17:38:57.023Z",
-    "files": [
-      "agents/community-manager.md",
-      "agents/live-ops-designer.md",
-      "skills/team-live-ops/SKILL.md"
-    ]
-  },
-  "localization": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-11T17:38:57.023Z",
-    "files": [
-      "agents/localization-lead.md",
-      "skills/localize/SKILL.md"
-    ]
-  },
-  "narrative": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-11T17:38:57.024Z",
-    "files": [
-      "agents/narrative-director.md",
-      "agents/world-builder.md",
-      "agents/writer.md",
-      "commands/team-narrative.md",
-      "rules/narrative.md",
-      "skills/team-narrative/SKILL.md"
-    ]
-  },
-  "programming": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-11T17:38:57.026Z",
-    "files": [
-      "agents/ai-programmer.md",
-      "agents/engine-programmer.md",
-      "agents/gameplay-programmer.md",
-      "agents/network-programmer.md",
-      "agents/tools-programmer.md",
-      "rules/ai-code.md",
-      "rules/engine-code.md",
-      "rules/gameplay-code.md",
-      "rules/network-code.md",
-      "rules/shader-code.md"
-    ]
-  },
-  "prototyping": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-11T17:38:57.027Z",
-    "files": [
-      "agents/prototyper.md",
-      "commands/explore.md",
-      "commands/prototype.md",
-      "rules/prototype-code.md",
-      "skills/explore/SKILL.md",
-      "skills/hybrid-prototype/SKILL.md",
-      "skills/prototype/SKILL.md"
-    ]
-  },
-  "qa": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-11T17:38:57.033Z",
-    "files": [
-      "agents/performance-analyst.md",
-      "agents/qa-lead.md",
-      "agents/qa-tester.md",
-      "agents/security-engineer.md",
-      "commands/autopilot-playtest.md",
-      "commands/bug-report.md",
-      "commands/bug-triage.md",
-      "commands/qa-plan.md",
-      "commands/regression-suite.md",
-      "commands/security-audit.md",
-      "commands/smoke-check.md",
-      "commands/soak-test.md",
-      "commands/team-polish.md",
-      "commands/team-qa.md",
-      "commands/test-evidence-review.md",
-      "commands/test-flakiness.md",
-      "commands/test-helpers.md",
-      "commands/test-setup.md",
-      "rules/test-standards.md",
-      "skills/automated-smoke-test/SKILL.md",
-      "skills/autopilot-playtest/SKILL.md",
-      "skills/bug-report/SKILL.md",
-      "skills/bug-triage/SKILL.md",
-      "skills/perf-profile/SKILL.md",
-      "skills/qa-plan/SKILL.md",
-      "skills/regression-suite/SKILL.md",
-      "skills/security-audit/SKILL.md",
-      "skills/skill-improve/SKILL.md",
-      "skills/skill-test/SKILL.md",
-      "skills/smoke-check/SKILL.md",
-      "skills/soak-test/SKILL.md",
-      "skills/team-polish/SKILL.md",
-      "skills/team-qa/SKILL.md",
-      "skills/test-evidence-review/SKILL.md",
-      "skills/test-flakiness/SKILL.md",
-      "skills/test-helpers/SKILL.md",
-      "skills/test-setup/SKILL.md"
-    ]
-  },
-  "release": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-11T17:38:57.038Z",
-    "files": [
-      "agents/analytics-engineer.md",
-      "agents/devops-engineer.md",
-      "agents/release-manager.md",
-      "commands/day-one-patch.md",
-      "commands/hotfix.md",
-      "commands/launch-checklist.md",
-      "commands/milestone-review.md",
-      "commands/release-checklist.md",
-      "commands/retrospective.md",
-      "commands/sprint-plan.md",
-      "commands/sprint-status.md",
-      "commands/team-release.md",
-      "skills/changelog/SKILL.md",
-      "skills/day-one-patch/SKILL.md",
-      "skills/hotfix/SKILL.md",
-      "skills/launch-checklist/SKILL.md",
-      "skills/milestone-review/SKILL.md",
-      "skills/patch-notes/SKILL.md",
-      "skills/release-checklist/SKILL.md",
-      "skills/retrospective/SKILL.md",
-      "skills/sprint-plan/SKILL.md",
-      "skills/sprint-status/SKILL.md",
-      "skills/team-release/SKILL.md"
-    ]
-  },
-  "stories": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-11T17:38:57.041Z",
-    "files": [
-      "commands/code-review.md",
-      "commands/create-epics.md",
-      "commands/create-stories.md",
-      "commands/dev-story.md",
-      "commands/reverse-document.md",
-      "commands/story-done.md",
-      "commands/story-readiness.md",
-      "skills/adopt/SKILL.md",
-      "skills/code-review/SKILL.md",
-      "skills/create-epics/SKILL.md",
-      "skills/create-stories/SKILL.md",
-      "skills/dev-story/SKILL.md",
-      "skills/onboard/SKILL.md",
-      "skills/reverse-document/SKILL.md",
-      "skills/story-done/SKILL.md",
-      "skills/story-readiness/SKILL.md",
-      "skills/tech-debt/SKILL.md"
-    ]
-  },
-  "ui": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-11T17:38:57.043Z",
-    "files": [
-      "agents/accessibility-specialist.md",
-      "agents/ui-programmer.md",
-      "agents/ux-designer.md",
-      "commands/team-ui.md",
-      "rules/ui-code.md",
-      "skills/team-ui/SKILL.md",
-      "skills/ux-design/SKILL.md",
-      "skills/ux-review/SKILL.md"
-    ]
-  },
-  "engine-sfml3": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-18T20:17:04.870Z",
-    "files": [
-      "agents/sfml-specialist.md"
-    ],
-    "mcp": []
-  },
-  "engine-raylib": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-05-18T20:17:04.874Z",
-    "files": [
-      "agents/raylib-specialist.md"
-    ],
-    "mcp": []
-  },
-  "engine-bevy": {
-    "version": "0.6.0",
-    "status": "installed",
-    "timestamp": "2026-08-09T19:15:22.436Z",
-    "files": [
-      "agents/bevy-specialist.md"
-    ],
-    "mcp": []
+  "version": 2,
+  "modules": {
+    "core": {
+      "version": "1.0.0",
+      "installedAt": "2026-11-18T15:32:10.246Z",
+      "files": {
+        "agents\\creative-director.md": "4b556fca6847187f73bf9e7bab341aaa8bffd7ca8035456ef7fb9cb1f7214100",
+        "agents\\producer.md": "549f51d6354e36d2a6ebbac9918253d6b033a7855098e6eaacbe27dab82e2324",
+        "agents\\technical-director.md": "12053e427d4c3fe057062b3ec3fc7317e72e3b3ca9d5307e5b18d993a13b310f",
+        "skills\\skills\\start\\SKILL.md": "002bb54474e0678083d3a1e7bff6c973834336f1ad4c636ac5f88da474d04087",
+        "skills\\skills\\help\\SKILL.md": "26ef1d0decda83ebe107c2ff3239a2c2afde42fe944cfc5fb73488bebd96e845",
+        "skills\\skills\\init-template\\SKILL.md": "7d865b39054b4f4285edceba6355771dd54264466af794d3fc56786dea4f0d35",
+        "skills\\skills\\setup-engine\\SKILL.md": "985cb4c750e73aae5c6150c36e0d45ac107d96bfed6cf4e4e3779dbb837ae62f",
+        "skills\\skills\\project-stage-detect\\SKILL.md": "2c36b8527e43a685a2e99fe7b8234a7ad1f50493df0b07dc2a61a865f43b2e46",
+        "skills\\skills\\concept-brainstorm\\SKILL.md": "617bedfa38632c99a99b3693eb6fd0c39e872f0f4a92539c9d786e4c8f6e13c1",
+        "skills\\skills\\map-systems\\SKILL.md": "f3a2902c0ae6e2eeb8d290baa9ff4d0bb6c6c3e62e89fe3a4d3f5d86de8d7798",
+        "skills\\skills\\create-architecture\\SKILL.md": "6e30d131830e71f795ceddbe6a4074c4a5e271ee77b6c10cf0e51839ec644e6d",
+        "skills\\skills\\architecture-decision\\SKILL.md": "348e77693f871a35a54163355a2925b592b5026128b59270c169f800ec970578",
+        "skills\\skills\\gate-check\\SKILL.md": "7515eb279315991a8bc4fe7eed369170249f0a5a6f8d95d188d521ae2f798849",
+        "skills\\skills\\code-review\\SKILL.md": "009ec097e9425825d416dfcde4d4a8e160ff34b7dd147f8b9c89a12fb3b1a706",
+        "skills\\skills\\tech-debt\\SKILL.md": "e72e2f89b093e2f4842ebfb9b99a3f849f8671522f9f3ef3a03e5ae71cd66986",
+        "skills\\skills\\onboard\\SKILL.md": "308a9ff7b68e7a307118c934cd4e635ab4ac79404e1d2ce9bef81a036beaee12",
+        "skills\\skills\\reverse-document\\SKILL.md": "a697f1331b5ca5ea57da2dac679c72dc6872dc5781b5cb68af1b4765cb06ee18",
+        "skills\\skills\\adopt\\SKILL.md": "9a802d6b5fba2a2c93846b42a8de9fb9cba3f8465b53c752edd3147044ae67f4",
+        "commands\\start.md": "daeb1eaca2c259b397b3800aba1888dae4e67591554ec5c3464fd7d94ffa91ee",
+        "commands\\help.md": "a5ea2afb51cb7c5309d84afcddc690faa7545fd432b9b880e148ea9544b613c0",
+        "commands\\init-template.md": "f36e84f7c50bd28ffc7bae285887ec754229625e06cc432166c53e5a3dc5c091",
+        "commands\\setup-engine.md": "b6edd82fc59c13c9fc6e60287c6e2f6c4fbb7e97aad13d363695cfb6f0fbc45f",
+        "commands\\project-stage-detect.md": "bbbe05946ecadd9f6bc579ca377046846c0489e8dda5b4943c8b8fa308f437e6",
+        "commands\\concept-brainstorm.md": "5cb32f07044b49604f0f6b56b0f4c4854ce7c4acb0127fb72b0a13f7dffb3b5b",
+        "commands\\map-systems.md": "97f86d2173b76315af4512fb5caa544f2c7d7d8ee6e26463247f7a22872b1030",
+        "commands\\create-architecture.md": "90a325c5dd0ad43bd5b9b47d331241bf3e93aa66b7916418e18023cea249cf4e",
+        "commands\\architecture-decision.md": "7dbfad280f3774137b2cf16ff7560170906756cd8389b0394298163c4f2a3b39",
+        "commands\\gate-check.md": "6742cb8e5fd1ec640f616cbe529dc6bbe57804d1c004b1fb6d957cb80866a5ec",
+        "commands\\code-review.md": "0065b9439188dfcf39455e202ec82740f62fdffa5bd54774878611b30a59eb69",
+        "commands\\tech-debt.md": "697e77c0856246570543b7df7a1ff301339375c6a8e0bb36ee220f716b60974c",
+        "commands\\onboard.md": "76069dbeb812070525e10495caf113c01880eaac6a76244d279174fd3ccf877c",
+        "commands\\reverse-document.md": "5ba9fbb0a0918e678dd2381c5ae837e3a810d8e54116d152770bf6055f04c622",
+        "commands\\adopt.md": "736caed21d1e3fc0aa5f71889749bde7b3e10ed68dbf07cc46ec757f35b4b232",
+        "skills\\skills\\pipeline-guard\\SKILL.md": "adb822dbf9590dab9f04c3334fc434741015ca19aae21c39f0714dad497521ed",
+        "skills\\skills\\capture-solution\\SKILL.md": "5627d8b1f4d973835d51ad1182b6d099313bf123dda83a76598e543de590aacc",
+        "skills\\skills\\publish-play\\SKILL.md": "5f527e72c5f299e0ef26154597a28daa2cd935503e2f3af534542845f9710f4a",
+        "commands\\pipeline-guard.md": "92177659e02d88302dc4f3630afcd8152b0f966a6147956daa2b419345151a96",
+        "commands\\capture-solution.md": "0e032fd1b78ec8b5bd98c2c21caa27a06b633c3910626408348ee31e9f2e2be6",
+        "commands\\publish-play.md": "dd4f96fe4b3e4b7f9a6fca00c3bf92c312d2eebf5ccae8de0a5ff372672fee43",
+        "rules\\encoding.md": "1ea519f899508e868a1374db323a70ad89e11cc7b99981d4cec9a28745b182f3",
+        "rules\\solutions.md": "2cf375706512f5dd75255b97eb20e860e21c6fce8c633e2dbcbbdd770fc5b3f7",
+        "rules\\web-hosting.md": "0df70ce8d10392832ada7db732cb70748a98f6270b1caba1b498ba6d79bf9101",
+        "skills\\start\\SKILL.md": "002bb54474e0678083d3a1e7bff6c973834336f1ad4c636ac5f88da474d04087",
+        "skills\\help\\SKILL.md": "26ef1d0decda83ebe107c2ff3239a2c2afde42fe944cfc5fb73488bebd96e845",
+        "skills\\init-template\\SKILL.md": "7d865b39054b4f4285edceba6355771dd54264466af794d3fc56786dea4f0d35",
+        "skills\\setup-engine\\SKILL.md": "985cb4c750e73aae5c6150c36e0d45ac107d96bfed6cf4e4e3779dbb837ae62f",
+        "skills\\project-stage-detect\\SKILL.md": "2c36b8527e43a685a2e99fe7b8234a7ad1f50493df0b07dc2a61a865f43b2e46",
+        "skills\\concept-brainstorm\\SKILL.md": "617bedfa38632c99a99b3693eb6fd0c39e872f0f4a92539c9d786e4c8f6e13c1",
+        "skills\\map-systems\\SKILL.md": "f3a2902c0ae6e2eeb8d290baa9ff4d0bb6c6c3e62e89fe3a4d3f5d86de8d7798",
+        "skills\\create-architecture\\SKILL.md": "6e30d131830e71f795ceddbe6a4074c4a5e271ee77b6c10cf0e51839ec644e6d",
+        "skills\\architecture-decision\\SKILL.md": "348e77693f871a35a54163355a2925b592b5026128b59270c169f800ec970578",
+        "skills\\gate-check\\SKILL.md": "7515eb279315991a8bc4fe7eed369170249f0a5a6f8d95d188d521ae2f798849",
+        "skills\\code-review\\SKILL.md": "009ec097e9425825d416dfcde4d4a8e160ff34b7dd147f8b9c89a12fb3b1a706",
+        "skills\\tech-debt\\SKILL.md": "e72e2f89b093e2f4842ebfb9b99a3f849f8671522f9f3ef3a03e5ae71cd66986",
+        "skills\\onboard\\SKILL.md": "308a9ff7b68e7a307118c934cd4e635ab4ac79404e1d2ce9bef81a036beaee12",
+        "skills\\reverse-document\\SKILL.md": "a697f1331b5ca5ea57da2dac679c72dc6872dc5781b5cb68af1b4765cb06ee18",
+        "skills\\adopt\\SKILL.md": "9a802d6b5fba2a2c93846b42a8de9fb9cba3f8465b53c752edd3147044ae67f4",
+        "skills\\pipeline-guard\\SKILL.md": "ae5ff387a3baee13073c059c130b3993125ce660238ac8181eec0720f6c547d5",
+        "skills\\capture-solution\\SKILL.md": "5627d8b1f4d973835d51ad1182b6d099313bf123dda83a76598e543de590aacc",
+        "skills\\publish-play\\SKILL.md": "5f527e72c5f299e0ef26154597a28daa2cd935503e2f3af534542845f9710f4a"
+      }
+    },
+    "design": {
+      "version": "1.0.0",
+      "installedAt": "2026-11-18T15:32:10.279Z",
+      "files": {
+        "agents\\game-designer.md": "da80124289f622fa6c81775427ed1a9bb4151f6fb9ad65092ccc98f4f786b701",
+        "agents\\systems-designer.md": "05ef8cf88125211c7d7ee6d07c1cfe86028768886933360db4d4eb8963a4ac52",
+        "agents\\economy-designer.md": "b50964a0a18012a4e1fe0a8f9dd1c02adb88beee20163d4ff5a43ba1fc62272c",
+        "skills\\skills\\design-system\\SKILL.md": "a6ea8c825e5372e6707e13a03512f65efe1300353b8c60b46da0f30364ff7881",
+        "skills\\skills\\design-review\\SKILL.md": "a43746bd02112a79cf3c11b7d9a645720e2be07ada01a8a8b228c73635e687e9",
+        "skills\\skills\\quick-design\\SKILL.md": "379d1ab1552c8bc3cabb956becb816a982b31e534a9707116c446abaddd6e22c",
+        "skills\\skills\\review-all-gdds\\SKILL.md": "9594c3f560db12cc541c78ae789230adab3d9fb1cb56acaa8fca681674946ca7",
+        "skills\\skills\\balance-check\\SKILL.md": "14e11670ef45e6dfc19c0a8c63720a5d0353109c58939ed93464d229a781c79c",
+        "skills\\skills\\consistency-check\\SKILL.md": "e16448cd8ffad47a382e28bcb5f750b47851e754d2bc22ee82946c76703058d0",
+        "skills\\skills\\content-audit\\SKILL.md": "295891c2603284666c9b41946beecb7c4c20a7ec67c688e1e6dc1adcd4101398",
+        "skills\\skills\\scope-check\\SKILL.md": "d91631b2b6768a3a7ab17ddfc2499af4289cad58483f9c4d4b62c1aefac9a337",
+        "skills\\skills\\estimate\\SKILL.md": "aeef37d1aa4fa6e99252c57468dbf28df7173d5f1b80a838ff673ac1b78c12ad",
+        "skills\\skills\\playtest-report\\SKILL.md": "7a984404ab35b3322517b3d5da20139fbe9ceb19a6d3463c64aab93a681b13b4",
+        "commands\\design-system.md": "8354592bfa5b027583be5f432fdfa04cbdf62a48089ecb7b5f21f10395220c4a",
+        "commands\\design-review.md": "44b5a01dc0280f1a764830c8f7dae37243ca89c0fc0ec2ceb5b1919e2f82497f",
+        "commands\\quick-design.md": "c2a921b2f8e4ea5cc6cd2e7038c20fe8fc2268803dce3fc54c982564c3063287",
+        "commands\\review-all-gdds.md": "628cb8d0d34da596bcae02559565cbc6f788f30e13b43cf93af622119e48e8fc",
+        "commands\\balance-check.md": "11121f407e41562c1be60f0736f71f2ed04affcdf41cccd94502c80f8fb4950a",
+        "commands\\consistency-check.md": "b679e986ae6f20708904ef7bffb0f87b656a84607544f67b8ed328623ccd2455",
+        "commands\\content-audit.md": "e5de286affc63730599264af2f90697f5a31e871abea3152ecbb5daf34c5b8f6",
+        "commands\\scope-check.md": "706f6866a1c5697e0a306636f1390bfb5d0ddac9c8d9eef0da2a7a3ab7d23da6",
+        "commands\\estimate.md": "414692a972f5852cfb0d893bf4835c37bf92a06184b3063b719e3038e5242308",
+        "commands\\playtest-report.md": "d74d0ba36b0b198a734a6fbf193ab2eaaed1b4269b5b6c8036047be9f468ace4",
+        "skills\\design-system\\SKILL.md": "a6ea8c825e5372e6707e13a03512f65efe1300353b8c60b46da0f30364ff7881",
+        "skills\\design-review\\SKILL.md": "a43746bd02112a79cf3c11b7d9a645720e2be07ada01a8a8b228c73635e687e9",
+        "skills\\quick-design\\SKILL.md": "379d1ab1552c8bc3cabb956becb816a982b31e534a9707116c446abaddd6e22c",
+        "skills\\review-all-gdds\\SKILL.md": "9594c3f560db12cc541c78ae789230adab3d9fb1cb56acaa8fca681674946ca7",
+        "skills\\balance-check\\SKILL.md": "14e11670ef45e6dfc19c0a8c63720a5d0353109c58939ed93464d229a781c79c",
+        "skills\\consistency-check\\SKILL.md": "e16448cd8ffad47a382e28bcb5f750b47851e754d2bc22ee82946c76703058d0",
+        "skills\\content-audit\\SKILL.md": "295891c2603284666c9b41946beecb7c4c20a7ec67c688e1e6dc1adcd4101398",
+        "skills\\scope-check\\SKILL.md": "d91631b2b6768a3a7ab17ddfc2499af4289cad58483f9c4d4b62c1aefac9a337",
+        "skills\\estimate\\SKILL.md": "aeef37d1aa4fa6e99252c57468dbf28df7173d5f1b80a838ff673ac1b78c12ad",
+        "skills\\playtest-report\\SKILL.md": "7a984404ab35b3322517b3d5da20139fbe9ceb19a6d3463c64aab93a681b13b4"
+      }
+    },
+    "programming": {
+      "version": "1.0.0",
+      "installedAt": "2026-11-18T15:32:10.295Z",
+      "files": {
+        "agents\\gameplay-programmer.md": "2e44f89a899008ef5cdbace9d8f1f8fcd3f147622e2ace670fb9b13d02487c74",
+        "agents\\engine-programmer.md": "9d5bb3e2150c317ff2bf2bcf64e377303c5589071dbea46a7289c96273623b4d",
+        "agents\\ai-programmer.md": "361f5a17806b0593ee3d0ee841d347451a00c992db37555b8763838bccb1b64b",
+        "agents\\network-programmer.md": "072d513729b353f8103f4cab1e07a713cb984065ddf7b691467f05ce4f63906a",
+        "agents\\tools-programmer.md": "731334024628c0bb5f3b74bf9431be1d21118dacba00eb19132bc7775dccd15c",
+        "rules\\gameplay-code.md": "cc8fcd71a0203e1fda2de2a97ff32b9ddca7f651a5531af687d5f837fe3ce110",
+        "rules\\engine-code.md": "c777c626fdfb1a340f57bfb5d75eff365cc43d8eaa50cc5268784e8f8dd795d2",
+        "rules\\ai-code.md": "b0ec879a4e850e038d9de6c384f26afa600b762f1ffd3278f4effcc19249f703",
+        "rules\\network-code.md": "8ae8ce995517707e983a5dbd59e37d0d10c3bee9b80e3430519b070eaaf522c5",
+        "rules\\shader-code.md": "f4bdb555c0504b8f8d1ec2da2b452380be62c86889bf5946d8d9a77ba39527e9"
+      }
+    },
+    "qa": {
+      "version": "1.0.0",
+      "installedAt": "2026-11-18T15:32:10.299Z",
+      "files": {
+        "agents\\qa-lead.md": "051df84d83bb70b71f49d29e1ffabdde5b7b9c56cc2dd8f236aa0b52615d6072",
+        "agents\\qa-tester.md": "2ddd4e44166e966fb4988e23a0fd9f95ea62614e759a98c9285df83f66bd44dc",
+        "agents\\performance-analyst.md": "b08a02fec95671eaa56713c6bc0306790f0ec08b785bde8ad126d0735e1dea63",
+        "agents\\security-engineer.md": "43f562a6ba7301ea552a065efb316f0f4c9aa415f52b5975a30aca92ef2123da",
+        "skills\\skills\\test-setup\\SKILL.md": "8eb7ba9bcf3e164e1dc8df1e336d67f06c7f079bb59fada518d1aa89123f7849",
+        "skills\\skills\\test-helpers\\SKILL.md": "16b40e245edf63aa6317d41959741392ace8beeb46a87f757dac0400ede072b6",
+        "skills\\skills\\smoke-check\\SKILL.md": "29dcaa5034b2fdcf5cc031f74c1926bcf53d2e82c0a6690eade7ce4a170812d1",
+        "skills\\skills\\regression-suite\\SKILL.md": "e5f923ba3224228dc954951d307629d3bc3825b6d0aba504da52eb3257c24eee",
+        "skills\\skills\\test-evidence-review\\SKILL.md": "44aedabaf93c7f0176ee34d06e5c67ffdb32ad3c59fb8eae375e4e0adadb495a",
+        "skills\\skills\\security-audit\\SKILL.md": "3e912b17ea3af31391bf787bd3080492460af68ddb6b5f9456f572f1f4566e0f",
+        "skills\\skills\\skill-test\\SKILL.md": "b03fc652f577a82653bdf7afd4570e5b09e6d1c2e115e4b54dd340576b5b5698",
+        "skills\\skills\\skill-improve\\SKILL.md": "63208263f1b0f4086df42c3dc002b8d7f6e02ee79d27ebf0393c30599c61a4f1",
+        "commands\\test-setup.md": "b9a9bf06c8f9b28385bccb3cde90945f4e259f6bbe49462ea6590bc0532288c6",
+        "commands\\test-helpers.md": "85caa0603c2641eeeb47644f9531d12edc29ef1d48a7c663e672ab293fd6f344",
+        "commands\\smoke-check.md": "dc141181214703221472f52d2ae0e2221440406f65c8fe1f3824bfb50cd2b841",
+        "commands\\regression-suite.md": "60a7740509157e41efc5b0c5701aa0c9aae7d149c35ed295d4380f1da66359e3",
+        "commands\\test-evidence-review.md": "432ac37ab123271c3453df33a0fa53f5f832192fe2c0688f18e8e087962c3e69",
+        "commands\\security-audit.md": "1694d8f24a924600760855830df8a6d3f7482a2ebfc72adcbb7722e0373e524c",
+        "commands\\skill-test.md": "224b81d6abbe11483c21f5586c32dd3ac8b4363eaed0dfb1feafaf07e2fc7df0",
+        "commands\\skill-improve.md": "971cd2375d3ac8fcc944c2709dc606f590c48ed804c29ff483fdf61564480130",
+        "rules\\test-standards.md": "dc1aea7e714578ae66a1469a0c236d24282f15466dcea80ebd366efe0dde07de",
+        "rules\\long-tests.md": "9f812de98dbebb2b641e29bbb700c3c9e49705af620373a48ccdfff406f74923",
+        "skills\\skills\\gauntlet\\SKILL.md": "e81d81ebea29d307d2b4e7325bd83363201eb75d5f211453adf7b7cc41ab8c51",
+        "commands\\gauntlet.md": "193a6824699e5133c157c5ca470aa8386169ca07e232f061eac22f912db76441",
+        "skills\\test-setup\\SKILL.md": "8eb7ba9bcf3e164e1dc8df1e336d67f06c7f079bb59fada518d1aa89123f7849",
+        "skills\\test-helpers\\SKILL.md": "16b40e245edf63aa6317d41959741392ace8beeb46a87f757dac0400ede072b6",
+        "skills\\smoke-check\\SKILL.md": "29dcaa5034b2fdcf5cc031f74c1926bcf53d2e82c0a6690eade7ce4a170812d1",
+        "skills\\regression-suite\\SKILL.md": "e5f923ba3224228dc954951d307629d3bc3825b6d0aba504da52eb3257c24eee",
+        "skills\\test-evidence-review\\SKILL.md": "44aedabaf93c7f0176ee34d06e5c67ffdb32ad3c59fb8eae375e4e0adadb495a",
+        "skills\\security-audit\\SKILL.md": "3e912b17ea3af31391bf787bd3080492460af68ddb6b5f9456f572f1f4566e0f",
+        "skills\\skill-test\\SKILL.md": "b03fc652f577a82653bdf7afd4570e5b09e6d1c2e115e4b54dd340576b5b5698",
+        "skills\\skill-improve\\SKILL.md": "63208263f1b0f4086df42c3dc002b8d7f6e02ee79d27ebf0393c30599c61a4f1",
+        "skills\\gauntlet\\SKILL.md": "e81d81ebea29d307d2b4e7325bd83363201eb75d5f211453adf7b7cc41ab8c51"
+      }
+    },
+    "release": {
+      "version": "1.0.0",
+      "installedAt": "2026-11-18T15:32:10.310Z",
+      "files": {
+        "agents\\release-manager.md": "6d5d76f0bbfd06a089f7864a99a0e4a7e387d9d5da0019b792ccf1be2db62475",
+        "agents\\devops-engineer.md": "915fa322eee7b1c6fef90eaf0fbe55df95a5ab5176eacd00073890a8187a3867",
+        "skills\\skills\\sprint-plan\\SKILL.md": "f6461b56cb41161fe096127f8e66bb8c8277b8ce6f9624e24ea7141cc1f881ea",
+        "skills\\skills\\sprint-status\\SKILL.md": "847b85bab6746e270c39525e0043a1c0195367ee209be8b199bf97dc9f98095f",
+        "skills\\skills\\retrospective\\SKILL.md": "8137df4a01c79cedcb3d4c2651866ea9f720351337733a1025ea6a0f7d55b945",
+        "skills\\skills\\milestone-review\\SKILL.md": "d17ca22a41c50a47391e46b5a9b9445c20402f950715b6d08d4f998542f7161a",
+        "skills\\skills\\release-checklist\\SKILL.md": "d2a16049d14c233aeb3a9d938e2d445d5452c7489f67c68e90e94d46d835b198",
+        "skills\\skills\\changelog\\SKILL.md": "4730746f3899448f97dc61364ffcfb0c7a68b765282b8c6bbdfee8b9123e9211",
+        "commands\\sprint-plan.md": "a85c05079dec1e650f45d8a42d137091d97993cbc3a4de85ed5e285525baeefe",
+        "commands\\sprint-status.md": "94bda5e06a908c78f4b618f3bfe7f3a6da62472824bc630b38884832283d0839",
+        "commands\\retrospective.md": "3841fea03530d31cfa4d26638458011c829b0d8a62230e7adadb23ecee528a1b",
+        "commands\\milestone-review.md": "0545ce084a73e504938fb45bd2d9f0a8063b0b9a65fc51768a86b59f353e7705",
+        "commands\\release-checklist.md": "36a2e3f0c318738954cb01fb5c7ca0e48b443c82a869ccbff39184acef20e35e",
+        "commands\\changelog.md": "896b2d7b0815f8f4a1172b8ebbf47f33c0dd3495a25927a531b784696bcc03fd",
+        "skills\\skills\\repo-init\\SKILL.md": "2a1605d306148dc3ce5d5d743059f8997e6d908b44b84bdb1eb994680cc0d966",
+        "skills\\skills\\repo-sync\\SKILL.md": "4262557727245e23d75776e4fafd4985a44712235f0b85318dea938917e72f80",
+        "commands\\repo-init.md": "4589ac7e97051169d43937e4ff1e508677714177b42969785c37a08a08ab39db",
+        "commands\\repo-sync.md": "b2e720ec35baf70d2916e3a9e382f3f6c79887dca2f0f4d4ce87ebd6abd9418e",
+        "skills\\sprint-plan\\SKILL.md": "f6461b56cb41161fe096127f8e66bb8c8277b8ce6f9624e24ea7141cc1f881ea",
+        "skills\\sprint-status\\SKILL.md": "847b85bab6746e270c39525e0043a1c0195367ee209be8b199bf97dc9f98095f",
+        "skills\\retrospective\\SKILL.md": "8137df4a01c79cedcb3d4c2651866ea9f720351337733a1025ea6a0f7d55b945",
+        "skills\\milestone-review\\SKILL.md": "d17ca22a41c50a47391e46b5a9b9445c20402f950715b6d08d4f998542f7161a",
+        "skills\\release-checklist\\SKILL.md": "d2a16049d14c233aeb3a9d938e2d445d5452c7489f67c68e90e94d46d835b198",
+        "skills\\changelog\\SKILL.md": "4730746f3899448f97dc61364ffcfb0c7a68b765282b8c6bbdfee8b9123e9211",
+        "skills\\repo-init\\SKILL.md": "2a1605d306148dc3ce5d5d743059f8997e6d908b44b84bdb1eb994680cc0d966",
+        "skills\\repo-sync\\SKILL.md": "4262557727245e23d75776e4fafd4985a44712235f0b85318dea938917e72f80"
+      }
+    }
   }
 }

@@ -4,12 +4,25 @@ This directory contains curated, version-pinned documentation snapshots for the
 game engine(s) used in this project. These files exist because **LLM knowledge
 has a cutoff date** and game engines update frequently.
 
+## Which engines are present
+
+`phaser/` and `unity/` ship with the framework because they are the supported
+stacks. Every other engine directory is **installed together with its module**:
+
+```bash
+node .framework/install.mjs add engine-godot     # brings docs/engine-reference/godot/
+node .framework/install.mjs remove engine-godot  # removes it again
+```
+
+So a Phaser project never carries 60 files about Godot, Unreal, SFML, Raylib and
+Bevy. If an engine directory is missing, its module is not installed — say so
+instead of guessing.
+
 ## Why This Exists
 
-Claude's training data has a knowledge cutoff (currently May 2025). Game engines
-like Godot, Unity, and Unreal ship updates that introduce breaking API changes,
-new features, and deprecated patterns. Without these reference files, agents will
-suggest outdated code.
+Model training data has a knowledge cutoff. Game engines ship updates that
+introduce breaking API changes, new features, and deprecated patterns. Without
+these reference files, agents will suggest outdated code.
 
 ## Structure
 

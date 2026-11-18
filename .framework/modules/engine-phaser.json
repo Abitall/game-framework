@@ -1,0 +1,25 @@
+{
+  "name": "engine-phaser",
+  "version": "1.0.0",
+  "description": "Phaser 4 specialist knowledge: scenes, systems, physics, tweens, WebAudio, TypeScript patterns.",
+  "default": false,
+  "depends": [
+    "core"
+  ],
+  "agents": [],
+  "skills": [
+    "phaser-coder",
+    "tuning-panel"
+  ],
+  "commands": [
+    "phaser-coder",
+    "tuning-panel"
+  ],
+  "rules": [
+    "phaser-code"
+  ],
+  "docs": [],
+  "triggers": [
+    "project stack is Phaser"
+  ]
+}

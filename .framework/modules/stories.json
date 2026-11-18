@@ -1,0 +1,31 @@
+{
+  "name": "stories",
+  "version": "1.0.0",
+  "description": "Heavy requirement pipeline: epics, stories, readiness, implementation, acceptance.",
+  "default": false,
+  "depends": [
+    "core"
+  ],
+  "agents": [],
+  "skills": [
+    "create-epics",
+    "create-stories",
+    "story-readiness",
+    "dev-story",
+    "story-done"
+  ],
+  "commands": [
+    "create-epics",
+    "create-stories",
+    "story-readiness",
+    "dev-story",
+    "story-done"
+  ],
+  "rules": [],
+  "docs": [],
+  "triggers": [
+    "large project",
+    "more than 20 systems",
+    "multiple contributors"
+  ]
+}

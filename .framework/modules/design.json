@@ -1,0 +1,43 @@
+{
+  "name": "design",
+  "version": "1.0.0",
+  "description": "Game mechanics, systems design, economy, balance analysis, design review.",
+  "default": true,
+  "depends": [
+    "core"
+  ],
+  "agents": [
+    "game-designer",
+    "systems-designer",
+    "economy-designer"
+  ],
+  "skills": [
+    "design-system",
+    "design-review",
+    "quick-design",
+    "review-all-gdds",
+    "balance-check",
+    "consistency-check",
+    "content-audit",
+    "scope-check",
+    "estimate",
+    "playtest-report"
+  ],
+  "commands": [
+    "design-system",
+    "design-review",
+    "quick-design",
+    "review-all-gdds",
+    "balance-check",
+    "consistency-check",
+    "content-audit",
+    "scope-check",
+    "estimate",
+    "playtest-report"
+  ],
+  "rules": [],
+  "docs": [],
+  "triggers": [
+    "any project with mechanics to design"
+  ]
+}

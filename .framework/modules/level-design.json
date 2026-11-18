@@ -1,0 +1,19 @@
+{
+  "name": "level-design",
+  "version": "1.0.0",
+  "description": "Level layout, encounter pacing, spatial design.",
+  "default": false,
+  "depends": [
+    "core"
+  ],
+  "agents": [
+    "level-designer"
+  ],
+  "skills": [],
+  "commands": [],
+  "rules": [],
+  "docs": [],
+  "triggers": [
+    "discrete levels or rooms"
+  ]
+}

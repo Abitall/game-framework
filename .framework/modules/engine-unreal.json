@@ -1,0 +1,41 @@
+{
+  "name": "engine-unreal",
+  "version": "1.0.0",
+  "description": "Unreal Engine 5 specialists: Blueprint, GAS, replication, UMG.",
+  "default": false,
+  "depends": [
+    "core"
+  ],
+  "agents": [
+    "unreal-specialist",
+    "ue-blueprint-specialist",
+    "ue-gas-specialist",
+    "ue-replication-specialist",
+    "ue-umg-specialist"
+  ],
+  "skills": [],
+  "commands": [],
+  "rules": [],
+  "docs": [
+    "engine-reference/unreal/PLUGINS.md",
+    "engine-reference/unreal/VERSION.md",
+    "engine-reference/unreal/breaking-changes.md",
+    "engine-reference/unreal/current-best-practices.md",
+    "engine-reference/unreal/deprecated-apis.md",
+    "engine-reference/unreal/modules/animation.md",
+    "engine-reference/unreal/modules/audio.md",
+    "engine-reference/unreal/modules/input.md",
+    "engine-reference/unreal/modules/navigation.md",
+    "engine-reference/unreal/modules/networking.md",
+    "engine-reference/unreal/modules/physics.md",
+    "engine-reference/unreal/modules/rendering.md",
+    "engine-reference/unreal/modules/ui.md",
+    "engine-reference/unreal/plugins/common-ui.md",
+    "engine-reference/unreal/plugins/gameplay-ability-system.md",
+    "engine-reference/unreal/plugins/gameplay-camera-system.md",
+    "engine-reference/unreal/plugins/pcg.md"
+  ],
+  "triggers": [
+    "project stack is Unreal Engine"
+  ]
+}

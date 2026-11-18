@@ -1,0 +1,29 @@
+{
+  "name": "programming",
+  "version": "1.0.0",
+  "description": "Programming agents and path-scoped coding rules. No skills.",
+  "default": true,
+  "depends": [
+    "core"
+  ],
+  "agents": [
+    "gameplay-programmer",
+    "engine-programmer",
+    "ai-programmer",
+    "network-programmer",
+    "tools-programmer"
+  ],
+  "skills": [],
+  "commands": [],
+  "rules": [
+    "gameplay-code",
+    "engine-code",
+    "ai-code",
+    "network-code",
+    "shader-code"
+  ],
+  "docs": [],
+  "triggers": [
+    "any project with code"
+  ]
+}

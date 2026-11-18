@@ -3,7 +3,7 @@
  *
  * One entry per coding-agent harness. Each entry says where module content is
  * installed, where the install state lives, and which file receives MCP
- * fragments. Content stays canonical in `.agents/`; harnesses that cannot read
+ * fragments. Content stays canonical in `.framework/library/`; harnesses that cannot read
  * it directly get an install target.
  *
  * Adding a harness here is the only place the installer learns about it.
@@ -49,15 +49,15 @@ export const HARNESS_TARGETS = {
   pi: {
     id: 'pi',
     label: 'Pi',
-    sourceRoot: '.agents/modules',
-    contentRoot: '.agents',
-    stateFile: '.agents/modules/installed.json',
+    sourceRoot: '.framework/library/modules',
+    contentRoot: '.framework/library',
+    stateFile: '.framework/library/modules/installed.json',
     dirs: {
-      agents: '.agents/agents',
-      skills: '.agents/skills',
-      commands: '.agents/commands',
-      rules: '.agents/rules',
-      docs: '.agents/docs',
+      agents: '.framework/library/agents',
+      skills: '.framework/library/skills',
+      commands: '.framework/library/commands',
+      rules: '.framework/library/rules',
+      docs: '.framework/library/docs',
     },
     transforms: {},
     mcp: { kind: 'mcp-servers-json', file: '.pi/mcp.json' },
@@ -67,19 +67,19 @@ export const HARNESS_TARGETS = {
   omp: {
     id: 'omp',
     label: 'oh-my-pi (omp)',
-    sourceRoot: '.agents/modules',
-    contentRoot: '.agents',
+    sourceRoot: '.framework/library/modules',
+    contentRoot: '.framework/library',
     stateFile: '.omp/modules/installed.json',
     dirs: {
       agents: '.omp/agents',
-      skills: '.agents/skills',
-      commands: '.agents/commands',
-      rules: '.agents/rules',
-      docs: '.agents/docs',
+      skills: '.framework/library/skills',
+      commands: '.framework/library/commands',
+      rules: '.framework/library/rules',
+      docs: '.framework/library/docs',
     },
     transforms: {
       // omp reads project agents from `.omp/agents/`; it does not scan
-      // `.agents/agents/`. Generate definitions with omp's required fields.
+      // `.framework/library/agents/`. Generate definitions with omp's required fields.
       agents: { transform: ompAgentMarkdown },
     },
     mcp: { kind: 'mcp-servers-json', file: '.omp/mcp.json' },
@@ -91,7 +91,7 @@ export const HARNESS_TARGETS = {
   claude: {
     id: 'claude',
     label: 'Claude Code',
-    sourceRoot: '.agents/modules',
+    sourceRoot: '.framework/library/modules',
     contentRoot: '.claude',
     stateFile: '.claude/modules/installed.json',
     dirs: {
@@ -111,14 +111,14 @@ export const HARNESS_TARGETS = {
   codex: {
     id: 'codex',
     label: 'Codex',
-    sourceRoot: '.agents/modules',
+    sourceRoot: '.framework/library/modules',
     contentRoot: '.codex',
     stateFile: '.codex/modules/installed.json',
     dirs: {
-      // Codex reads skills from `.agents/skills` natively; only agents need a
+      // Codex reads skills from `.framework/library/skills` natively; only agents need a
       // project-scoped target.
       agents: '.codex/agents',
-      skills: '.agents/skills',
+      skills: '.framework/library/skills',
     },
     transforms: {
       agents: { transform: codexAgentToml, extension: '.toml' },

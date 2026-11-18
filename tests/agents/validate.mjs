@@ -4,9 +4,9 @@
  * Agent Framework Validator
  *
  * Validates the structural integrity of the OCGS agent framework:
- * - Agent markdown files (.agents/agents/)
- * - Skill markdown files (.agents/skills/)
- * - Command markdown files (.agents/commands/)
+ * - Agent markdown files (.framework/library/agents/)
+ * - Skill markdown files (.framework/library/skills/)
+ * - Command markdown files (.framework/library/commands/)
  *
  * Produces a PASS/FAIL report with detailed diagnostics.
  * Exits with code 0 on pass, 1 on failure.
@@ -35,7 +35,7 @@ const AGENT_EXCEPTIONS = [
 	// Delegation Map + Reports to: + Must NOT sections added in #80
 ];
 
-const REQUIRED_AGENT_FRONTMATTER = ["description", "maxTurns"];
+const REQUIRED_AGENT_FRONTMATTER = ["description", "steps"];
 const REQUIRED_AGENT_SECTIONS = [
 	"Collaboration Protocol",
 	"Key Responsibilities",
@@ -55,7 +55,7 @@ const REQUIRED_SKILL_FRONTMATTER = [
 	"user-invocable",
 	"allowed-tools",
 ];
-const REQUIRED_COMMAND_FRONTMATTER = ["description", "skill", "category"];
+const REQUIRED_COMMAND_FRONTMATTER = ["description"];
 
 // ── YAML Frontmatter Parser ──────────────────────────────────────────────
 
@@ -84,7 +84,7 @@ function parseFrontmatter(content) {
 // ── Agent Validation ────────────────────────────────────────────────────
 
 function validateAgents() {
-	const agentsDir = join(ROOT, ".agents", "agents");
+	const agentsDir = join(ROOT, ".framework/library", "agents");
 	if (!existsSync(agentsDir))
 		return { error: `Agents directory not found: ${agentsDir}` };
 
@@ -109,7 +109,7 @@ function validateAgents() {
 					issues.push(`Frontmatter: missing required field '${field}'`);
 				}
 			}
-			// mode field is optional (harness-specific, stripped from .agents/)
+			// mode field is optional (harness-specific, stripped from .framework/library/)
 		}
 
 		// Required sections check
@@ -188,7 +188,7 @@ function validateAgents() {
 // ── Skill Validation ────────────────────────────────────────────────────
 
 function validateSkills() {
-	const skillsDir = join(ROOT, ".agents", "skills");
+	const skillsDir = join(ROOT, ".framework/library", "skills");
 	if (!existsSync(skillsDir))
 		return { error: `Skills directory not found: ${skillsDir}` };
 
@@ -202,7 +202,7 @@ function validateSkills() {
 		failed = 0;
 
 	// Build valid agent names for cross-reference validation
-	const agentNames = readdirSync(join(ROOT, ".agents", "agents"))
+	const agentNames = readdirSync(join(ROOT, ".framework/library", "agents"))
 		.filter((f) => f.endsWith(".md"))
 		.map((f) => f.replace(".md", ""));
 
@@ -276,7 +276,7 @@ function validateSkills() {
 // ── Command Validation ──────────────────────────────────────────────────
 
 function validateCommands() {
-	const commandsDir = join(ROOT, ".agents", "commands");
+	const commandsDir = join(ROOT, ".framework/library", "commands");
 	if (!existsSync(commandsDir))
 		return { error: `Commands directory not found: ${commandsDir}` };
 
@@ -288,8 +288,8 @@ function validateCommands() {
 		failed = 0;
 
 	// Build valid skill names
-	const skillNames = readdirSync(join(ROOT, ".agents", "skills")).filter(
-		(d) => statSync(join(ROOT, ".agents", "skills", d)).isDirectory(),
+	const skillNames = readdirSync(join(ROOT, ".framework/library", "skills")).filter(
+		(d) => statSync(join(ROOT, ".framework/library", "skills", d)).isDirectory(),
 	);
 
 	for (const file of files) {
@@ -314,23 +314,8 @@ function validateCommands() {
 				);
 			}
 
-			// Validate category
-			const validCategories = [
-				"onboarding",
-				"design",
-				"architecture",
-				"stories",
-				"qa",
-				"prototyping",
-				"team",
-				"release",
-				"ops",
-			];
-			if (fm.data.category && !validCategories.includes(fm.data.category)) {
-				issues.push(
-					`Invalid category '${fm.data.category}'. Valid: ${validCategories.join(", ")}`,
-				);
-			}
+			// `category` is not an OpenCode command field. If a project adds one for
+			// its own bookkeeping, do not enforce a fixed list here.
 		}
 
 		const status = issues.length === 0 ? "PASS" : "FAIL";
@@ -353,7 +338,7 @@ function validateCrossReferences() {
 	const issues = [];
 
 	// Find orphan skills (skill dirs with no SKILL.md)
-	const skillsDir = join(ROOT, ".agents", "skills");
+	const skillsDir = join(ROOT, ".framework/library", "skills");
 	if (existsSync(skillsDir)) {
 		const skillDirs = readdirSync(skillsDir).filter((d) =>
 			statSync(join(skillsDir, d)).isDirectory(),

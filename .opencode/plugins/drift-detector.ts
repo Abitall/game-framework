@@ -55,7 +55,7 @@ export function parseFrontmatter(content: string): Record<string, string> | null
 export function detectAgentDrift(projectRoot: string, filePath: string): DriftIssue[] {
   const issues: DriftIssue[] = []
 
-  if (!filePath.startsWith(".agents/agents/") || !filePath.endsWith(".md")) return issues
+  if (!filePath.startsWith(".opencode/agents/") || !filePath.endsWith(".md")) return issues
 
   const fp = path.join(projectRoot, filePath)
   if (!fs.existsSync(fp)) return issues
@@ -140,7 +140,7 @@ export function detectAgentDrift(projectRoot: string, filePath: string): DriftIs
 export function detectSkillDrift(projectRoot: string, filePath: string): DriftIssue[] {
   const issues: DriftIssue[] = []
 
-  if (!filePath.startsWith(".agents/skills/") || !filePath.endsWith("SKILL.md")) return issues
+  if (!filePath.startsWith(".opencode/skills/") || !filePath.endsWith("SKILL.md")) return issues
 
   const fp = path.join(projectRoot, filePath)
   if (!fs.existsSync(fp)) return issues
@@ -216,7 +216,7 @@ export function detectSkillDrift(projectRoot: string, filePath: string): DriftIs
 export function detectCommandDrift(projectRoot: string, filePath: string): DriftIssue[] {
   const issues: DriftIssue[] = []
 
-  if (!filePath.startsWith(".agents/commands/") || !filePath.endsWith(".md")) return issues
+  if (!filePath.startsWith(".opencode/commands/") || !filePath.endsWith(".md")) return issues
   if (filePath.endsWith("README.md")) return issues
 
   const fp = path.join(projectRoot, filePath)
@@ -249,7 +249,7 @@ export function detectCommandDrift(projectRoot: string, filePath: string): Drift
 
   // Validate skill reference exists
   if (fm.skill) {
-    const skillDir = path.join(projectRoot, ".agents", "skills", fm.skill)
+    const skillDir = path.join(projectRoot, ".opencode", "skills", fm.skill)
     if (!fs.existsSync(skillDir)) {
       issues.push({
         file: filePath,
@@ -349,11 +349,11 @@ export const DriftDetector: OpenCodePlugin.Plugin = {
       // Quick single-file drift check on write/edit.
       let issues: DriftIssue[] = []
 
-      if (filePath.startsWith(".agents/agents/")) {
+      if (filePath.startsWith(".opencode/agents/")) {
         issues = detectAgentDrift(projectRoot, filePath)
-      } else if (filePath.includes("/SKILL.md") && filePath.startsWith(".agents/skills/")) {
+      } else if (filePath.includes("/SKILL.md") && filePath.startsWith(".opencode/skills/")) {
         issues = detectSkillDrift(projectRoot, filePath)
-      } else if (filePath.startsWith(".agents/commands/")) {
+      } else if (filePath.startsWith(".opencode/commands/")) {
         issues = detectCommandDrift(projectRoot, filePath)
       }
 
@@ -382,32 +382,32 @@ export const DriftDetector: OpenCodePlugin.Plugin = {
             logger.info("Running drift detection scan...")
             const allIssues: DriftIssue[] = []
 
-            const agentsDir = path.join(projectRoot, ".agents", "agents")
+            const agentsDir = path.join(projectRoot, ".opencode", "agents")
             if (fs.existsSync(agentsDir)) {
               for (const file of fs.readdirSync(agentsDir)) {
                 if (!file.endsWith(".md")) continue
-                const relPath = `.agents/agents/${file}`
+                const relPath = `.opencode/agents/${file}`
                 allIssues.push(...detectAgentDrift(projectRoot, relPath))
               }
             }
 
-            const skillsDir = path.join(projectRoot, ".agents", "skills")
+            const skillsDir = path.join(projectRoot, ".opencode", "skills")
             if (fs.existsSync(skillsDir)) {
               for (const dir of fs.readdirSync(skillsDir)) {
                 const skillPath = path.join(skillsDir, dir)
                 if (!fs.statSync(skillPath).isDirectory()) continue
-                const relPath = `.agents/skills/${dir}/SKILL.md`
+                const relPath = `.opencode/skills/${dir}/SKILL.md`
                 if (fs.existsSync(path.join(projectRoot, relPath))) {
                   allIssues.push(...detectSkillDrift(projectRoot, relPath))
                 }
               }
             }
 
-            const commandsDir = path.join(projectRoot, ".agents", "commands")
+            const commandsDir = path.join(projectRoot, ".opencode", "commands")
             if (fs.existsSync(commandsDir)) {
               for (const file of fs.readdirSync(commandsDir)) {
                 if (!file.endsWith(".md") || file === "README.md") continue
-                const relPath = `.agents/commands/${file}`
+                const relPath = `.opencode/commands/${file}`
                 allIssues.push(...detectCommandDrift(projectRoot, relPath))
               }
             }

@@ -24,7 +24,7 @@ export const DESIGN_SECTIONS = [
 
 function isGitRepo(cwd: string): boolean {
   try {
-    execSync("git rev-parse --git-dir", { encoding: "utf8", cwd, stdio: "ignore", timeout: 5000 })
+    execSync("git rev-parse --git-dir", { encoding: "utf8", cwd, stdio: "ignore", timeout: 5000, windowsHide: true })
     return true
   } catch {
     return false
@@ -32,7 +32,7 @@ function isGitRepo(cwd: string): boolean {
 }
 
 function git(cwd: string, ...args: string[]): string {
-  const result = spawnSync("git", args, { encoding: "utf8", cwd, stdio: ["pipe", "pipe", "ignore"], timeout: 15000 })
+  const result = spawnSync("git", args, { encoding: "utf8", cwd, stdio: ["pipe", "pipe", "ignore"], timeout: 15000, windowsHide: true })
   if (result.error || result.status !== 0) return ""
   return result.stdout.trim()
 }
@@ -398,7 +398,7 @@ export function validateAssetPath(projectRoot: string, filePath: string): { warn
 
 function runGit(cwd: string, cmd: string): string {
   try {
-    return execSync(cmd, { encoding: "utf8", cwd, stdio: ["pipe", "pipe", "ignore"], timeout: 15000 }).trim()
+    return execSync(cmd, { encoding: "utf8", cwd, stdio: ["pipe", "pipe", "ignore"], timeout: 15000, windowsHide: true }).trim()
   } catch {
     return ""
   }
@@ -532,17 +532,19 @@ export function showNotification(message: string) {
         `$n.ShowBalloonTip(5000); ` +
         `Start-Sleep -Seconds 6; ` +
         `$n.Dispose()"`,
-        { stdio: "ignore", timeout: 10000 }
+        { stdio: "ignore", timeout: 10000, windowsHide: true }
       )
     } else if (platform === "darwin") {
       execFileSync("osascript", ["-e", `display notification ${JSON.stringify(text)} with title "OpenCode"`], {
         stdio: "ignore",
         timeout: 5000,
+        windowsHide: true,
       })
     } else if (platform === "linux") {
       execFileSync("notify-send", ["OpenCode", text], {
         stdio: "ignore",
         timeout: 5000,
+        windowsHide: true,
       })
     }
   } catch { /* ignore — notification is best-effort */ }
@@ -647,7 +649,12 @@ export const CCGSHooks: OpenCodePlugin.Plugin = {
       const args = getToolArgs(event.input)
       const command = typeof args.command === "string" ? args.command : ""
 
-      if (isGitRepo(projectRoot) && event.tool === "shell" && command) {
+      // Only spawn git for git push/commit: isGitRepo() starts a child process,
+      // and with the old ordering it ran on every tool call (a visible console
+      // window flashed on Windows).
+      const gitCommand =
+        event.tool === "shell" && /^git\s+(push|commit)\b/.test(command)
+      if (gitCommand && isGitRepo(projectRoot)) {
         if (/^git\s+push/.test(command)) {
           const matched = detectPushToProtected(command, git(projectRoot, "rev-parse", "--abbrev-ref", "HEAD"))
           if (matched) {

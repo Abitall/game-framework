@@ -1,0 +1,20 @@
+{
+  "name": "data",
+  "version": "1.0.0",
+  "description": "Data file conventions and validation rules.",
+  "default": false,
+  "depends": [
+    "core"
+  ],
+  "agents": [],
+  "skills": [],
+  "commands": [],
+  "rules": [
+    "data-files"
+  ],
+  "docs": [],
+  "triggers": [
+    "external data files",
+    "content tables"
+  ]
+}

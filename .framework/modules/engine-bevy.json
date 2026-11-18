@@ -1,0 +1,32 @@
+{
+  "name": "engine-bevy",
+  "version": "1.0.0",
+  "description": "Bevy specialist: ECS, 2D/3D rendering, bevy_ui, assets, audio.",
+  "default": false,
+  "depends": [
+    "core"
+  ],
+  "agents": [
+    "bevy-specialist"
+  ],
+  "skills": [],
+  "commands": [],
+  "rules": [],
+  "docs": [
+    "engine-reference/bevy/VERSION.md",
+    "engine-reference/bevy/breaking-changes.md",
+    "engine-reference/bevy/current-best-practices.md",
+    "engine-reference/bevy/deprecated-apis.md",
+    "engine-reference/bevy/modules/2d.md",
+    "engine-reference/bevy/modules/3d.md",
+    "engine-reference/bevy/modules/asset.md",
+    "engine-reference/bevy/modules/audio.md",
+    "engine-reference/bevy/modules/ecs.md",
+    "engine-reference/bevy/modules/input.md",
+    "engine-reference/bevy/modules/testing.md",
+    "engine-reference/bevy/modules/ui.md"
+  ],
+  "triggers": [
+    "project stack is Bevy"
+  ]
+}

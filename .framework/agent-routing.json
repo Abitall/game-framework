@@ -1,0 +1,17 @@
+{
+  "$comment": "Agent model routing. Regenerate frontmatter with: node .framework/tools/build-agents-config.mjs",
+  "default": {
+    "model": null,
+    "mode": "subagent",
+    "steps": 20
+  },
+  "agents": {
+    "creative-director": { "mode": "all", "steps": 30 },
+    "technical-director": { "mode": "all", "steps": 30 },
+    "producer": { "mode": "all", "steps": 30 },
+    "game-designer": { "steps": 25 },
+    "systems-designer": { "steps": 25 },
+    "qa-lead": { "steps": 25 },
+    "lead-programmer": { "steps": 25 }
+  }
+}

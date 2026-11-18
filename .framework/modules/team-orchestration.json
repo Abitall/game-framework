@@ -1,0 +1,37 @@
+{
+  "name": "team-orchestration",
+  "version": "1.0.0",
+  "description": "Multi-agent team orchestration. Redundant for solo development.",
+  "default": false,
+  "depends": [
+    "core"
+  ],
+  "agents": [],
+  "skills": [
+    "team-combat",
+    "team-qa",
+    "team-polish",
+    "team-release",
+    "team-ui",
+    "team-audio",
+    "team-narrative",
+    "team-level",
+    "team-live-ops"
+  ],
+  "commands": [
+    "team-combat",
+    "team-qa",
+    "team-polish",
+    "team-release",
+    "team-ui",
+    "team-audio",
+    "team-narrative",
+    "team-level",
+    "team-live-ops"
+  ],
+  "rules": [],
+  "docs": [],
+  "triggers": [
+    "team of 3 or more people"
+  ]
+}

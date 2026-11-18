@@ -1,0 +1,36 @@
+{
+  "name": "engine-godot",
+  "version": "1.0.0",
+  "description": "Godot 4 specialists: GDScript, C#, shaders, GDExtension.",
+  "default": false,
+  "depends": [
+    "core"
+  ],
+  "agents": [
+    "godot-specialist",
+    "godot-gdscript-specialist",
+    "godot-csharp-specialist",
+    "godot-shader-specialist",
+    "godot-gdextension-specialist"
+  ],
+  "skills": [],
+  "commands": [],
+  "rules": [],
+  "docs": [
+    "engine-reference/godot/VERSION.md",
+    "engine-reference/godot/breaking-changes.md",
+    "engine-reference/godot/current-best-practices.md",
+    "engine-reference/godot/deprecated-apis.md",
+    "engine-reference/godot/modules/animation.md",
+    "engine-reference/godot/modules/audio.md",
+    "engine-reference/godot/modules/input.md",
+    "engine-reference/godot/modules/navigation.md",
+    "engine-reference/godot/modules/networking.md",
+    "engine-reference/godot/modules/physics.md",
+    "engine-reference/godot/modules/rendering.md",
+    "engine-reference/godot/modules/ui.md"
+  ],
+  "triggers": [
+    "project stack is Godot 4"
+  ]
+}

@@ -1,36 +1,48 @@
 {
-  "name": "opencodegamedesign",
-  "version": "0.14.1",
-  "description": "<p align=\"center\">   <img src=\"assets/banner.png\" alt=\"OpenCode Game Studios Banner\" width=\"100%\"> </p>",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs",
-    "test": "tests"
-  },
+  "name": "game-framework",
+  "version": "1.0.0",
+  "description": "Indie game development framework for OpenCode: 27 modules, 52 agents, 84 skills. Phaser 4 and Unity 6 support.",
+  "private": true,
+  "type": "commonjs",
+  "main": ".framework/install.mjs",
   "scripts": {
     "prepare": "node tools/git-hooks/install.mjs",
     "hooks:install": "node tools/git-hooks/install.mjs",
-    "test": "npm run test:plugins && npm run test:hooks",
+    "dev": "vite --port 5174 --strictPort",
+    "play": "node tools/play-host.mjs",
+    "publish:play": "node tools/publish-play.mjs",
+    "check:encoding": "node tools/check-encoding.mjs",
+    "test": "npm run check:encoding && npm run test:plugins && npm run test:hooks && npm run test:framework",
     "test:plugins": "node --import tsx --test .opencode/plugins/tests/test-*.mjs",
-    "test:extensions": "node --import tsx --test tests/extensions/*.mjs",
-    "test:omp": "node --import tsx --test tests/omp/*.mjs",
     "test:hooks": "node --test tests/git-hooks/test-commit-msg.mjs tests/git-hooks/test-pre-commit.mjs",
     "test:framework": "node tests/agents/validate.mjs",
-    "test:modules": "node --test tests/modules/test-install-harness.mjs",
-    "test:parity": "node --import tsx --test tests/e2e/test-parity.test.ts"
+    "test:long": "node --test --test-reporter=spec tests/**/*.test.*",
+    "modules:build": "node .framework/tools/build-manifests.mjs",
+    "modules:list": "node .framework/install.mjs list",
+    "modules:doctor": "node .framework/install.mjs doctor",
+    "check:self": "node .framework/tools/self-check.mjs",
+    "check:self:quick": "node .framework/tools/self-check.mjs --quick",
+    "agents:build": "node .framework/tools/build-agents-config.mjs",
+    "agents:model": "node tools/change-model.mjs",
+    "pipeline": "node tools/pipeline.mjs status",
+    "pipeline:check": "node tools/pipeline.mjs check",
+    "scope": "node tools/scope.mjs",
+    "learn": "node tools/learn.mjs list",
+    "gauntlet:pair": "node tools/ab.mjs",
+    "gauntlet:reveal": "node tools/reveal.mjs",
+    "balance:progress": "node tools/balance-progress.mjs",
+    "search:up": "docker compose -f tools/searxng/docker-compose.yml up -d",
+    "search:down": "docker compose -f tools/searxng/docker-compose.yml down"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/striderZA/OpenCodeGameStudios.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/striderZA/OpenCodeGameStudios/issues"
-  },
-  "homepage": "https://github.com/striderZA/OpenCodeGameStudios#readme",
+  "keywords": [
+    "game-development",
+    "opencode",
+    "phaser",
+    "unity",
+    "ai-agents"
+  ],
+  "author": "Abitall",
+  "license": "MIT",
   "devDependencies": {
     "minimatch": "^10.2.5",
     "tsx": "^4.23.1"

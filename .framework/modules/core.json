@@ -1,0 +1,61 @@
+{
+  "name": "core",
+  "version": "1.0.0",
+  "description": "Framework skeleton: directors, onboarding, workflow, architecture planning, and shared utilities.",
+  "default": true,
+  "depends": [],
+  "agents": [
+    "creative-director",
+    "producer",
+    "technical-director"
+  ],
+  "skills": [
+    "start",
+    "help",
+    "init-template",
+    "setup-engine",
+    "project-stage-detect",
+    "concept-brainstorm",
+    "map-systems",
+    "create-architecture",
+    "architecture-decision",
+    "gate-check",
+    "code-review",
+    "tech-debt",
+    "onboard",
+    "reverse-document",
+    "adopt",
+    "pipeline-guard",
+    "capture-solution",
+    "publish-play"
+  ],
+  "commands": [
+    "start",
+    "help",
+    "init-template",
+    "setup-engine",
+    "project-stage-detect",
+    "concept-brainstorm",
+    "map-systems",
+    "create-architecture",
+    "architecture-decision",
+    "gate-check",
+    "code-review",
+    "tech-debt",
+    "onboard",
+    "reverse-document",
+    "adopt",
+    "pipeline-guard",
+    "capture-solution",
+    "publish-play"
+  ],
+  "rules": [
+    "encoding",
+    "solutions",
+    "web-hosting"
+  ],
+  "docs": [],
+  "triggers": [
+    "always installed"
+  ]
+}

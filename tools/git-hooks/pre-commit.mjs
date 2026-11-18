@@ -7,7 +7,7 @@
  *   - credentials/private keys added in the staged diff
  *   - unresolved merge-conflict markers
  *   - staged files larger than 20 MB
- *   - framework validation when `.agents/` is staged
+ *   - framework validation when `.framework/library/` is staged
  *   - plugin tests when `.opencode/plugins/` is staged
  *
  * Advisory checks (warnings only):
@@ -212,15 +212,15 @@ export function checkFileSizes(root, files, thresholds = {}) {
 
 /**
  * Verify `.opencode/<name>` redirects (symlinks on POSIX, text stubs on Windows
- * checkouts) still resolve to their canonical `.agents/` target.
+ * checkouts) still resolve to their canonical `.framework/library/` target.
  * @returns {{ errors: string[], warnings: string[] }}
  */
 export function checkFrameworkLinks(root) {
 	const links = [
-		["agents", ".agents/agents"],
-		["commands", ".agents/commands"],
-		["rules", ".agents/rules"],
-		["skills", ".agents/skills"],
+		["agents", ".framework/library/agents"],
+		["commands", ".framework/library/commands"],
+		["rules", ".framework/library/rules"],
+		["skills", ".framework/library/skills"],
 	]
 	const opencode = join(root, ".opencode")
 	const errors = []
@@ -279,8 +279,9 @@ export function planGates(files) {
 	if (
 		files.some(
 			(file) =>
-				file.startsWith(".agents/") ||
+				file.startsWith(".framework/library/") ||
 				file.startsWith("tests/agents/") ||
+				file.startsWith("docs/agents/") ||
 				file === "AGENTS.md",
 		)
 	) {
@@ -288,6 +289,9 @@ export function planGates(files) {
 	}
 	if (files.some((file) => file.startsWith(".opencode/plugins/"))) {
 		gates.push("plugins")
+	}
+	if (files.some((file) => /\.(ts|tsx|js|mjs|json|md|css|html|ya?ml|ps1)$/i.test(file))) {
+		gates.push("encoding")
 	}
 	return gates
 }
@@ -341,6 +345,16 @@ export function runGates(root, gates, env = process.env) {
 			const result = runCommand(root, command, args)
 			if (result.ok) notes.push(`${label} passed`)
 			else errors.push(`${label} failed:\n${tail(result.output)}`)
+		}
+	}
+
+	if (gates.includes("encoding")) {
+		if (!existsSync(join(root, "tools", "check-encoding.mjs"))) {
+			notes.push("encoding check skipped: tools/check-encoding.mjs is missing")
+		} else {
+			const result = runCommand(root, process.execPath, ["tools/check-encoding.mjs"])
+			if (result.ok) notes.push("encoding check passed")
+			else errors.push(`encoding check failed:\n${tail(result.output)}`)
 		}
 	}
 

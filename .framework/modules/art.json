@@ -1,0 +1,31 @@
+{
+  "name": "art",
+  "version": "1.0.0",
+  "description": "Art direction, art bible, asset specs, Aseprite pipeline.",
+  "default": false,
+  "depends": [
+    "core"
+  ],
+  "agents": [
+    "art-director",
+    "technical-artist"
+  ],
+  "skills": [
+    "art-bible",
+    "asset-spec",
+    "art-generate",
+    "asset-audit"
+  ],
+  "commands": [
+    "art-bible",
+    "asset-spec",
+    "art-generate",
+    "asset-audit"
+  ],
+  "rules": [],
+  "docs": [],
+  "triggers": [
+    "external art assets",
+    "sprite pipeline"
+  ]
+}

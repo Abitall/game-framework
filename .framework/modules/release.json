@@ -1,0 +1,38 @@
+{
+  "name": "release",
+  "version": "1.0.0",
+  "description": "Sprint planning, status, retrospectives, milestones, release checklist, changelog.",
+  "default": true,
+  "depends": [
+    "core"
+  ],
+  "agents": [
+    "release-manager",
+    "devops-engineer"
+  ],
+  "skills": [
+    "sprint-plan",
+    "sprint-status",
+    "retrospective",
+    "milestone-review",
+    "release-checklist",
+    "changelog",
+    "repo-init",
+    "repo-sync"
+  ],
+  "commands": [
+    "sprint-plan",
+    "sprint-status",
+    "retrospective",
+    "milestone-review",
+    "release-checklist",
+    "changelog",
+    "repo-init",
+    "repo-sync"
+  ],
+  "rules": [],
+  "docs": [],
+  "triggers": [
+    "any project organised in sprints"
+  ]
+}

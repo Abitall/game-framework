@@ -1,8 +1,0 @@
----
-description: OCGS framework references
-globs: 
-  - .agents/**
----
-
-OCGS agents, skills, commands, rules, and modules live in `.agents/`.
-Reference them directly. See `.pi/extensions/` for the Pi implementation.

@@ -1,0 +1,28 @@
+{
+  "name": "release-launch",
+  "version": "1.0.0",
+  "description": "Public launch: store, marketing, legal, day-one patch, hotfix, player patch notes.",
+  "default": false,
+  "depends": [
+    "release"
+  ],
+  "agents": [],
+  "skills": [
+    "launch-checklist",
+    "patch-notes",
+    "hotfix",
+    "day-one-patch"
+  ],
+  "commands": [
+    "launch-checklist",
+    "patch-notes",
+    "hotfix",
+    "day-one-patch"
+  ],
+  "rules": [],
+  "docs": [],
+  "triggers": [
+    "public launch",
+    "live players"
+  ]
+}

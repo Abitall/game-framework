@@ -1,0 +1,30 @@
+{
+  "name": "prototyping",
+  "version": "1.0.0",
+  "description": "Rapid prototypes, exploration, fast-lane validation.",
+  "default": false,
+  "depends": [
+    "core"
+  ],
+  "agents": [
+    "prototyper"
+  ],
+  "skills": [
+    "prototype",
+    "hybrid-prototype",
+    "explore"
+  ],
+  "commands": [
+    "prototype",
+    "hybrid-prototype",
+    "explore"
+  ],
+  "rules": [
+    "prototype-code"
+  ],
+  "docs": [],
+  "triggers": [
+    "idea search",
+    "mechanic validation"
+  ]
+}

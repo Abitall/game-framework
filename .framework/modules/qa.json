@@ -1,0 +1,45 @@
+{
+  "name": "qa",
+  "version": "1.0.0",
+  "description": "Test scaffolding, smoke gate, regression mapping, security audit, skill validation.",
+  "default": true,
+  "depends": [
+    "core"
+  ],
+  "agents": [
+    "qa-lead",
+    "qa-tester",
+    "performance-analyst",
+    "security-engineer"
+  ],
+  "skills": [
+    "test-setup",
+    "test-helpers",
+    "smoke-check",
+    "regression-suite",
+    "test-evidence-review",
+    "security-audit",
+    "skill-test",
+    "skill-improve",
+    "gauntlet"
+  ],
+  "commands": [
+    "test-setup",
+    "test-helpers",
+    "smoke-check",
+    "regression-suite",
+    "test-evidence-review",
+    "security-audit",
+    "skill-test",
+    "skill-improve",
+    "gauntlet"
+  ],
+  "rules": [
+    "test-standards",
+    "long-tests"
+  ],
+  "docs": [],
+  "triggers": [
+    "any project with tests"
+  ]
+}

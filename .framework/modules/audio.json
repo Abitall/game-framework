@@ -1,0 +1,20 @@
+{
+  "name": "audio",
+  "version": "1.0.0",
+  "description": "Audio direction and sound design.",
+  "default": false,
+  "depends": [
+    "core"
+  ],
+  "agents": [
+    "audio-director",
+    "sound-designer"
+  ],
+  "skills": [],
+  "commands": [],
+  "rules": [],
+  "docs": [],
+  "triggers": [
+    "recorded audio or music"
+  ]
+}

@@ -7,9 +7,9 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..', '..');
 
-const COMMANDS_DIR = join(ROOT, '.agents', 'commands');
-const SKILLS_DIR = join(ROOT, '.agents', 'skills');
-const AGENTS_DIR = join(ROOT, '.agents', 'agents');
+const COMMANDS_DIR = join(ROOT, '.framework/library', 'commands');
+const SKILLS_DIR = join(ROOT, '.framework/library', 'skills');
+const AGENTS_DIR = join(ROOT, '.framework/library', 'agents');
 
 function parseFrontmatter(content) {
   const match = content.match(/^---\n([\s\S]*?)\n---/);

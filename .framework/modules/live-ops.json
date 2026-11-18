@@ -1,0 +1,21 @@
+{
+  "name": "live-ops",
+  "version": "1.0.0",
+  "description": "Post-launch content, seasonal events, community.",
+  "default": false,
+  "depends": [
+    "core"
+  ],
+  "agents": [
+    "live-ops-designer",
+    "community-manager"
+  ],
+  "skills": [],
+  "commands": [],
+  "rules": [],
+  "docs": [],
+  "triggers": [
+    "game already shipped",
+    "live service"
+  ]
+}

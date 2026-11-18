@@ -459,7 +459,7 @@ describe("OpenCode V2 hook behavior", () => {
         await hook({
           tool: "edit",
           status: "completed",
-          input: { filePath: ".agents/agents/broken.md" },
+          input: { filePath: ".opencode/agents/broken.md" },
           result: { output: "updated" },
         })
       })

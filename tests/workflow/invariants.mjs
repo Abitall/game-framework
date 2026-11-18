@@ -7,9 +7,9 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..', '..');
 
-const COMMANDS_DIR = join(ROOT, '.agents', 'commands');
-const SKILLS_DIR = join(ROOT, '.agents', 'skills');
-const AGENTS_DIR = join(ROOT, '.agents', 'agents');
+const COMMANDS_DIR = join(ROOT, '.framework/library', 'commands');
+const SKILLS_DIR = join(ROOT, '.framework/library', 'skills');
+const AGENTS_DIR = join(ROOT, '.framework/library', 'agents');
 const DOCS_DIR = join(ROOT, 'docs');
 const DESIGN_DIR = join(ROOT, 'design');
 const PRODUCTION_DIR = join(ROOT, 'production');
@@ -168,14 +168,20 @@ console.log('\n=== Cross-Cutting Invariants ===\n');
 }
 
 { // I5: The Studio Hierarchy roster references only existing agent files
-  const agentDocPath = join(ROOT, 'AGENTS.md');
-  if (existsSync(agentDocPath)) {
+  const candidates = [
+    join(ROOT, 'docs', 'agents', 'hierarchy.md'),
+    join(ROOT, 'AGENTS.md'),
+  ];
+  const agentDocPath = candidates.find((p) => existsSync(p));
+  if (agentDocPath) {
     const content = readFileSync(agentDocPath, 'utf-8');
     const agentNames = existsSync(AGENTS_DIR)
       ? new Set(readdirSync(AGENTS_DIR).filter(f => f.endsWith('.md')).map(f => f.replace('.md', '')))
       : new Set();
 
-    const start = content.indexOf('## Studio Hierarchy');
+    const start = content.indexOf('## Studio Hierarchy') === -1
+      ? content.indexOf('# Studio Hierarchy')
+      : content.indexOf('## Studio Hierarchy');
     const end = start === -1 ? -1 : content.indexOf('\n## ', start + 1);
     const hierarchy = start === -1
       ? ''
@@ -190,8 +196,8 @@ console.log('\n=== Cross-Cutting Invariants ===\n');
     }
 
     const unknown = [...new Set(roster)].filter(r => !agentNames.has(r));
-    run('I5: AGENTS.md studio hierarchy lists only existing agent files', () => {
-      if (!hierarchy) throw new Error('Studio Hierarchy section not found in AGENTS.md');
+    run('I5: Studio hierarchy lists only existing agent files', () => {
+      if (!hierarchy) throw new Error('Studio Hierarchy section not found');
       if (unknown.length > 0) {
         throw new Error(`Unknown agents referenced: ${unknown.join(', ')}`);
       }
@@ -201,22 +207,19 @@ console.log('\n=== Cross-Cutting Invariants ===\n');
   }
 }
 
-{ // I6: All command files have frontmatter with required fields
+{ // I6: All command files have the frontmatter OpenCode actually reads
   if (existsSync(COMMANDS_DIR)) {
     const bad = [];
     const files = readdirSync(COMMANDS_DIR).filter(f => f.endsWith('.md') && f !== 'README.md');
     for (const file of files) {
       const content = readFileSync(join(COMMANDS_DIR, file), 'utf-8');
       const fm = parseFrontmatter(content);
-      if (!fm.name) bad.push(`${file}: missing name`);
       if (!fm.description) bad.push(`${file}: missing description`);
-      if (!fm.skill) bad.push(`${file}: missing skill`);
-      if (!fm.category) bad.push(`${file}: missing category`);
-      if (fm.category && !['onboarding', 'design', 'architecture', 'stories', 'qa', 'prototyping', 'team', 'release', 'ops'].includes(fm.category)) {
-        bad.push(`${file}: invalid category "${fm.category}"`);
-      }
+      // A command body is the prompt; an empty one invokes nothing.
+      const body = content.replace(/^---[\s\S]*?---/, '').trim();
+      if (!body) bad.push(`${file}: empty command body`);
     }
-    run('I6: All command files have valid frontmatter', () => {
+    run('I6: All command files have a description and a non-empty prompt body', () => {
       if (bad.length > 0) {
         throw new Error(`Issues:\n  ${bad.join('\n  ')}`);
       }
@@ -283,7 +286,7 @@ console.log('\n=== Cross-Cutting Invariants ===\n');
   }
 }
 
-{ // I10: skill-testing-framework catalog.yaml covers all skills in .agents/skills/
+{ // I10: skill-testing-framework catalog.yaml covers all skills in .framework/library/skills/
   const catalogPath = join(ROOT, 'skill-testing-framework', 'catalog.yaml');
   if (existsSync(catalogPath)) {
     const yaml = readFileSync(catalogPath, 'utf-8');
@@ -293,7 +296,7 @@ console.log('\n=== Cross-Cutting Invariants ===\n');
       return statSync(p).isDirectory() && existsSync(join(p, 'SKILL.md'));
     });
     const missing = skillDirs.filter(s => !cataloged.has(s));
-    run('I10: All skills in .agents/skills/ are cataloged in skill-testing-framework/catalog.yaml', () => {
+    run('I10: All skills in .framework/library/skills/ are cataloged in skill-testing-framework/catalog.yaml', () => {
       if (missing.length > 0) {
         throw new Error(`Skills not in catalog.yaml: ${missing.join(', ')}`);
       }

@@ -1,0 +1,30 @@
+{
+  "name": "ui",
+  "version": "1.0.0",
+  "description": "UX design, UI programming, accessibility, UI code rules.",
+  "default": false,
+  "depends": [
+    "core"
+  ],
+  "agents": [
+    "ux-designer",
+    "ui-programmer",
+    "accessibility-specialist"
+  ],
+  "skills": [
+    "ux-design",
+    "ux-review"
+  ],
+  "commands": [
+    "ux-design",
+    "ux-review"
+  ],
+  "rules": [
+    "ui-code"
+  ],
+  "docs": [],
+  "triggers": [
+    "more than 3 screens",
+    "accessibility requirements"
+  ]
+}

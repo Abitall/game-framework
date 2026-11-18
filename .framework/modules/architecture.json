@@ -1,0 +1,31 @@
+{
+  "name": "architecture",
+  "version": "1.0.0",
+  "description": "Architecture review, control manifest, design change propagation, design doc rules.",
+  "default": false,
+  "depends": [
+    "core"
+  ],
+  "agents": [
+    "lead-programmer"
+  ],
+  "skills": [
+    "architecture-review",
+    "create-control-manifest",
+    "propagate-design-change"
+  ],
+  "commands": [
+    "architecture-review",
+    "create-control-manifest",
+    "propagate-design-change"
+  ],
+  "rules": [
+    "design-docs"
+  ],
+  "docs": [],
+  "triggers": [
+    "more than 5 architectural modules",
+    "more than 5 ADRs",
+    "multiple contributors"
+  ]
+}

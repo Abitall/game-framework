@@ -2,7 +2,7 @@
  * Test suite for validate-skill-change hook (detectSkillChange)
  *
  * Tests behavioral equivalence with bash validate-skill-change.sh:
- *   - Detects file edits inside .agents/skills/ or .agents/commands/ (canonical)
+ *   - Detects file edits inside .opencode/skills/ or .opencode/commands/ (canonical)
  *   - Also matches .opencode/skills/ or .opencode/commands/ (backward compat)
  *   - Extracts skill/command name from path
  *   - Returns null for non-skill paths
@@ -20,15 +20,15 @@ import { detectSkillChange } from "../ccgs-hooks.ts"
 
 describe("validate-skill-change", () => {
 
-  // ── S1: Detects skill file in .agents/skills/ (canonical path) ──
-  it("S1: .agents/skills/ path — extracts name", () => {
-    const result = detectSkillChange("/project/.agents/skills/my-skill/SKILL.md")
+  // ── S1: Detects skill file in .opencode/skills/ (canonical path) ──
+  it("S1: .opencode/skills/ path — extracts name", () => {
+    const result = detectSkillChange("/project/.opencode/skills/my-skill/SKILL.md")
     assert.equal(result, "my-skill")
   })
 
-  // ── S2: Detects command file in .agents/commands/ (canonical path) ──
-  it("S2: .agents/commands/ path — extracts name", () => {
-    const result = detectSkillChange("/project/.agents/commands/my-command/COMMAND.md")
+  // ── S2: Detects command file in .opencode/commands/ (canonical path) ──
+  it("S2: .opencode/commands/ path — extracts name", () => {
+    const result = detectSkillChange("/project/.opencode/commands/my-command/COMMAND.md")
     assert.equal(result, "my-command")
   })
 
@@ -60,25 +60,25 @@ describe("validate-skill-change", () => {
     const rawResult = detectSkillChange("E:\\Project\\.opencode\\skills\\my-skill\\SKILL.md")
     assert.equal(rawResult, null)
     // After normalizePath (backslashes → forward slashes) it matches
-    const normResult = detectSkillChange("E:/Project/.agents/skills/my-skill/SKILL.md")
+    const normResult = detectSkillChange("E:/Project/.opencode/skills/my-skill/SKILL.md")
     assert.equal(normResult, "my-skill")
   })
 
   // ── S5: Relative path without leading / ──
   it("S5: Relative path — still extracts name", () => {
-    const result = detectSkillChange(".agents/commands/format-code/COMMAND.md")
+    const result = detectSkillChange(".opencode/commands/format-code/COMMAND.md")
     assert.equal(result, "format-code")
   })
 
   // ── S6: Deeply nested file inside skill directory ──
   it("S6: Deep file in skill dir — extracts name", () => {
-    const result = detectSkillChange("/project/.agents/skills/debugging/reference/examples.json")
+    const result = detectSkillChange("/project/.opencode/skills/debugging/reference/examples.json")
     assert.equal(result, "debugging")
   })
 
   // ── S7: Name with hyphens and numbers ──
   it("S7: Name with hyphens — extracted correctly", () => {
-    const result = detectSkillChange("/project/.agents/skills/test-driven-development/SCRIPTS.md")
+    const result = detectSkillChange("/project/.opencode/skills/test-driven-development/SCRIPTS.md")
     assert.equal(result, "test-driven-development")
   })
 
@@ -108,7 +108,7 @@ describe("validate-skill-change", () => {
 
   // ── S12: Path ending with the skill directory itself ──
   it("S12: Path ends at skill dir (no file) — still extracts name", () => {
-    const result = detectSkillChange("/project/.agents/skills/caveman")
+    const result = detectSkillChange("/project/.opencode/skills/caveman")
     assert.equal(result, "caveman")
   })
 })

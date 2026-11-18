@@ -863,6 +863,94 @@ skills:
     priority: low
     category: utility
 
+  - name: phaser-coder
+    spec: skill-testing-framework/skills/engine/phaser-coder.md
+    last_static: ""
+    last_static_result: ""
+    last_spec: ""
+    last_spec_result: ""
+    last_category: ""
+    last_category_result: ""
+    priority: high
+    category: engine
+
+  - name: pipeline-guard
+    spec: skill-testing-framework/skills/process/pipeline-guard.md
+    last_static: ""
+    last_static_result: ""
+    last_spec: ""
+    last_spec_result: ""
+    last_category: ""
+    last_category_result: ""
+    priority: high
+    category: process
+
+  - name: capture-solution
+    spec: skill-testing-framework/skills/process/capture-solution.md
+    last_static: ""
+    last_static_result: ""
+    last_spec: ""
+    last_spec_result: ""
+    last_category: ""
+    last_category_result: ""
+    priority: high
+    category: process
+
+  - name: publish-play
+    spec: skill-testing-framework/skills/process/publish-play.md
+    last_static: ""
+    last_static_result: ""
+    last_spec: ""
+    last_spec_result: ""
+    last_category: ""
+    last_category_result: ""
+    priority: high
+    category: process
+
+  - name: repo-init
+    spec: skill-testing-framework/skills/process/repo-init.md
+    last_static: ""
+    last_static_result: ""
+    last_spec: ""
+    last_spec_result: ""
+    last_category: ""
+    last_category_result: ""
+    priority: medium
+    category: process
+
+  - name: repo-sync
+    spec: skill-testing-framework/skills/process/repo-sync.md
+    last_static: ""
+    last_static_result: ""
+    last_spec: ""
+    last_spec_result: ""
+    last_category: ""
+    last_category_result: ""
+    priority: medium
+    category: process
+
+  - name: gauntlet
+    spec: skill-testing-framework/skills/review/gauntlet.md
+    last_static: ""
+    last_static_result: ""
+    last_spec: ""
+    last_spec_result: ""
+    last_category: ""
+    last_category_result: ""
+    priority: high
+    category: review
+
+  - name: tuning-panel
+    spec: skill-testing-framework/skills/engine/tuning-panel.md
+    last_static: ""
+    last_static_result: ""
+    last_spec: ""
+    last_spec_result: ""
+    last_category: ""
+    last_category_result: ""
+    priority: high
+    category: engine
+
 agents:
   # Tier 1 Directors
   - name: creative-director

@@ -1,5 +1,20 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    "docs/agents/stack.md",
+    "docs/agents/structure.md",
+    "docs/agents/modules.md",
+    "docs/agents/coordination.md",
+    "docs/agents/hierarchy.md",
+    "docs/agents/collaboration.md",
+    "docs/agents/coding.md",
+    "docs/agents/context.md",
+    "docs/agents/workflow.md",
+    "docs/agents/getting-started.md",
+    "docs/agents/quality.md",
+    "docs/agents/engine-reference.md",
+    "docs/agents/notes.md"
+  ],
   "plugins": [
     "./.opencode/plugins/ccgs-hooks.ts",
     "./.opencode/plugins/drift-detector.ts",
@@ -7,9 +22,14 @@
   ],
   "commands": {
     "hybrid-prototype": {
-      "template": "Run the hybrid-prototype skill: load .agents/skills/hybrid-prototype/SKILL.md and follow the fast-lane prototype workflow. Concept: $ARGUMENTS",
+      "template": "Run the hybrid-prototype skill: load .opencode/skills/hybrid-prototype/SKILL.md and follow the fast-lane prototype workflow. Concept: $ARGUMENTS",
       "description": "Fast-lane prototype for discovery phase — build a playable prototype in 2-3 days with minimal process overhead.",
       "agent": "prototyper"
+    },
+    "modules": {
+      "template": "List installed and available framework modules: run `node .framework/install.mjs list`, then explain what is active and which modules the current project is likely to need next, with the exact install command for each.",
+      "description": "Show installed and available framework modules, with install recommendations.",
+      "agent": "producer"
     }
   },
   "mcp": {
@@ -43,6 +63,15 @@
         "command": ["unity", "mcp"],
         "disabled": true,
         "codemode": false
+      },
+      "searxng": {
+        "type": "local",
+        "command": ["node", "tools/searxng-mcp.mjs"],
+        "disabled": true,
+        "codemode": false,
+        "environment": {
+          "SEARXNG_URL": "{env:SEARXNG_URL}"
+        }
       }
     }
   },
@@ -54,6 +83,10 @@
     { "action": "shell", "resource": "git rev-parse *", "effect": "allow" },
     { "action": "shell", "resource": "ls *", "effect": "allow" },
     { "action": "shell", "resource": "dir *", "effect": "allow" },
+    { "action": "shell", "resource": "node .framework/install.mjs list", "effect": "allow" },
+    { "action": "shell", "resource": "node .framework/install.mjs status", "effect": "allow" },
+    { "action": "shell", "resource": "node .framework/install.mjs doctor", "effect": "allow" },
+    { "action": "shell", "resource": "node .framework/install.mjs info *", "effect": "allow" },
     { "action": "shell", "resource": "python -m json.tool *", "effect": "allow" },
     { "action": "shell", "resource": "python -m pytest *", "effect": "allow" },
     { "action": "shell", "resource": "py -m pytest *", "effect": "allow" },
@@ -62,6 +95,8 @@
     { "action": "shell", "resource": "git push -f *", "effect": "deny" },
     { "action": "shell", "resource": "git reset --hard *", "effect": "deny" },
     { "action": "shell", "resource": "git clean -f *", "effect": "deny" },
+    { "action": "shell", "resource": "gh repo delete *", "effect": "deny" },
+    { "action": "shell", "resource": "gh auth token *", "effect": "deny" },
     { "action": "shell", "resource": "sudo *", "effect": "deny" },
     { "action": "shell", "resource": "chmod 777 *", "effect": "deny" },
     { "action": "shell", "resource": "*>.env*", "effect": "deny" },

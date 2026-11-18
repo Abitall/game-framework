@@ -268,8 +268,8 @@ describe("detectAgentDrift", () => {
   it("returns no issues for complete agent (all frontmatter + all sections)", () => {
     const root = tempRoot()
     try {
-      write(root, ".agents/agents/test-agent.md", COMPLETE_AGENT_CONTENT)
-      const issues = detectAgentDrift(root, ".agents/agents/test-agent.md")
+      write(root, ".opencode/agents/test-agent.md", COMPLETE_AGENT_CONTENT)
+      const issues = detectAgentDrift(root, ".opencode/agents/test-agent.md")
       assert.strictEqual(issues.length, 0, `Expected 0 issues, got ${issues.length}: ${JSON.stringify(issues)}`)
     } finally {
       cleanup(root)
@@ -280,8 +280,8 @@ describe("detectAgentDrift", () => {
     const root = tempRoot()
     try {
       const content = `# No Frontmatter Agent\n\nThis file has no frontmatter block.`
-      write(root, ".agents/agents/bad-agent.md", content)
-      const issues = detectAgentDrift(root, ".agents/agents/bad-agent.md")
+      write(root, ".opencode/agents/bad-agent.md", content)
+      const issues = detectAgentDrift(root, ".opencode/agents/bad-agent.md")
       assert.ok(issues.length > 0, "should report issues")
       const hasHigh = issues.some((i) => i.severity === "HIGH" && i.section === "frontmatter")
       assert.ok(hasHigh, JSON.stringify(issues))
@@ -298,8 +298,8 @@ describe("detectAgentDrift", () => {
 description: Incomplete agent
 ---
 # Incomplete Agent`
-      write(root, ".agents/agents/incomplete-agent.md", content)
-      const issues = detectAgentDrift(root, ".agents/agents/incomplete-agent.md")
+      write(root, ".opencode/agents/incomplete-agent.md", content)
+      const issues = detectAgentDrift(root, ".opencode/agents/incomplete-agent.md")
       const highFields = issues
         .filter((i) => i.severity === "HIGH" && i.section.startsWith("frontmatter."))
         .map((i) => i.section)
@@ -339,8 +339,8 @@ Basic communication.
 Some padding to approach 80 lines.
 ${Array.from({ length: 70 }, (_, i) => `Line ${i + 1} for padding.`).join("\n")}
 `
-      write(root, ".agents/agents/sparse-agent.md", content)
-      const issues = detectAgentDrift(root, ".agents/agents/sparse-agent.md")
+      write(root, ".opencode/agents/sparse-agent.md", content)
+      const issues = detectAgentDrift(root, ".opencode/agents/sparse-agent.md")
       const mediumSections = issues
         .filter((i) => i.severity === "MEDIUM" && !i.section.startsWith("frontmatter"))
         .map((i) => i.section)
@@ -382,8 +382,8 @@ describe("detectSkillDrift", () => {
   it("returns no issues for complete skill", () => {
     const root = tempRoot()
     try {
-      write(root, ".agents/skills/test-skill/SKILL.md", COMPLETE_SKILL_CONTENT)
-      const issues = detectSkillDrift(root, ".agents/skills/test-skill/SKILL.md")
+      write(root, ".opencode/skills/test-skill/SKILL.md", COMPLETE_SKILL_CONTENT)
+      const issues = detectSkillDrift(root, ".opencode/skills/test-skill/SKILL.md")
       assert.strictEqual(issues.length, 0, `Expected 0 issues, got ${issues.length}: ${JSON.stringify(issues)}`)
     } finally {
       cleanup(root)
@@ -394,8 +394,8 @@ describe("detectSkillDrift", () => {
     const root = tempRoot()
     try {
       const content = `# No Frontmatter Skill\n\nThis skill has no frontmatter block.`
-      write(root, ".agents/skills/bad-skill/SKILL.md", content)
-      const issues = detectSkillDrift(root, ".agents/skills/bad-skill/SKILL.md")
+      write(root, ".opencode/skills/bad-skill/SKILL.md", content)
+      const issues = detectSkillDrift(root, ".opencode/skills/bad-skill/SKILL.md")
       const hasHigh = issues.some((i) => i.severity === "HIGH" && i.section === "frontmatter")
       assert.ok(hasHigh, JSON.stringify(issues))
     } finally {
@@ -424,9 +424,9 @@ describe("detectCommandDrift", () => {
     const root = tempRoot()
     try {
       // Create the referenced skill directory so the skill reference check passes
-      write(root, ".agents/skills/test-skill/SKILL.md", COMPLETE_SKILL_CONTENT)
-      write(root, ".agents/commands/test-cmd.md", COMPLETE_COMMAND_CONTENT)
-      const issues = detectCommandDrift(root, ".agents/commands/test-cmd.md")
+      write(root, ".opencode/skills/test-skill/SKILL.md", COMPLETE_SKILL_CONTENT)
+      write(root, ".opencode/commands/test-cmd.md", COMPLETE_COMMAND_CONTENT)
+      const issues = detectCommandDrift(root, ".opencode/commands/test-cmd.md")
       assert.strictEqual(issues.length, 0, `Expected 0 issues, got ${issues.length}: ${JSON.stringify(issues)}`)
     } finally {
       cleanup(root)
@@ -440,8 +440,8 @@ describe("detectCommandDrift", () => {
 description: Only description
 ---
 # Incomplete Command`
-      write(root, ".agents/commands/incomplete-cmd.md", content)
-      const issues = detectCommandDrift(root, ".agents/commands/incomplete-cmd.md")
+      write(root, ".opencode/commands/incomplete-cmd.md", content)
+      const issues = detectCommandDrift(root, ".opencode/commands/incomplete-cmd.md")
       const highFields = issues
         .filter((i) => i.severity === "HIGH")
         .map((i) => i.section)
@@ -467,8 +467,8 @@ skill: nonexistent-skill
 category: testing
 ---
 # Broken Command`
-      write(root, ".agents/commands/broken-cmd.md", content)
-      const issues = detectCommandDrift(root, ".agents/commands/broken-cmd.md")
+      write(root, ".opencode/commands/broken-cmd.md", content)
+      const issues = detectCommandDrift(root, ".opencode/commands/broken-cmd.md")
       const skillIssues = issues.filter(
         (i) => i.section === "frontmatter.skill" && i.severity === "HIGH",
       )
