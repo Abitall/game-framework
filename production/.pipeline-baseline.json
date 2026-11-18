@@ -1,0 +1,32 @@
+{
+  "gates": [
+    "Phase 0 — Start::project under git",
+    "Phase 0 — Start::framework modules installed",
+    "Phase 0 — Start::engine module matches the stack",
+    "Phase 1 — Concept::concept approved by the user",
+    "Phase 1 — Concept::3-5 falsifiable pillars written",
+    "Phase 1 — Concept::scope boundary stated (what this game is not)",
+    "Phase 2 — Design::systems decomposed and ordered",
+    "Phase 2 — Design::core loop GDD approved",
+    "Phase 2 — Design::every system GDD has the 8 required sections",
+    "Phase 2 — Design::cross-GDD review passed",
+    "Phase 3 — Architecture::architecture document accepted",
+    "Phase 3 — Architecture::at least one ADR for the risky decision",
+    "Phase 3 — Architecture::control manifest lists who may change what",
+    "Phase 4 — Pre-production::dev host runs on port 5174",
+    "Phase 4 — Pre-production::playtest host runs on port 5173",
+    "Phase 4 — Pre-production::core loop playable end to end",
+    "Phase 4 — Pre-production::first playtest recorded",
+    "Phase 5 — Production::every system has tests for its critical path",
+    "Phase 5 — Production::balance pass done with numbers, not opinions",
+    "Phase 5 — Production::no hardcoded gameplay values",
+    "Phase 5 — Production::encoding check clean",
+    "Phase 6 — Polish::first 60 seconds reviewed",
+    "Phase 6 — Polish::accessibility modes verified",
+    "Phase 6 — Polish::performance within budget",
+    "Phase 6 — Polish::solutions journal reviewed for reusable entries",
+    "Phase 7 — Release::release checklist complete",
+    "Phase 7 — Release::playtest snapshot published and approved",
+    "Phase 7 — Release::changelog written"
+  ]
+}

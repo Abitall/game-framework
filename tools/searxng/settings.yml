@@ -1,0 +1,20 @@
+# SearXNG settings for the game framework.
+# JSON output is required by tools/searxng-mcp.mjs.
+use_default_settings: true
+
+general:
+  instance_name: "game-framework-search"
+
+search:
+  safe_search: 0
+  formats:
+    - html
+    - json
+
+server:
+  secret_key: "change-me-local-only"
+  limiter: false
+  image_proxy: false
+
+ui:
+  default_locale: "en"
