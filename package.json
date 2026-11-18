@@ -21,6 +21,8 @@
     "modules:list": "node .framework/install.mjs list",
     "modules:doctor": "node .framework/install.mjs doctor",
     "check:self": "node .framework/tools/self-check.mjs",
+    "check:env": "node tools/envcheck.mjs",
+    "capture": "node tools/capture.mjs",
     "check:self:quick": "node .framework/tools/self-check.mjs --quick",
     "agents:build": "node .framework/tools/build-agents-config.mjs",
     "agents:model": "node tools/change-model.mjs",

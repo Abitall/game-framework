@@ -951,6 +951,17 @@ skills:
     priority: high
     category: engine
 
+  - name: ui-editor
+    spec: skill-testing-framework/skills/engine/ui-editor.md
+    last_static: ""
+    last_static_result: ""
+    last_spec: ""
+    last_spec_result: ""
+    last_category: ""
+    last_category_result: ""
+    priority: high
+    category: engine
+
 agents:
   # Tier 1 Directors
   - name: creative-director

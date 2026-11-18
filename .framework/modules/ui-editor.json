@@ -1,0 +1,22 @@
+{
+  "name": "ui-editor",
+  "version": "1.0.0",
+  "description": "Dev-only in-game UI editor for Phaser: select, drag, nudge, edit properties, export layout JSON.",
+  "default": false,
+  "depends": [
+    "engine-phaser"
+  ],
+  "agents": [],
+  "skills": [
+    "ui-editor"
+  ],
+  "commands": [
+    "ui-editor"
+  ],
+  "rules": [],
+  "docs": [],
+  "triggers": [
+    "the user wants to move UI elements without asking the agent",
+    "layout tuning by feel"
+  ]
+}

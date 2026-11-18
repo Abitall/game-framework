@@ -170,6 +170,14 @@ const SPEC = [
     triggers: ["project stack is Bevy"],
   },
 
+  {
+    name: "ui-editor",
+    description: "Dev-only in-game UI editor for Phaser: select, drag, nudge, edit properties, export layout JSON.",
+    depends: ["engine-phaser"],
+    skills: ["ui-editor"],
+    triggers: ["the user wants to move UI elements without asking the agent", "layout tuning by feel"],
+  },
+
   // ── Domains ───────────────────────────────────────────────────────────────
   {
     name: "architecture",

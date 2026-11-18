@@ -151,8 +151,15 @@ function doctorOk() {
 if (!doctorOk()) fail("doctor is not clean before the round-trip test")
 
 if (!QUICK) {
-  const stateBefore = fs.readFileSync(path.join(ACTIVE, "modules", "installed.json"), "utf8")
+  const statePath = path.join(ACTIVE, "modules", "installed.json")
+  const stateBefore = fs.readFileSync(statePath, "utf8")
+  const installedNow = new Set(Object.keys(JSON.parse(stateBefore).modules ?? {}))
+
   for (const m of manifests.filter((x) => !x.default)) {
+    // Only round-trip modules that are not installed: removing a module that is
+    // part of the baseline would change the state by design.
+    if (installedNow.has(m.name)) continue
+
     const add = run([path.join(ROOT, ".framework", "install.mjs"), "add", m.name])
     if (add.status !== 0) {
       fail(`add ${m.name} failed: ${add.stderr.trim()}`)
@@ -173,6 +180,16 @@ if (!QUICK) {
 
     const remove = run([path.join(ROOT, ".framework", "install.mjs"), "remove", m.name])
     if (remove.status !== 0) fail(`remove ${m.name} failed: ${remove.stderr.trim()}`)
+
+    // Dependencies pulled in by the add (for example engine-phaser for
+    // ui-editor) are not part of the baseline; remove them too.
+    const after = JSON.parse(fs.readFileSync(statePath, "utf8")).modules ?? {}
+    for (const name of Object.keys(after)) {
+      if (installedNow.has(name)) continue
+      const cleanup = run([path.join(ROOT, ".framework", "install.mjs"), "remove", name])
+      if (cleanup.status !== 0) fail(`cleanup of ${name} after ${m.name} failed`)
+    }
+
     if (!doctorOk()) fail(`doctor failed after removing ${m.name}`)
   }
 
