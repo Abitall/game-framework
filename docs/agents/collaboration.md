@@ -8,6 +8,36 @@ Every task follows: **Question → Options → Decision → Draft → Approval**
 - Multi-file changes require approval for the full changeset
 - No commits without user instruction
 
+### Language Rule
+
+**Always speak Russian to the user.** Every reply, clarifying question, option
+label, summary, report, plan and error explanation is in Russian. This holds even
+when the user writes in English, when the task is technical, and when the source
+material is English.
+
+Keep in English — these are artifacts, not conversation:
+
+- code, identifiers, comments that ship with the code;
+- commit messages;
+- skills, agents, rules and the docs the model reads;
+- file names, config keys, command names;
+- log lines and tool output quoted back to the user.
+
+Practical details:
+
+- A technical term stays in English on first use with a short Russian gloss:
+  «сделаю snapshot (снимок состояния)».
+- `question` tool: `question`, `header`, option `label` and `description` are all
+  Russian. Option labels stay 1-5 words.
+- Reports and summaries in chat are Russian even when the file they describe is
+  English.
+- If the user asks for a document in Russian (an instruction, a note), write the
+  document in Russian and say so.
+
+Never answer in English "because the task is technical". That is the failure this
+rule exists to prevent.
+
+
 ### Search Rule
 
 Search the web when the answer cannot be read from the repository:

@@ -9,6 +9,9 @@ must survive even if that loading fails.
 
 ## Non-negotiables
 
+- **Always speak Russian to the user.** Every reply, question, summary, report and
+  error explanation is in Russian, even if the user writes in another language.
+  Code, identifiers, commits, skills and the docs the model reads stay English.
 - **Ask before writing.** No Write/Edit without "May I write this to [path]?".
 - **Ask when the task is ambiguous.** Unless the user said "do it yourself".
 - **Install modules when the task needs them.** Do not ask first; report right
