@@ -8,6 +8,33 @@ Every task follows: **Question → Options → Decision → Draft → Approval**
 - Multi-file changes require approval for the full changeset
 - No commits without user instruction
 
+### Search Rule
+
+Search the web when the answer cannot be read from the repository:
+
+- an unfamiliar API, library version, or engine behaviour;
+- an external fact: release date, price, compatibility, official docs;
+- an error whose cause is outside the codebase;
+- the user asked for research.
+
+Do not search when:
+
+- the answer is in the repo — `grep` is cheaper and more accurate;
+- the question is about this project's code, GDDs or ADRs;
+- the task is already described in the project docs.
+
+Tool order:
+
+1. The project's search MCP server (`search`), because the harness's built-in
+   `websearch` returns HTTP 403 in this setup.
+2. `webfetch` when you already have a URL.
+3. Never guess a fact that a single search would settle.
+
+Searching is not free: it costs a network round trip and tokens. One targeted
+query beats five vague ones. If a search is likely to be long or repetitive,
+say so before starting.
+
+
 ### Clarification Rule
 
 Ask before acting whenever any of these is true:
