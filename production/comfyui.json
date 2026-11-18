@@ -1,0 +1,5 @@
+{
+  "$comment": "Local ComfyUI used by the comfyui skill. Override with COMFYUI_URL / COMFYUI_DIR.",
+  "url": "http://127.0.0.1:8188",
+  "dir": "D:\\Program Files\\ComfyUI"
+}

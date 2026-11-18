@@ -1,0 +1,21 @@
+{
+  "name": "comfyui",
+  "version": "1.0.0",
+  "description": "Generate images on the local GPU through ComfyUI: prompt, look, judge, iterate. No API keys, no per-image cost.",
+  "default": true,
+  "depends": [
+    "core"
+  ],
+  "agents": [],
+  "skills": [
+    "comfyui"
+  ],
+  "commands": [
+    "comfyui"
+  ],
+  "rules": [],
+  "docs": [],
+  "triggers": [
+    "the user wants generated images and ComfyUI runs locally"
+  ]
+}

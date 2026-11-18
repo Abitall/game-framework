@@ -72,6 +72,15 @@
           "SEARXNG_URL": "{env:SEARXNG_URL}",
           "SEARCH_PROVIDER": "{env:SEARCH_PROVIDER}"
         }
+      },
+      "comfyui": {
+        "type": "local",
+        "command": ["node", "tools/comfyui.mjs"],
+        "codemode": false,
+        "environment": {
+          "COMFYUI_URL": "{env:COMFYUI_URL}",
+          "COMFYUI_DIR": "{env:COMFYUI_DIR}"
+        }
       }
     }
   },

@@ -208,6 +208,14 @@
         "skills\\shutdown\\SKILL.md": "6f899099116460edebb4682dd9a797d72cd212b508cefffbe18099f7495087f1",
         "commands\\shutdown.md": "3fa17ebbf33e70db9620b7cb838a8ad8ce40dced7fc00b2aa8666514b4f3bf4e"
       }
+    },
+    "comfyui": {
+      "version": "1.0.0",
+      "installedAt": "2026-11-18T19:55:55.784Z",
+      "files": {
+        "skills\\comfyui\\SKILL.md": "21201292812e0c8c495955fe1f96e16263fae9284af5568c27c074bcf8ebfb55",
+        "commands\\comfyui.md": "1cda2c192f6fc33b904d4aaaf288dd0b2762494585015f96b6207289d0b98064"
+      }
     }
   }
 }

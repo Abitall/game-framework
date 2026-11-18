@@ -196,6 +196,15 @@ const SPEC = [
     triggers: ["the user leaves a long task overnight and asks the machine to power off when done"],
   },
 
+  {
+    name: "comfyui",
+    default: true,
+    description: "Generate images on the local GPU through ComfyUI: prompt, look, judge, iterate. No API keys, no per-image cost.",
+    depends: ["core"],
+    skills: ["comfyui"],
+    triggers: ["the user wants generated images and ComfyUI runs locally"],
+  },
+
   // ── Domains ───────────────────────────────────────────────────────────────
   {
     name: "architecture",
