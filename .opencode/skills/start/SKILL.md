@@ -8,6 +8,11 @@ allowed-tools: Read, Glob, Grep, Write, question
 
 # Guided Onboarding
 
+**Language:** the user is Russian-speaking. Every message you send, and every
+`question` option label and description, is in **Russian**. The text below is
+English because the framework is English — translate it, do not copy it.
+"Exact options" means the same set of choices, not the same words.
+
 **Question-tool discipline:** whenever a step says to use `question`, make that tool call in the same turn, then stop. Do not announce it ("I'll call question", "let me ask"), describe its arguments in prose, or write the call as text or pseudo-code. Use one of two shapes, depending on the harness. OpenCode: `{"questions": [{"question": "...", "header": "...", "options": [{"label": "...", "description": "..."}]}]}`, where `header` (max 30 chars) and each option's `description` are required, and `questions` must be non-empty. oh-my-pi: `{"question": "...", "options": [{"label": "...", "description": "..."}]}`, where `header` is optional and `description` may be omitted. Never send a `prompt` field or bare-string options. The "Prompt:" and "Options:" labels in this skill describe what to show the user, not parameter names. Analysis goes in ordinary text before the call; the user's answer is the next input.
 
 This skill writes up to two files:

@@ -65,7 +65,9 @@ conversationally (not as a checklist):
   or let you express yourself? *(Use `question` for this — constrained choice.)*
 
 **Practical constraints** (shape the sandbox before brainstorming).
-Bundle these into a single multi-tab `question` with these exact tab labels:
+Bundle these into a single multi-tab `question`. Translate every tab label,
+question and option into Russian; the English wording below is the meaning, not
+the text to copy:
 - Tab "Experience" — "What kind of experience do you most want players to have?" (Challenge & Mastery / Story & Discovery / Expression & Creativity / Relaxation & Flow)
 - Tab "Timeline" — "What's your realistic development timeline?" (Weeks / Months / 1-2 years / Multi-year)
 - Tab "Dev level" — "Where are you in your dev journey?" (First game / Shipped before / Professional background)

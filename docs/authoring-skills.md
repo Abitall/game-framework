@@ -111,6 +111,19 @@ as static context text.
 
 ## Workflow Structure Guidelines
 
+### Output language
+
+A skill's own text is English, but what the user sees is Russian. Any skill that
+greets the user or shows a `question` must say so explicitly, for example:
+
+```markdown
+**Language:** every message and every `question` option is in Russian. The text
+below is English because the framework is English — translate it, do not copy it.
+```
+
+Without this line the model copies English option labels verbatim, because
+"use these exact options" reads as "copy these strings".
+
 ### Phases
 
 Break skills into numbered phases. Each phase should:
