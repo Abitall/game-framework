@@ -200,6 +200,14 @@
         "skills\\obsidian\\SKILL.md": "62ce724777a36f61037605fa87d2bb668f9cd3014e0c46aef6dc760580fdbd9a",
         "commands\\obsidian.md": "dcff092e59f5a6df6442966eb7aab4edb3164c1affe9bdcab998d2605ad2d541"
       }
+    },
+    "shutdown": {
+      "version": "1.0.0",
+      "installedAt": "2026-11-18T19:20:42.717Z",
+      "files": {
+        "skills\\shutdown\\SKILL.md": "6f899099116460edebb4682dd9a797d72cd212b508cefffbe18099f7495087f1",
+        "commands\\shutdown.md": "3fa17ebbf33e70db9620b7cb838a8ad8ce40dced7fc00b2aa8666514b4f3bf4e"
+      }
     }
   }
 }

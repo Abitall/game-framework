@@ -187,6 +187,15 @@ const SPEC = [
     triggers: ["the user wants notes, ideas or plans in Obsidian", "a thinking space outside the project docs"],
   },
 
+  {
+    name: "shutdown",
+    default: true,
+    description: "Shut the machine down after a long task finishes, only when the user asked. Two-step guard: arm, then fire on success.",
+    depends: ["core"],
+    skills: ["shutdown"],
+    triggers: ["the user leaves a long task overnight and asks the machine to power off when done"],
+  },
+
   // ── Domains ───────────────────────────────────────────────────────────────
   {
     name: "architecture",

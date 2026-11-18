@@ -36,3 +36,6 @@ tools/aseprite-mcp/.venv/
 
 # Playtest snapshot (built by tools/publish-play.mjs)
 dist-play/
+
+# Runtime state (armed shutdown)
+production/shutdown.json

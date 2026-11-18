@@ -1,0 +1,21 @@
+{
+  "name": "shutdown",
+  "version": "1.0.0",
+  "description": "Shut the machine down after a long task finishes, only when the user asked. Two-step guard: arm, then fire on success.",
+  "default": true,
+  "depends": [
+    "core"
+  ],
+  "agents": [],
+  "skills": [
+    "shutdown"
+  ],
+  "commands": [
+    "shutdown"
+  ],
+  "rules": [],
+  "docs": [],
+  "triggers": [
+    "the user leaves a long task overnight and asks the machine to power off when done"
+  ]
+}

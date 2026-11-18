@@ -43,7 +43,6 @@
       "aseprite": {
         "type": "local",
         "command": ["uv", "--directory", "tools/aseprite-mcp", "run", "-m", "aseprite_mcp"],
-        "disabled": true,
         "codemode": false,
         "environment": {
           "ASEPRITE_PATH": "{env:ASEPRITE_PATH}"
@@ -88,6 +87,7 @@
     { "action": "shell", "resource": "node .framework/install.mjs status", "effect": "allow" },
     { "action": "shell", "resource": "node .framework/install.mjs doctor", "effect": "allow" },
     { "action": "shell", "resource": "node .framework/install.mjs info *", "effect": "allow" },
+    { "action": "shell", "resource": "node tools/shutdown.mjs *", "effect": "allow" },
     { "action": "shell", "resource": "python -m json.tool *", "effect": "allow" },
     { "action": "shell", "resource": "python -m pytest *", "effect": "allow" },
     { "action": "shell", "resource": "py -m pytest *", "effect": "allow" },
