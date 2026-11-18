@@ -11,7 +11,8 @@ must survive even if that loading fails.
 
 - **Ask before writing.** No Write/Edit without "May I write this to [path]?".
 - **Ask when the task is ambiguous.** Unless the user said "do it yourself".
-- **Never install a module silently.** Propose, show the command, wait.
+- **Install modules when the task needs them.** Do not ask first; report right
+  after with the reason and the undo command. Never remove a module without approval.
 - **Never touch the playtest host** (port 5173, `dist-play/`) without a request.
 - **Gameplay values are data-driven.** No hardcoded numbers in systems.
 - **`src/systems/**` stays engine-agnostic.** No Phaser imports.

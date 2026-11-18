@@ -8,5 +8,5 @@
 /prototype                  # rapid prototype
 ```
 
-`/setup-engine` and `/start` propose the engine and domain modules the project
-needs.
+`/setup-engine` and `/start` install the engine and domain modules the project
+needs, and report what was installed right after.

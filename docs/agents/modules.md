@@ -48,16 +48,24 @@ node .framework/install.mjs doctor
 | `team-orchestration` | team of 3+ people |
 | `analytics` | telemetry, A/B testing, analytics backend |
 
-### Module advisor rule
+### Module rule
 
-**If a task needs a capability that lives in an uninstalled module, propose it.**
+**Install a module when the task needs it. Do not ask first.**
 
-1. Name the module and give a one-line reason.
-2. Show the exact command: `node .framework/install.mjs add <module>`.
-3. Wait for approval. Never install silently.
-4. After approval, install, then continue the task.
+1. Check `node .framework/install.mjs list` before claiming a capability is missing.
+2. Run `node .framework/install.mjs add <module>`. Dependencies come with it.
+3. Report immediately after, in one short block:
+   - which module, and the one-line reason;
+   - what it added (agents, skills, rules);
+   - the exact undo command: `node .framework/install.mjs remove <module>`;
+   - any file the installer skipped because it was modified.
+4. Continue the task.
 
-Check `node .framework/install.mjs list` before claiming a capability is
-missing. Typical triggers: engine choice → `engine-*`; second language →
-`localization`; telemetry → `analytics`; file-based bug tracking →
-`qa-advanced`; public launch → `release-launch`.
+Removal is different: `remove` deletes files, so it always asks first.
+
+Never install "just in case". Every installed module costs context, so the reason
+must be the current task, not a possible future one.
+
+Typical triggers: engine choice → `engine-*`; second language → `localization`;
+telemetry → `analytics`; file-based bug tracking → `qa-advanced`; public launch →
+`release-launch`; moving UI by hand → `ui-editor`.
