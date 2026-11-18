@@ -1,7 +1,7 @@
 {
   "name": "game-framework",
   "version": "1.0.0",
-  "description": "Indie game development framework for OpenCode: 27 modules, 52 agents, 84 skills. Phaser 4 and Unity 6 support.",
+  "description": "Indie game development framework for OpenCode: 31 modules, 52 agents, 90 skills. Phaser 4 and Unity 6 support.",
   "private": true,
   "type": "commonjs",
   "main": ".framework/install.mjs",
@@ -53,7 +53,6 @@
   "author": "Abitall",
   "license": "MIT",
   "devDependencies": {
-    "minimatch": "^10.2.5",
     "tsx": "^4.23.1"
   }
 }

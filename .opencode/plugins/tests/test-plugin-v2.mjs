@@ -11,11 +11,9 @@ const runtimePlugins = {
   "changelog-generator": await import("../changelog-generator.ts"),
 }
 
-const modulePlugins = {
-  "ccgs-hooks": await import("../../modules/core/plugins/ccgs-hooks.ts"),
-  "drift-detector": await import("../../modules/core/plugins/drift-detector.ts"),
-  "changelog-generator": await import("../../modules/core/plugins/changelog-generator.ts"),
-}
+// Plugins live only in .opencode/plugins now; modules are manifests, not copies.
+// Loading the same module twice still exercises duplicate registration.
+const modulePlugins = runtimePlugins
 
 function definition(module) {
   return module.default?.default ?? module.default
@@ -214,7 +212,7 @@ describe("OpenCode V2 hook behavior", () => {
 
   it("ignores foreign session-created events in both drift-detector copies", async () => {
     const root = makeTempProject("ocgs-v2-foreign-drift-")
-    const agentDir = path.join(root, ".agents", "agents")
+    const agentDir = path.join(root, ".opencode", "agents")
     fs.mkdirSync(agentDir, { recursive: true })
     fs.writeFileSync(path.join(agentDir, "broken.md"), "Missing required frontmatter\\n")
     const plugins = [runtimePlugins["drift-detector"], modulePlugins["drift-detector"]]
@@ -415,7 +413,7 @@ describe("OpenCode V2 hook behavior", () => {
 
   it("runs the drift scan for a V2 session-created event", async () => {
     const root = makeTempProject("ocgs-v2-event-")
-    const agentDir = path.join(root, ".agents", "agents")
+    const agentDir = path.join(root, ".opencode", "agents")
     fs.mkdirSync(agentDir, { recursive: true })
     fs.writeFileSync(path.join(agentDir, "broken.md"), "Missing required frontmatter\\n")
     const plugin = definition(runtimePlugins["drift-detector"])
@@ -442,7 +440,7 @@ describe("OpenCode V2 hook behavior", () => {
 
   it("passes V2 tool input to drift detection after a successful edit", async () => {
     const root = makeTempProject("ocgs-v2-drift-")
-    const agentDir = path.join(root, ".agents", "agents")
+    const agentDir = path.join(root, ".opencode", "agents")
     fs.mkdirSync(agentDir, { recursive: true })
     fs.writeFileSync(path.join(agentDir, "broken.md"), "Missing required frontmatter\n")
     const plugin = definition(runtimePlugins["drift-detector"])
