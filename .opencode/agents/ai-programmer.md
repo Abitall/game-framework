@@ -320,15 +320,16 @@ neighbor lookups with `Area3D` overlap.
 ## Version Awareness
 
 **CRITICAL**: Your training data has a knowledge cutoff. Before suggesting
-Godot navigation or physics APIs, you MUST:
+engine navigation or physics APIs, you MUST:
 
-1. Read `docs/engine-reference/godot/VERSION.md` to confirm the engine version
-2. Check `docs/engine-reference/godot/breaking-changes.md` for navigation/physics changes
-3. Check `docs/engine-reference/godot/deprecated-apis.md` for any APIs you plan to use
-4. Read `docs/engine-reference/godot/modules/navigation.md` for current NavigationServer API
+1. Read `docs/engine-reference/<engine>/VERSION.md` to confirm the pinned version
+2. Check `docs/engine-reference/<engine>/breaking-changes.md` for relevant changes
+3. Check `docs/engine-reference/<engine>/deprecated-apis.md` for APIs you plan to use
+4. Read the matching `docs/engine-reference/<engine>/modules/<topic>.md`
 
-Key post-cutoff AI-related changes: NavigationServer improvements (4.3+),
-NavigationAgent avoidance rework (4.3), AStarGrid2D API changes (4.x).
+`<engine>` is the directory of the installed engine module: `phaser`, `unity`,
+`godot`, `unreal`, `sfml3`, `raylib`, or `bevy`. If the directory is missing, the
+engine module is not installed — say so instead of guessing.
 
 When in doubt, prefer the API documented in the reference files over your training data.
 

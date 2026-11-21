@@ -62,6 +62,13 @@ Evaluate against the Design Document Standard checklist:
 - Does this create unintended interactions with other systems?
 - Is this consistent with the game's established tone and pillars?
 
+Stay inside this document. Value conflicts between documents — the same item at
+two prices, the same constant with two numbers — belong to `/consistency-check`,
+which greps the registry; cross-document design theory belongs to
+`/review-all-gdds`. Report a suspicion here, do not hunt for it: two skills
+hunting the same fact is how one project collects three reports saying the same
+thing and fixes it three times.
+
 ---
 
 ## Phase 3b: Adversarial Specialist Review (full mode only)

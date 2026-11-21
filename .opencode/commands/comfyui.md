@@ -1,7 +1,9 @@
 ---
-description: "Generate images on the local GPU through ComfyUI: write the"
+description: "Create images: choose the medium (code, Aseprite, ComfyUI),"
 ---
 
-Use the `comfyui` skill (`.opencode/skills/comfyui/SKILL.md`).
+Read `.opencode/skills/comfyui/SKILL.md` and execute its workflow now.
+Treat this message as the invocation: do not answer with a description of the
+skill, and do not ask whether to begin.
 
 $ARGUMENTS

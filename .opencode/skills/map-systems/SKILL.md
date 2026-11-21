@@ -1,6 +1,6 @@
 ---
 name: map-systems
-description: "Decompose a game concept into individual systems, map dependencies, prioritize design order, and create the systems index."
+description: "Decompose a game concept into a capped set of systems (3-5 active, the rest backlog), map dependencies, prioritize design order, and create the systems index."
 argument-hint: "[next | system-name] [--review full|lean|solo]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, question, TodoWrite, Task
@@ -23,6 +23,28 @@ Also resolve the review mode (once, store for all gate spawns this run):
 3. Else → default to `lean`
 
 See `docs/framework/director-gates.md` for the full check pattern.
+
+---
+
+## Phase 0: Refuse before something can be played
+
+A system may be designed only after its mechanic can be played by hand. Check
+two things first, silently:
+
+- `design/gdd/game-concept.md` exists
+- `package.json` has `check:slice` and `npm run check:slice` exits 0, or a
+  prototype exists in `prototypes/`
+
+If a concept is missing, fail as before. If nothing can be played, stop:
+
+> "There is nothing to decompose yet — no playable skeleton and no prototype.
+> Run `/prototype` first: one core mechanic you can play today. Designing
+> systems that cannot be played is how a project reaches twenty-eight documents
+> before the first minute of gameplay, and every one of them is a guess."
+
+Do not enumerate systems in that case. The user may override with an explicit
+"map them anyway" — then record in the index header:
+`> **No playable mechanic yet** — this index is a hypothesis until <mechanics> play.`
 
 ---
 
@@ -102,6 +124,40 @@ Then use `question` to capture feedback:
 - "Are there systems listed that this game does NOT need?"
 
 Iterate until the user approves the enumeration.
+
+---
+
+### Step 2d: Cut to the core (hard cap)
+
+The enumeration is a candidate list, not a plan. Before mapping dependencies,
+cut it down into three piles and say the counts out loud:
+
+- **Active — at most five systems.** Designed and built now.
+- **Backlog — everything else.** Name it, one line on what it would add.
+- **Cut — what the game does not need.** Say so explicitly; a list that only
+  grows is how scope escapes.
+
+More than five active systems is not ambition, it is deferred checking. Every
+system designed before it can be played multiplies the ways the documents can
+disagree, and none of those disagreements can be settled by playing.
+
+For each active system the user must answer two questions in one sentence:
+
+1. **What does the player do by hand?** A click, a drag, a choice, a decision —
+   not "the system tracks…" and not "the data model supports…".
+2. **How do we check it in ten minutes?** A concrete action and the expected
+   result, e.g. "sell three cards, see money fall, die on day 4".
+
+If either answer is missing, the system is not ready to be designed. Move it to
+the backlog rather than inventing the answer for the user — the meaning of a
+system is the owner's decision, not the agent's.
+
+Use `question` to confirm the cut:
+
+> "Active core: [list]. Backlog: [list]. Cut: [list]. Are these the few we build
+> first?"
+
+Record all three piles in the index. A system in the backlog is not a promise.
 
 ---
 
@@ -219,6 +275,8 @@ This is the order the team should write GDDs in.
 Using the template at `docs/framework/templates/systems-index.md`, populate the
 systems index with all data from Phases 2-4:
 - Fill the enumeration table
+- Fill "player does by hand" and "ten-minute check" for every **active** system
+- Fill the backlog and the cut list, so the scope boundary is visible
 - Fill the dependency map
 - Fill the recommended design order
 - Fill the high-risk systems
@@ -296,6 +354,12 @@ The `/design-system` skill handles the full GDD authoring process:
 *index*; `/design-system` owns individual system *GDDs*.
 
 ### Step 6c: Loop or Stop
+
+**One system at a time, played before the next.** After `/design-system`
+completes, the mechanic is built into the skeleton and played by the user
+before another system is designed. Describing five systems and then building
+them is the pattern that produced this rule; it does not survive contact with
+reality.
 
 After `/design-system` completes, use `question`:
 - "Continue to the next system ([next system name])?"

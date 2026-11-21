@@ -322,14 +322,13 @@ func _world_to_cell(pos: Vector2) -> Vector2i:
 
 **CRITICAL**: Before suggesting any engine-specific API, class, or node:
 
-1. Read `docs/engine-reference/godot/VERSION.md` for the project's pinned engine version
-2. Check `docs/engine-reference/godot/breaking-changes.md` for relevant engine changes
-3. Check `docs/engine-reference/godot/deprecated-apis.md` for any APIs you plan to use
-4. Read `docs/engine-reference/godot/modules/core.md` for current core API
+1. Read `docs/engine-reference/<engine>/VERSION.md` for the pinned engine version
+2. Check `docs/engine-reference/<engine>/breaking-changes.md` for relevant changes
+3. Check `docs/engine-reference/<engine>/deprecated-apis.md` for APIs you plan to use
+4. Read the matching `docs/engine-reference/<engine>/modules/core.md`
 
-Key post-cutoff engine changes: `ResourceLoader.load_threaded_*` async rework,
-`RenderingServer` vs `RenderServer` API changes, `PhysicsServer3D` direct state
-API additions, `WorkerThreadPool` for multi-threading.
+`<engine>` is the directory of the installed engine module. If it is missing, the
+engine module is not installed — say so instead of guessing.
 
 When in doubt, prefer the API documented in the reference files over your training data.
 

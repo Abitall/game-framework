@@ -14,6 +14,24 @@ phase. It checks for required artifacts, quality standards, and blockers.
 **Distinct from `/project-stage-detect`**: That skill is diagnostic ("where are we?").
 This skill is prescriptive ("are we ready to advance?" with a formal verdict).
 
+## Rule: one check per fact
+
+A gate asks two questions: does the evidence exist, and is its verdict acceptable.
+It never re-derives a verdict that another skill already owns.
+
+| Fact | Who decides it | What this gate checks |
+|---|---|---|
+| a GDD is complete and implementable | `/design-review` | the report exists, verdict is not MAJOR REVISION NEEDED |
+| documents agree with each other | `/consistency-check` | the report exists, no open conflicts |
+| systems are decomposed, capped, ordered | `/map-systems` | `design/gdd/systems-index.md` exists, five active systems at most |
+| architecture is sound | `/architecture-review` | the review file exists, verdict is not FAIL |
+| the project builds and its tests pass | `npm run check:slice` | the command exits 0 |
+| the mechanics are implemented | the code, not a document | the mechanic is playable by hand (user confirms) |
+
+If evidence is missing, the gate fails and names the skill that produces it.
+Re-reading every GDD to confirm a verdict that is already written in a report is
+the rework loop this rule exists to stop: it costs a full read and finds nothing new.
+
 ## Production Stages (7)
 
 The project progresses through these stages:
@@ -202,18 +220,24 @@ to prototype more ideas, then return here."
 
 ### Gate: Systems Design → Technical Setup
 
-**Required Artifacts:**
-- [ ] Systems index exists at `design/gdd/systems-index.md` with at least MVP systems enumerated
-- [ ] All MVP-tier GDDs exist in `design/gdd/` and individually pass `/design-review`
-- [ ] A cross-GDD review report exists in `design/gdd/` (from `/review-all-gdds`)
+**Evidence — each line is a file or a report, never a re-read:**
+- [ ] `design/gdd/systems-index.md` exists, and at most five systems are active
+- [ ] Every active system has a GDD in `design/gdd/`
+- [ ] Every active GDD has a `/design-review` report with verdict APPROVED or
+      NEEDS REVISION (never MAJOR REVISION NEEDED)
+- [ ] A `/consistency-check` report exists with no open conflicts
+- [ ] A `/review-all-gdds` report exists with verdict PASS or CONCERNS (never FAIL)
 
-**Quality Checks:**
-- [ ] All MVP GDDs pass individual design review (8 required sections, no MAJOR REVISION NEEDED verdict)
-- [ ] `/review-all-gdds` verdict is not FAIL (cross-GDD consistency and design theory checks pass)
-- [ ] All cross-GDD consistency issues flagged by `/review-all-gdds` are resolved or explicitly accepted
-- [ ] System dependencies are mapped in the systems index and are bidirectionally consistent
-- [ ] MVP priority tier is defined
-- [ ] No stale GDD references flagged (older GDDs updated to reflect decisions made in later GDDs)
+**The one check no document can answer:**
+- [ ] Every active system already has a mechanic a player can use by hand (user)
+
+**State, not investigation:**
+- [ ] The open issues from the three reports are collected in one list, and each
+      one is resolved or explicitly accepted
+- [ ] MVP priority tier is defined in the index
+
+A project that arrives here with twenty systems has already failed the cap: send
+it back to `/map-systems` instead of grading each document.
 
 ---
 
