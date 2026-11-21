@@ -1,6 +1,6 @@
 # Game Framework
 
-Игровой фреймворк для OpenCode: 52 агента, 90 скиллов, 16 правил, 38 шаблонов
+Игровой фреймворк для OpenCode: 52 агента, 90 скиллов, 19 правил, 38 шаблонов
 документов. Phaser 4 — основной стек, Unity 6.3 LTS — второй.
 
 ## Что это
@@ -11,7 +11,7 @@
 
 ```text
 .framework/          библиотека (агент её не видит)
-  library/           52 агента, 90 скиллов, 90 команд, 16 правил
+  library/           52 агента, 90 скиллов, 90 команд, 19 правил
   modules/           27 манифестов
   install.mjs        установщик
 .opencode/           активное: только установленные модули
@@ -58,6 +58,7 @@ node .framework/install.mjs doctor               # проверить целос
 | `node tools/capture.mjs` | снимок экрана через headless Chrome |
 | `node tools/envcheck.mjs` | чего не хватает в окружении |
 | `node tools/obsidian.mjs` | заметки в Obsidian: создать, найти, проверить ссылки |
+| `node tools/table.mjs apply\|pull\|check` | таблицы `data/*.tsv` ⇄ JSON в `src/data/` |
 | `node tools/change-model.mjs <model>` | сменить модель у агентов |
 | `node tools/check-encoding.mjs` | проверить UTF-8 |
 

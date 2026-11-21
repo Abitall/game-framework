@@ -23,36 +23,36 @@
         "skills\\skills\\onboard\\SKILL.md": "308a9ff7b68e7a307118c934cd4e635ab4ac79404e1d2ce9bef81a036beaee12",
         "skills\\skills\\reverse-document\\SKILL.md": "a697f1331b5ca5ea57da2dac679c72dc6872dc5781b5cb68af1b4765cb06ee18",
         "skills\\skills\\adopt\\SKILL.md": "9a802d6b5fba2a2c93846b42a8de9fb9cba3f8465b53c752edd3147044ae67f4",
-        "commands\\start.md": "daeb1eaca2c259b397b3800aba1888dae4e67591554ec5c3464fd7d94ffa91ee",
-        "commands\\help.md": "a5ea2afb51cb7c5309d84afcddc690faa7545fd432b9b880e148ea9544b613c0",
-        "commands\\init-template.md": "f36e84f7c50bd28ffc7bae285887ec754229625e06cc432166c53e5a3dc5c091",
-        "commands\\setup-engine.md": "b6edd82fc59c13c9fc6e60287c6e2f6c4fbb7e97aad13d363695cfb6f0fbc45f",
-        "commands\\project-stage-detect.md": "bbbe05946ecadd9f6bc579ca377046846c0489e8dda5b4943c8b8fa308f437e6",
-        "commands\\concept-brainstorm.md": "5cb32f07044b49604f0f6b56b0f4c4854ce7c4acb0127fb72b0a13f7dffb3b5b",
-        "commands\\map-systems.md": "97f86d2173b76315af4512fb5caa544f2c7d7d8ee6e26463247f7a22872b1030",
-        "commands\\create-architecture.md": "90a325c5dd0ad43bd5b9b47d331241bf3e93aa66b7916418e18023cea249cf4e",
-        "commands\\architecture-decision.md": "7dbfad280f3774137b2cf16ff7560170906756cd8389b0394298163c4f2a3b39",
-        "commands\\gate-check.md": "6742cb8e5fd1ec640f616cbe529dc6bbe57804d1c004b1fb6d957cb80866a5ec",
-        "commands\\code-review.md": "0065b9439188dfcf39455e202ec82740f62fdffa5bd54774878611b30a59eb69",
-        "commands\\tech-debt.md": "697e77c0856246570543b7df7a1ff301339375c6a8e0bb36ee220f716b60974c",
-        "commands\\onboard.md": "76069dbeb812070525e10495caf113c01880eaac6a76244d279174fd3ccf877c",
-        "commands\\reverse-document.md": "5ba9fbb0a0918e678dd2381c5ae837e3a810d8e54116d152770bf6055f04c622",
-        "commands\\adopt.md": "736caed21d1e3fc0aa5f71889749bde7b3e10ed68dbf07cc46ec757f35b4b232",
+        "commands\\start.md": "603d263cd60003845e08b7b50886482c316379fb960d957e677c984a62f21259",
+        "commands\\help.md": "673cf1aebb08cb71ec50da3f115e2e445c49a57afb94bf58bbeaa274b8195bc3",
+        "commands\\init-template.md": "4080ca8853fa23644d7f976cce19e7cbf926cf6902d1682b1b4ae3917269c5e6",
+        "commands\\setup-engine.md": "25cf796b1647a63ce7ede7b8e6ff91a5db521de3d3aa8107392e86f9719dd24b",
+        "commands\\project-stage-detect.md": "52beb814f270b362745b587b8a36ccd26a4f46dc2743b03b7e63cd3c0b32b39f",
+        "commands\\concept-brainstorm.md": "5d126987fe870eb434e157bcbf26f11b10e11d2de1089a504f049f37e695c243",
+        "commands\\map-systems.md": "a95c9dd3841036d623a8fb627fa33ead0c5509e2a0bf2b96071dc27a68761774",
+        "commands\\create-architecture.md": "e1a273fee286beed422191ab62cd4492e5309bcb82505f1478e8710cc5d04194",
+        "commands\\architecture-decision.md": "63ad2179a95e346ea07fd1f5e10fb3d329b4c8d3b14b9f8ff9a0e5524ad397b1",
+        "commands\\gate-check.md": "7c149ef4798fabe0f91f0a6b55ac8aa0a4f9c94c76627bd4d022e731427f21a8",
+        "commands\\code-review.md": "7bf3e0ee0772a8de4d912d759e1b062108bf3fe83b06d548d4030494ad6e39d4",
+        "commands\\tech-debt.md": "803b79cc5a1e2387f5977eedabb2d6382cdf62fe7bb1ee5ed6859861c0b1f3e0",
+        "commands\\onboard.md": "aaae52a6716ae5198da5686137ec066a41d25e95ce224faf15dfd55102b5a4db",
+        "commands\\reverse-document.md": "db2d79b625b3a8eddaddf20fdb6942a36fe02c845cf60022144f10487abdadbd",
+        "commands\\adopt.md": "d4f4d6cbbd99332c3b81d8b106fd645e46d6acaaf08b944472dea2cdbba0d51a",
         "skills\\skills\\pipeline-guard\\SKILL.md": "adb822dbf9590dab9f04c3334fc434741015ca19aae21c39f0714dad497521ed",
         "skills\\skills\\capture-solution\\SKILL.md": "5627d8b1f4d973835d51ad1182b6d099313bf123dda83a76598e543de590aacc",
         "skills\\skills\\publish-play\\SKILL.md": "5f527e72c5f299e0ef26154597a28daa2cd935503e2f3af534542845f9710f4a",
-        "commands\\pipeline-guard.md": "92177659e02d88302dc4f3630afcd8152b0f966a6147956daa2b419345151a96",
-        "commands\\capture-solution.md": "0e032fd1b78ec8b5bd98c2c21caa27a06b633c3910626408348ee31e9f2e2be6",
-        "commands\\publish-play.md": "dd4f96fe4b3e4b7f9a6fca00c3bf92c312d2eebf5ccae8de0a5ff372672fee43",
+        "commands\\pipeline-guard.md": "04e07f1f0287341757158943912fe38540eac391f539d75104a8c122afa6d087",
+        "commands\\capture-solution.md": "f8ef956259e66fd3dcf1c83122daaf79e0a157d2f6bee7d38c596e8b88875a26",
+        "commands\\publish-play.md": "e460cb6991f88d3d1b136139d82c59e8aed175fe8b74e034e7c4a9b6a0d9f1fc",
         "rules\\encoding.md": "1ea519f899508e868a1374db323a70ad89e11cc7b99981d4cec9a28745b182f3",
         "rules\\solutions.md": "2cf375706512f5dd75255b97eb20e860e21c6fce8c633e2dbcbbdd770fc5b3f7",
         "rules\\web-hosting.md": "0df70ce8d10392832ada7db732cb70748a98f6270b1caba1b498ba6d79bf9101",
-        "skills\\start\\SKILL.md": "002bb54474e0678083d3a1e7bff6c973834336f1ad4c636ac5f88da474d04087",
+        "skills\\start\\SKILL.md": "dc592022c40fc0e658bbb52fc1885f1b6c92035414d24df8716e5f89a88ba068",
         "skills\\help\\SKILL.md": "26ef1d0decda83ebe107c2ff3239a2c2afde42fe944cfc5fb73488bebd96e845",
         "skills\\init-template\\SKILL.md": "349bdbfcb436d5c6ff9b5bd5d752cc66d11cf3711acc69a0844bd1ff7dbc173c",
         "skills\\setup-engine\\SKILL.md": "985cb4c750e73aae5c6150c36e0d45ac107d96bfed6cf4e4e3779dbb837ae62f",
         "skills\\project-stage-detect\\SKILL.md": "2c36b8527e43a685a2e99fe7b8234a7ad1f50493df0b07dc2a61a865f43b2e46",
-        "skills\\concept-brainstorm\\SKILL.md": "617bedfa38632c99a99b3693eb6fd0c39e872f0f4a92539c9d786e4c8f6e13c1",
+        "skills\\concept-brainstorm\\SKILL.md": "021cacf836497d1a78fe373cb008cc8e390f295137155ed52e9a1e2398356875",
         "skills\\map-systems\\SKILL.md": "f3a2902c0ae6e2eeb8d290baa9ff4d0bb6c6c3e62e89fe3a4d3f5d86de8d7798",
         "skills\\create-architecture\\SKILL.md": "6e30d131830e71f795ceddbe6a4074c4a5e271ee77b6c10cf0e51839ec644e6d",
         "skills\\architecture-decision\\SKILL.md": "348e77693f871a35a54163355a2925b592b5026128b59270c169f800ec970578",
@@ -64,7 +64,10 @@
         "skills\\adopt\\SKILL.md": "9a802d6b5fba2a2c93846b42a8de9fb9cba3f8465b53c752edd3147044ae67f4",
         "skills\\pipeline-guard\\SKILL.md": "ae5ff387a3baee13073c059c130b3993125ce660238ac8181eec0720f6c547d5",
         "skills\\capture-solution\\SKILL.md": "5627d8b1f4d973835d51ad1182b6d099313bf123dda83a76598e543de590aacc",
-        "skills\\publish-play\\SKILL.md": "5f527e72c5f299e0ef26154597a28daa2cd935503e2f3af534542845f9710f4a"
+        "skills\\publish-play\\SKILL.md": "5f527e72c5f299e0ef26154597a28daa2cd935503e2f3af534542845f9710f4a",
+        "rules\\data-tables.md": "a3f3e0b59e209904c280d9ebedd15485a3149bb54558ed6df8e024c39fcf5042",
+        "rules\\owner-keeps-creativity.md": "df54dacc140ae6134e5223438df44a5b9b96b38fd802903330d148edfbe0b607",
+        "rules\\subagents.md": "4e032b28887b59014f5bdc806e6a8cc753c1bde982079f7e93e5de0087470a03"
       }
     },
     "design": {
@@ -197,8 +200,8 @@
       "version": "1.0.0",
       "installedAt": "2026-11-18T18:56:35.193Z",
       "files": {
-        "skills\\obsidian\\SKILL.md": "62ce724777a36f61037605fa87d2bb668f9cd3014e0c46aef6dc760580fdbd9a",
-        "commands\\obsidian.md": "dcff092e59f5a6df6442966eb7aab4edb3164c1affe9bdcab998d2605ad2d541"
+        "skills\\obsidian\\SKILL.md": "dc071a84150ffc8c9168a58468f89a6da606c926d562dd2b4f2bccffd55926f5",
+        "commands\\obsidian.md": "bcf639c51c466be7d0bb27509862df7cfd4b6d608d98ef631544290ea711baf0"
       }
     },
     "shutdown": {
@@ -213,8 +216,8 @@
       "version": "1.0.0",
       "installedAt": "2026-11-18T19:55:55.784Z",
       "files": {
-        "skills\\comfyui\\SKILL.md": "21201292812e0c8c495955fe1f96e16263fae9284af5568c27c074bcf8ebfb55",
-        "commands\\comfyui.md": "1cda2c192f6fc33b904d4aaaf288dd0b2762494585015f96b6207289d0b98064"
+        "skills\\comfyui\\SKILL.md": "4046bb39b7bceb31710deb9cddd33d5257e5a952047bc66368c01062947ec7a0",
+        "commands\\comfyui.md": "569c363b194a810a7f6db082005a59eeef1bc0ce938879b558319b112be0aaa6"
       }
     }
   }

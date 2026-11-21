@@ -42,3 +42,6 @@ production/shutdown.json
 
 # Generated images (copy the ones you ship into assets/)
 production/images/
+
+# ComfyUI server output (the start tool appends here)
+production/comfyui.log

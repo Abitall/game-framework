@@ -24,6 +24,7 @@
 import fs from "node:fs"
 import path from "node:path"
 import readline from "node:readline"
+import { spawn } from "node:child_process"
 
 const ROOT = process.cwd()
 const DEFAULT_URL = "http://127.0.0.1:8188"
@@ -414,10 +415,140 @@ async function history(args = {}) {
   }
 }
 
+async function isUp(url) {
+  try {
+    const res = await fetch(`${url}/system_stats`, { signal: AbortSignal.timeout(2000) })
+    return res.ok
+  } catch {
+    return false
+  }
+}
+
+const START_TIMEOUT_MS = Number(process.env.COMFYUI_START_TIMEOUT_MS ?? 240000)
+
+function logFile() {
+  const file = path.join(ROOT, "production", "comfyui.log")
+  fs.mkdirSync(path.dirname(file), { recursive: true })
+  return file
+}
+
+function tail(file, lines = 25) {
+  if (!fs.existsSync(file)) return []
+  return fs
+    .readFileSync(file, "utf8")
+    .trimEnd()
+    .split(/\r?\n/)
+    .slice(-lines)
+}
+
+/**
+ * Start the server and wait until it answers.
+ *
+ * Python is launched directly, not through run_nvidia_gpu.bat. The batch file
+ * ends with `pause`: with no console attached it falls through, the console
+ * closes, and Windows takes the python child down with it. That failure looks
+ * like "ComfyUI does not start", with nothing in the log to prove it.
+ *
+ * Output goes to production/comfyui.log, so a timeout can quote the real error
+ * instead of guessing at it.
+ */
+async function startServer() {
+  const { url, dir } = config()
+  if (await isUp(url)) {
+    return JSON.stringify({ ok: true, alreadyRunning: true, url }, null, 2)
+  }
+  if (!dir) {
+    return JSON.stringify(
+      {
+        ok: false,
+        error: "ComfyUI is not running, and production/comfyui.json has no \"dir\".",
+        fix: "Set dir to the ComfyUI folder (the one with run_nvidia_gpu.bat), then call start again.",
+        url,
+      },
+      null,
+      2,
+    )
+  }
+
+  const python = path.join(dir, "python_embeded", "python.exe")
+  const main = path.join(dir, "ComfyUI", "main.py")
+  const direct = fs.existsSync(python) && fs.existsSync(main)
+
+  const candidates = ["run_nvidia_gpu_fast_fp16_accumulation.bat", "run_nvidia_gpu.bat", "run_cpu.bat"]
+  const launcher = candidates.map((name) => path.join(dir, name)).find((file) => fs.existsSync(file))
+
+  if (!direct && !launcher) {
+    return JSON.stringify(
+      {
+        ok: false,
+        error: `No python_embeded/python.exe + ComfyUI/main.py and no launcher found in ${dir}`,
+        tried: ["python_embeded/python.exe + ComfyUI/main.py", ...candidates],
+      },
+      null,
+      2,
+    )
+  }
+
+  const log = logFile()
+  const startedAt = Date.now()
+  const out = fs.openSync(log, "a")
+  fs.writeSync(out, `\n--- start ${new Date().toISOString()} ---\n`)
+
+  const command = direct ? python : launcher
+  const args = direct ? ["-s", main, "--windows-standalone-build"] : []
+
+  const child = spawn(command, args, {
+    cwd: dir,
+    detached: true,
+    stdio: ["ignore", out, out],
+    shell: !direct,
+    windowsHide: false,
+  })
+  child.unref()
+  fs.closeSync(out)
+
+  while (Date.now() - startedAt < START_TIMEOUT_MS) {
+    if (await isUp(url)) {
+      return JSON.stringify(
+        {
+          ok: true,
+          started: true,
+          method: direct ? "python_embeded" : path.basename(launcher),
+          url,
+          waitedSeconds: Math.round((Date.now() - startedAt) / 1000),
+          log,
+        },
+        null,
+        2,
+      )
+    }
+    await new Promise((resolve) => setTimeout(resolve, 3000))
+  }
+
+  return JSON.stringify(
+    {
+      ok: false,
+      error: `ComfyUI did not answer at ${url} within ${Math.round(START_TIMEOUT_MS / 1000)} s.`,
+      method: direct ? "python_embeded" : path.basename(launcher),
+      log,
+      logTail: tail(log),
+      hint: "The lines above are the server's own output. A missing model, a CUDA error or a port already in use all appear there.",
+    },
+    null,
+    2,
+  )
+}
+
 // ── MCP plumbing ─────────────────────────────────────────────────────────────
 
 const TOOLS = [
   { name: "status", description: "Check whether ComfyUI is running, and its queue and VRAM.", inputSchema: { type: "object", properties: {} } },
+  {
+    name: "start",
+    description:
+      "Start ComfyUI from the folder in production/comfyui.json and wait until it answers. Use this instead of poking the API or opening tabs. Idempotent: if it is already running, says so.",
+    inputSchema: { type: "object", properties: {} },
+  },
   { name: "models", description: "List the checkpoints, text encoders and VAEs ComfyUI can load.", inputSchema: { type: "object", properties: {} } },
   {
     name: "workflows",
@@ -462,6 +593,7 @@ const TOOLS = [
 
 async function callTool(name, args) {
   if (name === "status") return status()
+  if (name === "start") return startServer()
   if (name === "models") return models()
   if (name === "workflows") return workflows()
   if (name === "validate-workflow") return validateWorkflow(args)

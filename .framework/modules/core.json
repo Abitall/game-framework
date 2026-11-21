@@ -50,8 +50,11 @@
     "publish-play"
   ],
   "rules": [
+    "data-tables",
     "encoding",
+    "owner-keeps-creativity",
     "solutions",
+    "subagents",
     "web-hosting"
   ],
   "docs": [],
