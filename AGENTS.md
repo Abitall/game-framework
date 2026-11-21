@@ -18,7 +18,9 @@ must survive even if that loading fails.
   after with the reason and the undo command. Never remove a module without approval.
 - **Never touch the playtest host** (port 5173, `dist-play/`) without a request.
 - **Gameplay values are data-driven.** No hardcoded numbers in systems.
-- **`src/systems/**` stays engine-agnostic.** No Phaser imports.
+- **`src/systems/**` stays engine-agnostic.** No Phaser imports. Layers, data
+  tables and test placement are checked mechanically by `npm run
+  check:boundaries` (`tools/boundaries.json`).
 - **Run `npm run check:encoding`** after bulk text edits.
 - **No commits without instruction.**
 

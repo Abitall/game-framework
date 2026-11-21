@@ -1,0 +1,27 @@
+{
+  "roots": ["src"],
+  "imports": [
+    {
+      "from": "src/systems/**",
+      "forbid": ["phaser"],
+      "why": "systems must run and be tested without the engine — AGENTS.md, Non-negotiables"
+    },
+    {
+      "from": "src/systems/**",
+      "forbid": ["src/view/**", "src/platform/**"],
+      "why": "systems do not reach the screen or the browser, so state stays testable headlessly — docs/agents/coding.md"
+    },
+    {
+      "from": "src/**",
+      "forbid": ["data/**"],
+      "why": "TSV belongs to the owner: data:apply builds src/data/*.json and the game reads that, never the table — docs/agents/coding.md"
+    }
+  ],
+  "files": [
+    {
+      "from": "src/**",
+      "reject": ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
+      "why": "tests live in tests/, not in src/ — src/AGENTS.md"
+    }
+  ]
+}

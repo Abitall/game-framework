@@ -9,6 +9,10 @@ Before merging to `development`:
   Conventional Commits; `.githooks/pre-commit` blocks credentials, conflict
   markers and >20 MB files, and runs framework validation when its paths are
   staged.
+- **Architecture boundaries** — `npm run check:boundaries` fails when a file
+  imports a module its layer forbids or when a test file sits under `src/`. The
+  rules are data in `tools/boundaries.json`, so a project changes them without
+  editing the tool.
 - **Module integrity** — `node .framework/tools/build-manifests.mjs` fails if a
   library item belongs to no module or a module claims a missing file.
 - **Doctor** — `node .framework/install.mjs doctor` fails on orphaned active
