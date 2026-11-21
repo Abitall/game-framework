@@ -60,7 +60,7 @@ This guided onboarding asks where you are and routes you to the right phase:
 
 - **Path A** -- No idea yet: routes to `/concept-brainstorm`
 - **Path B** -- Vague idea: routes to `/concept-brainstorm` with seed
-- **Path C** -- Clear concept: routes to `/setup-engine` and `/map-systems`
+- **Path C** -- Clear concept: routes to `/setup-engine`, `/prototype`, then `/map-systems`
 - **Path D1** -- Existing project, few artifacts: normal flow
 - **Path D2** -- Existing project, GDDs/ADRs exist: runs `/project-stage-detect`
   then `/adopt` for brownfield migration
@@ -169,12 +169,19 @@ with defined pillars and a player journey. This is where you figure out
   Player motiv.   core loop, USP         document
                                                                    |
                                                                    v
+                                                              /prototype
+                                                                   |
+                                                                   v
+                                                       one mechanic, played
+                                                       by hand, today
+                                                                   |
+                                                                   v
                                                              /map-systems
                                                                    |
                                                                    v
-                                                            systems-index.md
-                                                            (all systems, deps,
-                                                             priority tiers)
+                                                       systems-index.md
+                                                       (core only: five at most,
+                                                        the rest is backlog)
 ```
 
 ### Step 1.1: Brainstorm With /concept-brainstorm
@@ -246,9 +253,28 @@ engine-specialist agents to use. If you pick Godot, agents like
 `godot-specialist`, `godot-gdscript-specialist`, and `godot-shader-specialist`
 become your go-to experts.
 
-### Step 1.4: Decompose Your Concept Into Systems
+### Step 1.4: Build One Playable Mechanic
 
-Before writing individual GDDs, enumerate all the systems your game needs:
+Before writing a single design document, make the core mechanic playable by hand:
+
+```
+/prototype
+```
+
+One mechanic, one hypothesis, a few hours. It runs in `prototypes/` or on the
+skeleton the template ships with, and you play it yourself.
+
+**Why before the documents:** a design written about a mechanic nobody has played
+cannot be proven wrong. It accumulates instead, and every later fix invents a new
+contradiction. The prototype answers one question -- *is this worth building?* --
+for the price of a few hours.
+
+Record what you learned in one page (`/playtest-report`). That page is the first
+input of the systems index.
+
+### Step 1.5: Decompose the Core Into Systems
+
+Now enumerate the systems, and cut them down:
 
 ```
 /map-systems
@@ -256,14 +282,17 @@ Before writing individual GDDs, enumerate all the systems your game needs:
 
 This creates `design/gdd/systems-index.md` -- a master tracking document that:
 
-- Lists every system your game needs (combat, movement, UI, etc.)
-- Maps dependencies between systems
+- Lists at most **five active systems**; everything else goes to Backlog or Cut
+- States, for each active system, what the player does by hand and how to check it
+  in ten minutes
+- Maps dependencies between the active systems
 - Assigns priority tiers (MVP, Vertical Slice, Alpha, Full Vision)
 - Determines design order (Foundation > Core > Feature > Presentation > Polish)
 
-This step is **required** before proceeding to Phase 2. Research from 155 game
-postmortems confirms that skipping systems enumeration costs 5-10x more in
-production.
+The cap is not modesty, it is the only thing that keeps the documents checkable:
+each system designed before it can be played multiplies the ways the documents can
+disagree, and none of those disagreements can be settled by playing.
+`node tools/systems-count.mjs` fails when the active list grows past five.
 
 ### Phase 1 Gate
 
@@ -275,7 +304,9 @@ production.
 
 - Engine configured in `technical-preferences.md`
 - `design/gdd/game-concept.md` exists with pillars
-- `design/gdd/systems-index.md` exists with dependency ordering
+- The skeleton builds and its tests pass: `npm run check:slice`
+- **You have played one core mechanic by hand** and said it is worth building
+- `design/gdd/systems-index.md` exists, and at most five systems are active
 
 **Verdict:** PASS / CONCERNS / FAIL. CONCERNS is passable with acknowledged
 risks. FAIL blocks advancement.
@@ -286,10 +317,14 @@ risks. FAIL blocks advancement.
 
 ### What Happens in This Phase
 
-You create all the design documents that define how your game works. Nothing
-gets coded yet -- this is pure design. Each system identified in the systems
-index gets its own GDD, authored section by section, reviewed individually,
-and then all GDDs are cross-checked for consistency.
+You write design documents for the core systems -- at most five -- and each one is
+played by you before the next is designed. The loop is not "design everything,
+then code": a system is authored, built into the skeleton, played, and only then
+does the next system get a document.
+
+Value conflicts between documents are found by `/consistency-check` (one owner,
+one grep-based scan); prose contradictions and design theory by `/review-all-gdds`.
+Nobody re-reads everything to confirm a verdict that already exists in a report.
 
 ### Phase 2 Pipeline
 
@@ -300,14 +335,21 @@ and then all GDDs are cross-checked for consistency.
   Picks next system    Section-by-section     Validates 8
   from systems-index   GDD authoring          required sections
                        (incremental writes)   APPROVED/NEEDS REVISION
+                                                       |
+                                                       v
+                                            build it into the skeleton,
+                                            play it by hand (you)
+                                                       |
+                                                       v
+                                            next system, or stop here
        |
-       |  (repeat for each MVP system)
+       |  (after the last core system)
        v
-/review-all-gdds
-       |
-       v
-  Cross-GDD consistency + design theory review
-  PASS / CONCERNS / FAIL
+/consistency-check  -->  /review-all-gdds
+                              |
+                              v
+                value conflicts, prose, design theory
+                PASS / CONCERNS / FAIL
 ```
 
 ### Step 2.1: Author System GDDs
@@ -568,7 +610,7 @@ Vertical Slice that proves the core loop is fun.
 ### Phase 4 Pipeline
 
 ```
-/ux-design  -->  /prototype  -->  /create-epics  -->  /create-stories  -->  /sprint-plan
+/ux-design  -->  /prototype*  -->  /create-epics  -->  /create-stories  -->  /sprint-plan
     |                |                  |                   |                       |
     v                v                  v                   v                       v
   UX specs       Throwaway       Epic files in       Story files in          First sprint with
@@ -591,6 +633,9 @@ Vertical Slice that proves the core loop is fun.
                    (playable build,
                     3 unguided sessions)
 ```
+
+\* the first prototype happened in Phase 1. Here you prototype only what is
+still risky in the core loop.
 
 ### Step 4.1: UX Specs for Key Screens
 
@@ -634,9 +679,13 @@ etc.) with animation and sound standards.
 Validates UX specs for GDD alignment and accessibility tier compliance.
 Produces APPROVED / NEEDS REVISION / MAJOR REVISION NEEDED verdict.
 
-### Step 4.2: Prototype Risky Mechanics
+### Step 4.2: Prototype What Is Still Risky
 
-Not everything needs a prototype. Prototype when:
+The first prototype happened in Phase 1, before any document. This step is for
+what the core loop still hides: a mechanic whose fun is unclear, a technical
+approach that may not be feasible, two design options that need to be felt.
+
+Prototype when:
 - A mechanic is novel and you are not sure it is fun
 - A technical approach is risky and you are not sure it is feasible
 - Two design options both seem viable and you need to feel the difference
@@ -1457,7 +1506,7 @@ conflicts go to `producer`.
 | `/content-audit` | Audit GDD-specified content vs implementation |
 | `/design-review` | Validate GDD completeness and consistency |
 | `/design-system` | Section-by-section GDD authoring |
-| `/map-systems` | Decompose concept into individual systems |
+| `/map-systems` | Decompose the core into at most five systems; the rest is backlog |
 | `/quick-design` | Lightweight design spec for small changes |
 | `/review-all-gdds` | Cross-GDD consistency and game design review |
 | `/ux-design` | Guided UX spec authoring for screens and flows |
@@ -1563,9 +1612,11 @@ conflicts go to `producer`.
 2. /concept-brainstorm (collaborative ideation, pick a concept)
 3. /setup-engine (pin engine and version)
 4. /design-review on concept doc (optional, recommended)
-5. /map-systems (decompose concept into systems with deps and priorities)
-6. /gate-check concept (verify you're ready for Systems Design)
-7. /design-system per system (guided GDD authoring)
+5. /prototype (one core mechanic, played by hand today)
+6. /playtest-report (one page: what worked, what did not)
+7. /map-systems (core only: at most five systems, the rest is backlog)
+8. /gate-check concept (verify you're ready for Systems Design)
+9. /design-system per system, each played before the next
 ```
 
 ### Workflow 2: "I have multiple ideas and want to explore before committing"
