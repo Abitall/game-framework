@@ -110,6 +110,16 @@ starting Phase 3. Collect both results before writing the combined report.
 
 Work through every pair and group of GDDs to find contradictions and gaps.
 
+**One check per fact.** Value conflicts between documents — the same item at two
+prices, the same constant with two numbers, the same formula with different
+variables — belong to `/consistency-check`, which greps the registry instead of
+reading everything. Run it once, read its report, and spend this phase on what a
+grep cannot see: dependency direction, contradictions in prose, stale references,
+and design theory.
+
+If `/consistency-check` has not been run on these documents, run it before 2a and
+skip 2d and 2e — they are the same scan done by hand.
+
 ### 2a: Dependency Bidirectionality
 
 For every GDD's Dependencies section, check that every listed dependency is

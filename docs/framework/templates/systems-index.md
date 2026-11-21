@@ -7,9 +7,22 @@
 
 ## System Enumeration
 
-| ID | System | Category | MVP? | Dependencies | Owner |
-|---|---|---|---|---|---|
-| [SYS-01] | [System name] | [Category] | [Yes / No] | [System IDs or None] | [Role / person] |
+| ID | System | Category | Player does by hand | Ten-minute check | MVP? | Dependencies | Owner |
+|---|---|---|---|---|---|---|---|
+| [SYS-01] | [System name] | [Category] | [The action the player takes, not what the system tracks] | [Action → expected result] | [Yes / No] | [System IDs or None] | [Role / person] |
+
+## Backlog
+
+Named, not promised. Each line says what it would add, so cutting it later is a
+decision rather than an accident.
+
+| System | What it would add | Revisit when |
+|---|---|---|
+| [System name] | [One line] | [After X plays or Y milestone] |
+
+## Cut
+
+- [System] — [why the game does not need it]
 
 ## Dependency Map
 

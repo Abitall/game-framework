@@ -83,6 +83,12 @@ Report the in-scope GDD list before scanning.
 
 ## Phase 3: Grep-First Conflict Scan
 
+This skill is the single owner of value conflicts between documents: the same
+entity with two stat blocks, the same item at two prices, the same constant with
+two numbers, the same formula with different variables. `/design-review` stays
+inside one document, `/review-all-gdds` handles prose contradictions and design
+theory, and `/gate-check` only reads this report. Do this scan once, here.
+
 For each registered entry, grep every in-scope GDD for the entry's name.
 Do NOT do full reads — extract only the matching lines and their immediate
 context (-C 3 lines).

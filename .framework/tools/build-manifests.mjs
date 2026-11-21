@@ -49,7 +49,7 @@ const SPEC = [
       "code-review", "tech-debt", "onboard", "reverse-document", "adopt",
       "pipeline-guard", "capture-solution", "publish-play",
     ],
-    rules: ["encoding", "solutions", "web-hosting"],
+    rules: ["data-tables", "encoding", "owner-keeps-creativity", "small-steps", "solutions", "subagents", "web-hosting"],
     triggers: ["always installed"],
   },
   {

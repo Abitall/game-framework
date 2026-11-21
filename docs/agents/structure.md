@@ -20,6 +20,7 @@
 ├── docs/                         # framework docs, engine references, solutions journal
 ├── design/                       # GDDs, entity registry
 ├── src/                          # game code
+├── data/                         # the owner's tables (*.tsv), JSON is generated
 ├── assets/                       # game assets
 ├── production/                   # sprints, PIPELINE.md gates, SCOPE.md contract, session state
 ├── prototypes/                   # throwaway prototypes

@@ -78,13 +78,35 @@ Never install "just in case". Each installed module costs context, so the reason
 must be an answer the user actually gave. In the report, name the module, the
 trigger, what it added, and the undo command.
 
-## Phase 3: Create the Directory Skeleton
+## Phase 3: Keep the Skeleton, Add the Directories
 
-Create only what is missing. Never delete existing user content.
+The template already ships a working skeleton. It is not a demo of a game — it
+is the wiring every project needs before any mechanic exists: input, state,
+data loaded from a checked table, a view, and a save that survives a reload.
+
+Never delete or gut these files. Each one encodes a mistake that cost a day to
+find:
 
 ```text
-src/                 # game code
+tsconfig.json        strict TypeScript with node + vite types
+index.html           boot guard: an error before the bundle shows text, not a black screen
+vite.config.mts      dev on 5174, relative build in dist/
+vitest.config.mts    node environment, tests/**/*.test.ts
+src/main.ts          the seam: guard -> WebGL -> data -> save -> loop -> input -> systems -> view
+src/fatal.ts         showFatal / markStarted / markBooted
+src/platform/        environment checks (WebGL)
+src/systems/         pure state, no DOM and no engine imports
+src/data/            balance.json + zod schema + loader (generated from data/*.tsv)
+src/view/            the only place that knows about pixels
+src/save.ts          versioned, validated, never throws
+tests/unit/          tests for state, data and save
+```
+
+Then add only what is missing. Never delete existing user content.
+
+```text
 assets/              # game assets
+data/                # the owner's tables: *.tsv read in a spreadsheet
 design/gdd/          # game design documents
 design/registry/     # entity registry (entities.yaml)
 docs/architecture/   # ADRs
@@ -92,6 +114,12 @@ production/sprints/  # sprint plans
 production/session-state/
 prototypes/
 ```
+
+`data/` is not optional. It is the one place the owner edits numbers, and
+`npm run data:apply` turns a table into the JSON the game imports.
+
+If the user asks for an empty `src/`, confirm first, and still keep `fatal.ts`,
+`platform/`, `data/` and `save.ts` — the first mechanic needs all four.
 
 Guard every clear operation: if a directory already holds user files, warn and
 skip instead of deleting.
@@ -111,8 +139,14 @@ Built with [Engine] on the Game Framework for OpenCode.
 
 ```bash
 npm install
-npm run dev
+npm run dev          # dev host on http://localhost:5174
+npm run check:slice  # typecheck + unit tests + production build
+npm run play         # the build the human opens on http://localhost:5173
 ```
+
+The skeleton that ships with the template is a working loop with no content:
+click to add, time to take away, a bar on screen, a save in the browser. Replace
+its mechanic, keep its wiring.
 
 Type `/start` for onboarding, `/` to browse skills.
 
@@ -120,6 +154,7 @@ Type `/start` for onboarding, `/` to browse skills.
 
 ```
 src/          game code
+data/         the tables the owner edits in a spreadsheet (TSV)
 assets/       assets
 design/       GDDs and registry
 docs/         architecture, ADRs
@@ -145,12 +180,15 @@ pins 6.3 LTS unless the user asked for another version.
 Run and report the output of each:
 
 ```bash
+npm run check:slice
 node .framework/install.mjs list
 node .framework/install.mjs doctor
 node .framework/tools/build-manifests.mjs
 ```
 
-All three must pass before reporting success. If `doctor` reports orphaned
+All four must pass before reporting success. `check:slice` proves the project
+actually builds and runs its tests — a skeleton that only exists as directories
+is the failure this order was designed to prevent. If `doctor` reports orphaned
 active files, show them and ask before removing.
 
 ## Phase 7: Optional Git Reset
@@ -176,7 +214,7 @@ Template initialized
   Modules: [installed list]
 
   What's next:
-  - /setup-engine [engine]   pin engine docs
-  - /concept-brainstorm      start the game concept
   - /start                   guided onboarding
+  - /concept-brainstorm      one page of concept
+  - /prototype               the first core mechanic, playable today
 ```

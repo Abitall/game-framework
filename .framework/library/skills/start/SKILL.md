@@ -57,6 +57,10 @@ Wait for the user's selection. Do not proceed until they respond.
 
 ## Phase 3: Route Based on Answer
 
+**One rule for every path:** nothing gets designed before something can be
+played. A system nobody has touched cannot be judged, and documents about it
+drift apart silently. The prototype is step three, not step fourteen.
+
 #### If A: No idea yet
 
 The user needs creative exploration before anything else.
@@ -68,9 +72,11 @@ The user needs creative exploration before anything else.
    **Concept phase:**
    - `/concept-brainstorm open` — discover your game concept
    - `/setup-engine` — configure the engine (brainstorm will recommend one)
-   - `/art-bible` — define visual identity (uses the Visual Identity Anchor brainstorm produces)
-   - `/map-systems` — decompose the concept into systems
-   - `/design-system` — author a GDD for each MVP system
+   - `/prototype` — one core mechanic, playable by hand today
+   - `/playtest-report` — one short page: what was fun and what was not
+   - `/art-bible` — visual identity, now that you know how the game feels
+   - `/map-systems` — decompose the concept into at most five core systems
+   - `/design-system` — a GDD per core system, one at a time, each played before the next
    - `/review-all-gdds` — cross-system consistency check
    - `/gate-check` — validate readiness before architecture work
    **Architecture phase:**
@@ -80,7 +86,6 @@ The user needs creative exploration before anything else.
    - `/architecture-review` — validate architecture coverage
    **Pre-Production phase:**
    - `/ux-design` — author UX specs for key screens (main menu, HUD, core interactions)
-   - `/prototype` — build a throwaway prototype to validate the core mechanic
    - `/playtest-report (×1+)` — document each vertical slice playtest session
    - `/create-epics` — map systems to epics
    - `/create-stories` — break epics into implementable stories
@@ -96,9 +101,11 @@ The user needs creative exploration before anything else.
    **Concept phase:**
    - `/concept-brainstorm [hint]` — develop the idea into a full concept
    - `/setup-engine` — configure the engine
-   - `/art-bible` — define visual identity (uses the Visual Identity Anchor brainstorm produces)
-   - `/map-systems` — decompose the concept into systems
-   - `/design-system` — author a GDD for each MVP system
+   - `/prototype` — one core mechanic, playable by hand today
+   - `/playtest-report` — one short page: what was fun and what was not
+   - `/art-bible` — visual identity, now that you know how the game feels
+   - `/map-systems` — decompose the concept into at most five core systems
+   - `/design-system` — a GDD per core system, one at a time, each played before the next
    - `/review-all-gdds` — cross-system consistency check
    - `/gate-check` — validate readiness before architecture work
    **Architecture phase:**
@@ -108,7 +115,6 @@ The user needs creative exploration before anything else.
    - `/architecture-review` — validate architecture coverage
    **Pre-Production phase:**
    - `/ux-design` — author UX specs for key screens (main menu, HUD, core interactions)
-   - `/prototype` — build a throwaway prototype to validate the core mechanic
    - `/playtest-report (×1+)` — document each vertical slice playtest session
    - `/create-epics` — map systems to epics
    - `/create-stories` — break epics into implementable stories
@@ -126,10 +132,12 @@ The user needs creative exploration before anything else.
 3. Show the recommended path:
    **Concept phase:**
    - `/concept-brainstorm` or `/setup-engine` — (their pick from step 2)
-   - `/art-bible` — define visual identity (after brainstorm if run, or after concept doc exists)
    - `/design-review` — validate the concept doc
-   - `/map-systems` — decompose the concept into individual systems
-   - `/design-system` — author a GDD for each MVP system
+   - `/prototype` — one core mechanic, playable by hand today
+   - `/playtest-report` — one short page: what was fun and what was not
+   - `/art-bible` — visual identity (after brainstorm if run, or after the concept doc exists)
+   - `/map-systems` — decompose the concept into at most five core systems
+   - `/design-system` — a GDD per core system, one at a time, each played before the next
    - `/review-all-gdds` — cross-system consistency check
    - `/gate-check` — validate readiness before architecture work
    **Architecture phase:**
@@ -139,7 +147,6 @@ The user needs creative exploration before anything else.
    - `/architecture-review` — validate architecture coverage
    **Pre-Production phase:**
    - `/ux-design` — author UX specs for key screens (main menu, HUD, core interactions)
-   - `/prototype` — build a throwaway prototype to validate the core mechanic
    - `/playtest-report (×1+)` — document each vertical slice playtest session
    - `/create-epics` — map systems to epics
    - `/create-stories` — break epics into implementable stories

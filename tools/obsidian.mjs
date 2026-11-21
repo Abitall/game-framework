@@ -51,6 +51,7 @@ const TEMPLATES = {
 type: идея
 status: черновик
 project: 
+sphere: 
 created: {{date}}
 tags: []
 ---
@@ -73,6 +74,7 @@ tags: []
 type: концепт
 status: черновик
 project: 
+sphere: 
 created: {{date}}
 tags: []
 ---
@@ -107,6 +109,7 @@ tags: []
 type: план
 status: черновик
 project: 
+sphere: 
 created: {{date}}
 tags: []
 ---
@@ -131,6 +134,7 @@ tags: []
 type: документ
 status: черновик
 project: 
+sphere: 
 created: {{date}}
 tags: []
 ---
@@ -151,6 +155,7 @@ tags: []
 type: вопрос
 status: открыт
 project: 
+sphere: 
 created: {{date}}
 tags: []
 ---
@@ -455,6 +460,21 @@ function cmdCheck() {
   console.log("")
   console.log(`  Vault: ${vault}`)
   console.log(`  Notes: ${content.length} (+${notes.length - content.length} templates)`)
+
+  // Graph readability: a note with no sphere lands in no card, and every one of
+  // them is a loose node in the graph view. Advice, not an error.
+  const withoutSphere = content.filter(
+    (note) => !note.rel.startsWith(FOLDERS.maps) && !String(note.frontmatter.sphere ?? "").trim(),
+  )
+  const crowded = content.filter((note) => !note.rel.startsWith(FOLDERS.maps) && note.links.length > 6)
+  if (withoutSphere.length) {
+    console.log(`  No sphere (${withoutSphere.length}) — they appear in no card:`)
+    for (const note of withoutSphere.slice(0, 10)) console.log(`    ${note.rel}`)
+  }
+  if (crowded.length) {
+    console.log(`  More than 6 links (${crowded.length}) — a hub, not a note:`)
+    for (const note of crowded.slice(0, 10)) console.log(`    ${note.rel} (${note.links.length} links)`)
+  }
   if (!broken.length && !orphan.length && !dupes.length) {
     console.log("  Links: OK — no broken links, no orphans, no duplicate titles")
   } else {
@@ -523,6 +543,49 @@ function cmdIndex() {
 
   console.log(`  Cards written: ${written}`)
   for (const type of allTypes) console.log(`    Карта — ${type}.md`)
+
+  // Sphere cards: the graph stays readable when every note has one home.
+  // A note links up to its sphere; the sphere card lists its notes.
+  const spheres = new Map()
+  for (const note of notes) {
+    if (note.rel.startsWith(FOLDERS.templates)) continue
+    if (note.rel.startsWith(FOLDERS.maps)) continue
+    const sphere = String(note.frontmatter.sphere ?? "").trim()
+    if (!sphere) continue
+    const list = spheres.get(sphere) ?? []
+    list.push(note)
+    spheres.set(sphere, list)
+  }
+
+  let sphereCards = 0
+  for (const [sphere, list] of spheres) {
+    const file = path.join(mapsDir, `Сфера — ${sphere}.md`)
+    const body = [
+      "---",
+      "type: карта",
+      "tags: [карта, сфера]",
+      `created: ${today()}`,
+      "---",
+      "",
+      `# Сфера: ${sphere}`,
+      "",
+      "Собирается командой `node tools/obsidian.mjs index`. Руками не править.",
+      "",
+      ...list
+        .sort((a, b) => a.title.localeCompare(b.title, "ru"))
+        .map((note) => {
+          const type = note.frontmatter.type ? `${note.frontmatter.type} · ` : ""
+          return `- [[${note.title}]] — ${type}${note.frontmatter.status ?? "черновик"}`
+        }),
+      "",
+    ].join("\n")
+    fs.writeFileSync(file, body, "utf8")
+    sphereCards++
+  }
+  if (sphereCards) {
+    console.log(`  Sphere cards: ${sphereCards}`)
+    for (const sphere of spheres.keys()) console.log(`    Сфера — ${sphere}.md`)
+  }
 }
 
 const command = args[0] ?? "vault"

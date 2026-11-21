@@ -102,6 +102,39 @@ function runCheck(command) {
   return { ok: result.status === 0, output: `${result.stdout ?? ""}${result.stderr ?? ""}`.trim() }
 }
 
+function walk(dir, extension) {
+  if (!fs.existsSync(dir)) return []
+  const found = []
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name)
+    if (entry.isDirectory()) found.push(...walk(full, extension))
+    else if (entry.name.endsWith(extension)) found.push(full)
+  }
+  return found
+}
+
+/**
+ * The stop-cock for a project that is planning instead of playing.
+ *
+ * Design documents about a system nobody has played cannot be wrong, so they
+ * never get corrected — they accumulate. Past this threshold the honest advice
+ * is to stop writing and build one mechanic by hand.
+ */
+function paperFirstWarning() {
+  const designDocs = walk(path.join(ROOT, "design", "gdd"), ".md")
+    .filter((file) => !/[\\/]reviews?[\\/]/i.test(file))
+
+  const code = [...walk(path.join(ROOT, "src"), ".ts"), ...walk(path.join(ROOT, "src"), ".js")]
+    .filter((file) => !file.endsWith(".d.ts"))
+  const prototypes = walk(path.join(ROOT, "prototypes"), ".md")
+
+  const playable = code.length > 0 || prototypes.length > 0
+  if (playable) return null
+  if (designDocs.length < 6) return null
+
+  return `${designDocs.length} design documents in design/gdd and nothing playable in src/ or prototypes/. Writing cannot tell you whether the game is fun; playing can.`
+}
+
 function gameFirstWarning() {
   const result = spawnSync("git", ["log", "--pretty=%s", "-n", "15"], {
     cwd: ROOT,
@@ -164,17 +197,27 @@ function cmdStatus(runChecks) {
     if (open.length > 5) console.log(`    … and ${open.length - 5} more`)
   }
 
-  const warning = gameFirstWarning()
-  if (warning) {
+  const warnings = [
+    [gameFirstWarning(), "Consider returning to gameplay before more infrastructure."],
+    [paperFirstWarning(), "Build one mechanic by hand before writing the next document."],
+  ].filter(([text]) => text)
+  for (const [text, advice] of warnings) {
     console.log("")
-    console.log(`  ! ${warning}`)
-    console.log("    Consider returning to gameplay before more infrastructure.")
+    console.log(`  ! ${text}`)
+    console.log(`    ${advice}`)
   }
   console.log("")
 
-  // Tamper check: a gate that existed and disappeared.
-  const names = phases.flatMap((p) => p.gates.map((g) => `${p.title}::${g.text}`))
-  const known = fs.existsSync(BASELINE) ? JSON.parse(fs.readFileSync(BASELINE, "utf8")).gates ?? [] : []
+  // Tamper check: a gate that existed and disappeared. Gates are compared by
+  // their text, not "phase::text", so renaming a phase is not a deletion.
+  const names = phases.flatMap((p) => p.gates.map((g) => g.text))
+  const stored = fs.existsSync(BASELINE)
+    ? JSON.parse(fs.readFileSync(BASELINE, "utf8")).gates ?? []
+    : []
+  const known = stored.map((entry) => {
+    const split = entry.lastIndexOf("::")
+    return split === -1 ? entry : entry.slice(split + 2)
+  })
   const gone = known.filter((k) => !names.includes(k))
   if (gone.length) {
     console.log(`  ! ${gone.length} gate(s) disappeared from PIPELINE.md:`)
