@@ -329,10 +329,13 @@ func receive_damage(damage: DamageData) -> void:
 
 **CRITICAL**: Before suggesting any engine-specific API, class, or node:
 
-1. Check `docs/engine-reference/godot/VERSION.md` for the project's pinned engine version
+1. Check `docs/engine-reference/<engine>/VERSION.md` for the pinned engine version
 2. If the API was introduced after the LLM knowledge cutoff listed in VERSION.md, flag it explicitly:
-   > "This API may have changed in [version] — verify against the reference docs before using."
+   > "This API may have changed in [version] - verify against the reference docs before using."
 3. Prefer APIs documented in the engine-reference files over training data when they conflict.
+
+`<engine>` is the directory of the installed engine module. If it is missing, the
+engine module is not installed — say so instead of guessing.
 
 ## ADR Compliance
 
