@@ -1,0 +1,5 @@
+key	value
+_note	Placeholder balance table for the skeleton slice. Replace or extend it; keep the shape valid against src/data/schema.ts.
+startValue	0
+gainPerClick	1
+driftPerSecond	0.5

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Game</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #0b0b0f;
+        overflow: hidden;
+      }
+      #game {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      /* Boot guard: paints before any script module loads, so a failure here
+         is never a silent black screen. */
+      #boot-guard {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        font: 14px/1.5 system-ui, sans-serif;
+        color: #8b93a7;
+        background: #0b0b0f;
+      }
+      #boot-guard.failed {
+        display: block;
+        padding: 24px;
+        color: #ff8181;
+        white-space: pre-wrap;
+        overflow: auto;
+      }
+      #boot-guard[hidden] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="game"></canvas>
+    <div id="boot-guard">Starting…</div>
+
+    <script>
+      // Boot-time error capture. src/fatal.ts takes over for runtime failures.
+      (function () {
+        var guard = document.getElementById('boot-guard');
+        function fail(text) {
+          if (!guard) return;
+          guard.classList.add('failed');
+          guard.hidden = false;
+          guard.textContent = guard.textContent.indexOf('[fatal]') === 0
+            ? guard.textContent + '\n\n' + text
+            : '[fatal] ' + text;
+        }
+        window.addEventListener('error', function (e) {
+          fail((e.message || 'Script error') + (e.filename ? ' — ' + e.filename + ':' + e.lineno : ''));
+        }, true);
+        window.addEventListener('unhandledrejection', function (e) {
+          fail('Unhandled promise rejection: ' + (e.reason && e.reason.message ? e.reason.message : e.reason));
+        });
+        // Watchdog: only report a script that never started. A started script
+        // without frames is usually a background tab, where rAF is paused; that
+        // is logged, not treated as fatal.
+        setTimeout(function () {
+          if (document.documentElement.dataset.booted === '1') return;
+          if (document.documentElement.dataset.bootStarted !== '1') {
+            fail('The game script did not start.\nCheck the browser console and the network tab for a failed request.');
+            return;
+          }
+          console.warn('[boot] script started but no frame yet (background tab or throttled rAF)');
+        }, 3000);
+      })();
+    </script>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
